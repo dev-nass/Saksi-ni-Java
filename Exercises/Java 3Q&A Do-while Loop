@@ -1,0 +1,60 @@
+import java.util.Scanner;
+
+public class Main {
+	
+	public static void main (String [] args) {
+		Scanner scanner = new Scanner (System.in);
+		int lives = 3;
+		String choice = ""; // y, Y, Yes, yes
+		String answer = ""; // Venus!
+		int answer2; // Dice!
+		String answer3; // Body Part - eye!
+		
+		do {
+			System.out.print("What is the hottest plannet? ");
+			answer = scanner.nextLine();
+			
+			if (answer.equals("venus") || answer.equals("Venus")) {
+				System.out.println("You answered the right shit!");
+				System.out.println ("You still have " +lives+ " lives remaining");
+			} else {
+				System.out.println("You answered the wrong shit, you stupid fuck!");
+				lives = lives - 1;
+				System.out.println ("You still have " +lives+ " lives remaining");
+			}
+			
+			System.out.println (); // space
+			System.out.print("How many dark points appear in a dice in total? ");
+			answer2 = scanner.nextInt();
+			scanner.nextLine();
+			
+			if (answer2 == 21) {
+				System.out.println("You got it fuckinng right");
+				System.out.println ("You still have " +lives+ " lives remaining");
+			} else {
+				System.out.println("You almost got it, you stupid fuck!");
+				lives = lives - 1;
+				System.out.println ("You still have " +lives+ " lives remaining, dumb fuck fuck");
+			}
+			
+			System.out.println (); // space
+			System.out.print("Which body part is full grown since birth? ");
+			answer3 = scanner.nextLine();
+			
+			if (answer3.equals("Eyeballs") ||answer3.equals("Eyeball") || answer3.equals("eyeballs") || answer3.equals("eyeball")) {
+				System.out.println ("Nailed it, you fucked up shitty");
+				System.out.println ("You have " +lives+ " remaining lives");
+			} else {
+				System.out.println ("You are just straight stupid!");
+				lives = lives - 1;
+				System.out.println ("You dumbness cause you to lose a live, " +lives+ " reamining");
+			}
+			
+			System.out.println (); //space
+			System.out.print ("Do you want to retry the game? ");
+			choice = scanner.nextLine();
+		}  	while (lives >= 1 && (choice.equals("y") || choice.equals("Y") || choice.equals("yes") || choice.equals("Yes"))); // change this if the player want's to continue
+			System.out.println("You finished the game with " +lives+ " lives remaining");
+			System.out.println("You quit the game!");
+	}
+}
