@@ -1,0 +1,55 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class Main {
+	
+	public static void main (String [] args) {
+		Scanner scanner = new Scanner (System.in);
+		Random random = new Random ();
+		
+		String symbol = "";
+		System.out.print("Enter rows: ");
+		int rows = scanner.nextInt();
+		
+		System.out.print("Enter columns: ");
+		int columns = scanner.nextInt();
+		
+		System.out.print("What kind of symobol: ");
+		symbol = scanner.next();
+		
+		int randomValue = random.nextInt(3)+1;
+		System.out.println("The chosen value is " +randomValue);
+		
+		switch (randomValue) {
+		case 1:
+			for (int i = 1; i <= rows; i++) {
+					for (int j = 1; j <= i; j++) {
+						System.out.print(symbol);
+				}	
+				System.out.println ();
+			}
+			System.out.println ("A triangle pattern has immerge!");
+		break;
+		
+		case 2: 
+			for (int i = 1; i <= rows; i++) {
+					for (int j = columns; j >= i; j--) {
+						System.out.print(symbol);
+				}	
+				System.out.println ();
+			}	
+			System.out.println ("A Reverse-triangle pattern has appeared!");
+		break;
+		
+		case 3:
+			for (int i = 1; i <= rows; i++) {
+					for (int j = 1; j <= columns; j++) {
+						System.out.print(symbol);
+				}
+				System.out.println ();
+			}	
+			System.out.println ("A square pattern has been brought upon!");
+		break;
+		}
+	}
+}
