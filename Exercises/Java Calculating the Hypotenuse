@@ -13,7 +13,8 @@ public class Main {
 		System.out.print("Enter another side of the triangle: ");
 		double angleB = scanner.nextDouble();
 		
-		double angleC = (Math.pow(angleA, 2)) + (Math.pow(angleB, 2));
+		double angleC = (Math.pow(angleA, 2)) + (Math.pow(angleB, 2)); 
+// Math.pow(base, exponent ); return of the base number after multiplying it to itself based on the exponent
 		System.out.println("The hypotenuse is " +angleC);
 	}
 }
