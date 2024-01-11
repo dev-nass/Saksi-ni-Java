@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+public class Main {
+	
+	public static void main (String[] args) {
+		Scanner scanner = new Scanner (System.in);
+		System.out.println("This will find the Hypotenuse of the Triangle!");
+		System.out.print("Enter a side of the triangle: ");
+		double angleA = scanner.nextDouble();
+		
+		System.out.println();
+		
+		System.out.print("Enter another side of the triangle: ");
+		double angleB = scanner.nextDouble();
+		
+		double angleC = (Math.pow(angleA, 2)) + (Math.pow(angleB, 2));
+		System.out.println("The hypotenuse is " +angleC);
+	}
+}
