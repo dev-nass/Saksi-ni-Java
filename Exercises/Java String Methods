@@ -1,0 +1,25 @@
+
+
+public class Main {
+	
+	public static void main (String [] args) {
+		
+		String name = "Jonas";
+		
+		boolean result = name.equalsIgnoreCase("jonas");
+		int result2 = name.length();
+		char result3 = name.charAt(0);
+		int result4 = name.indexOf("J");
+		boolean result5 = name.isEmpty();
+		boolean result6 = name.isBlank();
+		String result7 = name.toUpperCase();
+		String result8 = name.toLowerCase();
+		String result9 = name.trim(); 
+		// trim - removes the space in the variable if there's any
+		String result10 = name.replace('o', 'a');
+		// replace - can be the whole string or just a letter
+		
+		
+		System.out.print(result10);
+	}
+}
