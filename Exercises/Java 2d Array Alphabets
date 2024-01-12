@@ -1,0 +1,27 @@
+
+
+public class Main {
+	public static void main (String [] args) {
+		String [] [] alphabets = new String [3] [3];
+			// rows - columns!
+		alphabets [0] [0] = "a";
+		alphabets [0] [1] = "b";
+		alphabets [0] [2] = "c";
+			// rows - columns!
+		alphabets [1] [0] = "d";
+		alphabets [1] [1] = "e";
+		alphabets [1] [2] = "f";
+			// rows - columns!
+		alphabets [2] [0] = "g";
+		alphabets [2] [1] = "h";
+		alphabets [2] [2] = "i";
+		
+		// 	[i] rows - [j] columns
+		for (int i = 0; i < alphabets.length; i++) {
+			for (int j = 0; j < alphabets[i].length; j++) {
+				System.out.print(alphabets [i] [j]+ " ");
+			}
+			System.out.println();
+		}
+	}
+}
