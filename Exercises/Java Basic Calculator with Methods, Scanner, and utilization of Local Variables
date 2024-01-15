@@ -1,0 +1,123 @@
+import java.util.Scanner;
+
+public class Main {
+	
+	public static void main (String [] args) {
+		Scanner scanner = new Scanner (System.in);
+		int howMany;
+		System.out.print("How many numbers you want to add: ");
+		howMany = scanner.nextInt();
+		scanner.nextLine();
+		
+		if (howMany == 2) {
+			String dataChoice;
+			System.out.print("What data type you like (integer or double): ");
+			dataChoice = scanner.nextLine();
+				if (dataChoice.equalsIgnoreCase ("integer")) {
+					System.out.print("Enter your first integer number: ");
+					int num1 = scanner.nextInt();
+					System.out.print("Enter your second number: ");
+					int num2 = scanner.nextInt();
+					
+					int result = integer__add(num1, num2);
+					System.out.println(result);
+				} else if (dataChoice.equalsIgnoreCase("double")) {
+					System.out.print("Enter your first double number: ");
+					double num1 = scanner.nextDouble();
+					System.out.print("Enter your second number: ");
+					double num2 = scanner.nextDouble();
+					
+					double result = double__add(num1, num2);
+					System.out.println(result);
+				}
+		}
+		
+		if (howMany == 3) {
+			String dataChoice;
+			System.out.print("What data type you like (integer or double): ");
+			dataChoice = scanner.nextLine();
+				if (dataChoice.equalsIgnoreCase ("integer")) {
+					System.out.print("Enter your first integer number: ");
+					int num1 = scanner.nextInt();
+					System.out.print("Enter your second number: ");
+					int num2 = scanner.nextInt();
+					System.out.print("Enter your third number: ");
+					int num3 = scanner.nextInt();
+					
+					int result = integer__add(num1, num2, num3);
+					System.out.println(result);
+				} else if (dataChoice.equalsIgnoreCase("double")) {
+					System.out.print("Enter your first double number: ");
+					double num1 = scanner.nextDouble();
+					System.out.print("Enter your second number: ");
+					double num2 = scanner.nextDouble();
+					System.out.print("Enter your second number: ");
+					double num3 = scanner.nextDouble();
+					
+					double result = double__add(num1, num2, num3);
+					System.out.println(result);
+				}
+		}
+		
+		if (howMany == 4) {
+			String dataChoice;
+			System.out.print("What data type you like (integer or double): ");
+			dataChoice = scanner.nextLine();
+				if (dataChoice.equalsIgnoreCase ("integer")) {
+					System.out.print("Enter your first integer number: ");
+					int num1 = scanner.nextInt();
+					System.out.print("Enter your second number: ");
+					int num2 = scanner.nextInt();
+					System.out.print("Enter your third number: ");
+					int num3 = scanner.nextInt();
+					System.out.print("Enter your fourth number: ");
+					int num4 = scanner.nextInt();
+					
+					int result = integer__add(num1, num2, num3, num4);
+					System.out.println(result);
+				} else if (dataChoice.equalsIgnoreCase("double")) {
+					System.out.print("Enter your first double number: ");
+					double num1 = scanner.nextDouble();
+					System.out.print("Enter your second number: ");
+					double num2 = scanner.nextDouble();
+					System.out.print("Enter your second number: ");
+					double num3 = scanner.nextDouble();
+					System.out.print("Enter your fourth number: ");
+					double num4 = scanner.nextDouble();
+					
+					double result = double__add(num1, num2, num3, num4);
+					System.out.println(result);
+				}
+		}
+	}
+	
+	static int integer__add (int x, int y) {
+		System.out.println("This is integer method 2 numbers added");
+		return x + y;
+	}
+	
+	static int integer__add (int x, int y, int z) {
+		System.out.println("This is integer method 3 numbers added");
+		return x + y + z;
+	}
+	
+	static int integer__add (int x, int y, int z, int a) {
+		System.out.println("This is integer method 4 numbers added");
+		return x + y + z + a;
+	}
+	
+	static double double__add (double x, double y) {
+		System.out.println("This is integer method 2 numbers added");
+		return x + y;
+	}
+	
+	static double double__add (double x, double y, double z) {
+		System.out.println("This is integer method 3 numbers added");
+		return x + y + z;
+	}
+	
+	static double double__add (double x, double y, double z, double a) {
+		System.out.println("This is integer method 4 numbers added");
+		return x + y + z + a;
+	}
+}
