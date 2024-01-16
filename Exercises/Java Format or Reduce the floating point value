@@ -1,0 +1,16 @@
+import java.text.DecimalFormat;
+
+public class Main {
+    public static void main(String[] args) {
+        double myValue = 123.456789;
+
+        // Create a DecimalFormat object with a pattern
+        DecimalFormat decimalFormat = new DecimalFormat("0.##"); // Keep up to two decimal places. Just increase the #.
+
+        // Format the double value
+        String formattedValue = decimalFormat.format(myValue);
+
+        // Print the formatted value
+        System.out.println("Formatted Value: " + formattedValue);
+    }
+}
