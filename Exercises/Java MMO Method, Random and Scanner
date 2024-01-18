@@ -1,0 +1,92 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+	
+	public static void main (String [] args) {
+		Scanner scanner = new Scanner (System.in);
+		System.out.print("Enter your name: ");
+		String userNameArgument = scanner.nextLine();
+		userNameArgument = stringMethod(userNameArgument);
+		
+		Random random = new Random ();
+		int randomTypeArgument = random.nextInt(4)+1;
+		randomTypeArgument = intMethod(randomTypeArgument);
+	}
+	
+	public static String stringMethod (String userNameParameter) {
+		System.out.println("Hello "+userNameParameter);
+		return userNameParameter;
+	}
+	
+	public static int intMethod (int randomTypeReceiver) {
+		String userTypeParameter = "";
+		switch (randomTypeReceiver) {
+			case 1:
+				userTypeParameter = "Swordsman";
+				break;
+			
+			case 2:
+				userTypeParameter = "Mage";
+				break;
+				
+			case 3:
+				userTypeParameter = "Archer";
+				break;
+				
+			case 4:
+				userTypeParameter = "Thief";
+				break;
+		}
+		
+		System.out.println("You have the type of: "+userTypeParameter);
+		System.out.println();
+		
+		switch (userTypeParameter) {
+			case "Swordsman":
+				double hp = 1000.00;
+				double mp = 100.00;
+				int level = 1;
+				double exp = 0.00;
+				System.out.println("You have " +hp+ " healt points");
+				System.out.println("You have " +mp+ " amount of mana points");
+				System.out.println("You are at level " +level);
+				System.out.println("Experience points " +exp);
+			break;
+			
+			case "Mage":
+				hp = 500.00;
+				mp = 1000.00;
+				level = 1;
+				exp = 0.00;
+				System.out.println("You have " +hp+ " healt points");
+				System.out.println("You have " +mp+ " amount of mana points");
+				System.out.println("You are at level " +level);
+				System.out.println("Experience points " +exp);
+			break;
+			
+			case "Archer":
+				hp = 700.00;
+				mp = 500.00;
+				level = 1;
+				exp = 0.00;
+				System.out.println("You have " +hp+ " healt points");
+				System.out.println("You have " +mp+ " amount of mana points");
+				System.out.println("You are at level " +level);
+				System.out.println("Experience points " +exp);
+			break;
+			
+			case "Thief":
+				hp = 500.00;
+				mp = 500.00;
+				level = 1;
+				exp = 0.00;
+				System.out.println("You have " +hp+ " healt points");
+				System.out.println("You have " +mp+ " amount of mana points");
+				System.out.println("You are at level " +level);
+				System.out.println("Experience points " +exp);
+			break;
+		}
+		return randomTypeReceiver;
+	}
+}
