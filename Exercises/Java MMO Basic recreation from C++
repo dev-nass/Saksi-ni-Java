@@ -1,0 +1,26 @@
+public class Main {
+	String userName;
+	int level;
+	int hp;
+	int mp;
+	final double exp = 0.00;
+	
+	public static void main (String [] args) {
+		Main myObj1 = new Main ();
+		Main myObj2 = new Main ();
+		
+		myObj1.userName = "Jonas";
+		myObj1.level = 1;
+		myObj1.hp = 100;
+		myObj1.mp = 100;
+		
+		myObj2.userName = "Rawr";
+		myObj2.level = 1;
+		myObj2.hp = 100;
+		myObj2.mp = 100;
+		
+		System.out.println(myObj1.userName+ " "+myObj1.level+ " "+myObj1.hp+ " "+myObj1.mp);
+		System.out.println();
+		System.out.println(myObj2.userName+ " "+myObj2.level+ " "+myObj2.hp+ " "+myObj2.mp);
+	}
+}
