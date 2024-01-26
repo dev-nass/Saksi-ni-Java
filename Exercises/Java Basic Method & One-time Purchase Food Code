@@ -1,0 +1,119 @@
+import java.util.Scanner;
+// note that this code is design for one time purchase only, so even if I have enough money after food 50 it won't
+// redirect me to another set of food be it 35 or 20.
+public class Main {
+  
+  public static void main (String [] args) {
+    Scanner scanner = new Scanner (System.in);
+    String foodChoiceset50 = "";
+    String foodChoiceset351 = ""; // for inner 35 within 50 if statement
+    String foodChoiceset352 = ""; 
+    String foodChoiceset201 = ""; // for inner 20 within 50 if statement
+    String foodChoiceset202 = "";
+    System.out.print("Do you want to buy something: ");
+    String choice = scanner.nextLine();    
+    
+    while (choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("yes")) {
+    	int peso, sampu, bente, sinkwenta, totalAmount;
+        String foodChoiceset = "";
+        String foodChoiceset35 = "";
+        String foodChoiceset20 = "";
+        System.out.println("Enter the amount of money you will enter");
+        System.out.print("How many peso: ");
+        peso = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("How many sampu: ");
+        sampu = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("How many bente: ");
+        bente = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("How many sinkwenta: ");
+        sinkwenta = scanner.nextInt();
+        scanner.nextLine();
+        totalAmount = add(peso, sampu, bente, sinkwenta);
+        System.out.println("The total amount that you have entered is: " + totalAmount);
+        
+        if (totalAmount >= 50) {
+          System.out.println("You are in the 50 zone");
+          System.out.print("Do you want to enter the food set of 50: ");
+          foodChoiceset50 = scanner.nextLine();
+          if (foodChoiceset50.equalsIgnoreCase("yes") || foodChoiceset50.equalsIgnoreCase("y")) {
+        	  if (foodChoiceset50.equalsIgnoreCase("yes") || foodChoiceset50.equalsIgnoreCase("y")) {
+                  System.out.printf("--------------------------%n");
+                  System.out.printf("|       Food sets         |%n");
+                  System.out.printf("--------------------------%n");
+                  System.out.printf("|  %-5s|  %-5s|  %-7s| %n", "One", "Two", "Three");
+                  System.out.printf("--------------------------%n");
+                  System.out.printf("|  %-5s|  %-5s|  %-7s| %n", "Try", "Try", "Try");
+                  System.out.printf("|  %-5s|  %-5s|  %-7s| %n", "Try", "Try", "Try");
+                  System.out.printf("|  %-5s|  %-5s|  %-7s| %n", "Try", "Try", "Try");
+                  System.out.printf("--------------------------%n");
+                  System.out.print("Enter the main food set you want to access: ");
+                  int foodChoice = scanner.nextInt();
+                  scanner.nextLine();
+                  switch (foodChoice) {
+                      case 1:
+                          System.out.println("You have received");
+                          System.out.println("try");
+                          System.out.println("try");
+                          System.out.println("try");
+                          totalAmount = totalAmount - 50;
+                          break;
+
+                      case 2:
+                          System.out.println("You have received");
+                          System.out.println("try2");
+                          System.out.println("try2");
+                          System.out.println("try2");
+                          totalAmount = totalAmount - 50;
+                          break;
+
+                      case 3:
+                          System.out.println("You have received");
+                          System.out.println("try3");
+                          System.out.println("try3");
+                          System.out.println("try3");
+                          totalAmount = totalAmount - 50;
+                          break;
+                  }
+              }
+          } else if (foodChoiceset50.equalsIgnoreCase("no") || foodChoiceset50.equalsIgnoreCase("n") || (totalAmount >= 21 && totalAmount <= 49)) {
+              System.out.print("Do you want to enter the food set of 35: ");
+              foodChoiceset351 = scanner.nextLine();
+              if (foodChoiceset351.equalsIgnoreCase("yes") || foodChoiceset351.equalsIgnoreCase("y")) {
+            	  System.out.println("You are within inner 35");
+            	// paste the code for 35 here
+              } else if (foodChoiceset351.equalsIgnoreCase("no") || foodChoiceset351.equalsIgnoreCase("n") || totalAmount <= 21) {
+                  System.out.print("Do you want to enter the food set of 20: ");
+                  foodChoiceset201 = scanner.nextLine();
+                  if (foodChoiceset201.equalsIgnoreCase("yes") || foodChoiceset201.equalsIgnoreCase("y")) {
+                	  System.out.println("You are within inner 20");
+                	// paste the code for 20 here
+             }
+           }
+         }
+          	
+        } else if (totalAmount >= 21 && totalAmount <= 49) {
+          System.out.println("You are in the outter 35 zone");
+          System.out.print("Do you want to enter the food set of 35: ");
+          foodChoiceset351 = scanner.nextLine();
+          if (foodChoiceset351.equalsIgnoreCase("yes") || foodChoiceset351.equalsIgnoreCase("y")) {
+        	  System.out.println("You are within inner 35");
+      }
+        } else if (totalAmount <= 20) {
+          System.out.println("You are in the outter 20 zone");
+          System.out.print("Do you want to enter the food set of 20: ");
+          foodChoiceset201 = scanner.nextLine();
+          if (foodChoiceset201.equalsIgnoreCase("yes") || foodChoiceset201.equalsIgnoreCase("y")) {
+        	  System.out.println("You are within inner 20");
+     }
+        }
+        System.out.print("Do you want to purchase again: ");
+        choice = scanner.nextLine();
+      }
+  }
+  static int add (int a, int b, int x, int y) {
+	  return a + b + x + y;
+  }
+}
