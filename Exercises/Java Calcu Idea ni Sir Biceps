@@ -1,0 +1,61 @@
+/*January 30, 2024 - I already know how to code like this by this point of time 
+  all I Did here is just a refresher in mind, and also to prepare for tommoorrow's class */
+
+
+import java.util.Scanner;
+
+public class Main {
+	
+	public static void main (String [] args) {
+		Scanner scanner = new Scanner(System.in);
+		double dNum1, dNum2, dAnswer;
+		String sOperation = "";
+		
+		System.out.print("Enter your number here: ");
+		dNum1 = scanner.nextInt();
+		scanner.nextLine();
+		
+		System.out.print("Enter your second number here: ");
+		dNum2 = scanner.nextInt();
+		scanner.nextLine();
+		
+		while (sOperation.isEmpty()) {
+			System.out.print("Enter the full spelling of what arithmetic operation you want to do: ");
+			sOperation = scanner.nextLine();
+			
+			if (sOperation.equalsIgnoreCase("addition") || (sOperation.equalsIgnoreCase("add"))) {
+				dAnswer = add(dNum1, dNum2);
+				System.out.println("The answer to your added numbers is "+dAnswer);
+			} else if (sOperation.equalsIgnoreCase("subraction") || (sOperation.equalsIgnoreCase("subraction"))) {
+				dAnswer = sub(dNum1, dNum2);
+				System.out.println("The answer to your subracted numbers is "+dAnswer);
+			} else if (sOperation.equalsIgnoreCase("multiplication") || (sOperation.equalsIgnoreCase("times"))) {
+				dAnswer = multiply(dNum1, dNum2);
+				System.out.println("The answer to your multiplied numbers is "+dAnswer);
+			} else if (sOperation.equalsIgnoreCase("division") || (sOperation.equalsIgnoreCase("divide"))) {
+				dAnswer = divide(dNum1, dNum2);
+				System.out.println("The answer to your divided numbers is "+dAnswer);
+			}
+		}
+	}
+	
+	static double add (double a, double b) {
+		double c;
+		return c = a + b;
+	}
+	
+	static double sub (double a, double b) {
+		double c;
+		return c = a - b;
+	}
+	
+	static double multiply (double a, double b) {
+		double c;
+		return c = a * b;
+	}
+	
+	static double divide (double a, double b) {
+		double c;
+		return c = a / b;
+	}
+}
