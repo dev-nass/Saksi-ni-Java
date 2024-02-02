@@ -1,0 +1,22 @@
+import java.util.Scanner;
+// January 2 - 3 just made this to not miss my coding streak!!
+public class Main {
+	public static void main (String [] args) {
+		Scanner scanner = new Scanner (System.in);
+		
+		double dCoefficient1, dCoefficient2, dConstant;
+		System.out.print("Enter your first coefficient: ");
+		dCoefficient1 = scanner.nextDouble();
+		
+		System.out.print("Enter your second coefficient: ");
+		dCoefficient2 = scanner.nextDouble();
+		dCoefficient2 = dCoefficient2*dCoefficient1;
+		
+		System.out.print("Enter your constant value: ");
+		dConstant = scanner.nextDouble();
+			
+		double dAnswer =  Math.pow(dCoefficient1, 2) + dCoefficient2 + dConstant;
+		System.out.println(dAnswer);
+
+	}
+}
