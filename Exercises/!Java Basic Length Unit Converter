@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main (String [] args) {
+		Scanner scanner = new Scanner (System.in);
+		String sChoice = ""; // used for what unit they want to convert
+		String sChoice2 = ""; // used for what unit they want it to convert into
+		String sAnotherOne = ""; // used to satisfy the condition inside the while loop
+		double dInch, dFeet, dYard, dMiles;
+		
+		do {
+			System.out.print("What unit of length you want to convert: ");
+			sChoice = scanner.nextLine();
+			
+			if (sChoice.equalsIgnoreCase("inches") || sChoice.equalsIgnoreCase("inch")) {
+				// for inches!
+			} else if (sChoice.equalsIgnoreCase("feets") || sChoice.equalsIgnoreCase("feet")) {
+				// for feet!
+			} else if (sChoice.equalsIgnoreCase("yards") || sChoice.equalsIgnoreCase("yard")) {
+				// for yards!
+			} else if (sChoice.equalsIgnoreCase("miles") || sChoice.equalsIgnoreCase("mile")) {
+				// for miles!
+			}
+		} while (sAnotherOne.equalsIgnoreCase("y") || sAnotherOne.equalsIgnoreCase("yes"));
+	}
+}
