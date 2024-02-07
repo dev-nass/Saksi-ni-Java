@@ -1,0 +1,36 @@
+import java.util.Scanner;
+// February 7 2024
+public class Main {
+    public static void main (String [] args) {
+        Scanner scanner = new Scanner (System.in);
+        final int penPrice = 5;
+        final int paperPrice = 10;
+        int itemChoice; // pang if else pen or paper
+        int ilan;
+        int totalAmount; // presyo
+        
+        System.out.println("Enter your which item you want to purchase, enter the number only");
+        System.out.println("1. Pen");
+        System.out.println("2. Paper");
+        System.out.print("Enter here the full number: ");
+        itemChoice = scanner.nextInt();
+        
+        if (itemChoice == 1) {
+            System.out.print("Ilang pen: ");
+            ilan = scanner.nextInt();
+            System.out.println("You purchased paper");
+            totalAmount =  ilan * penPrice;
+            System.out.println("The total amount is " +totalAmount);
+        } else if (itemChoice == 2) {
+            System.out.print("Ilang paper: ");
+            ilan = scanner.nextInt();
+            System.out.println("You purchased paper");
+            totalAmount =  ilan * paperPrice;
+            System.out.println("The total amount is " +totalAmount);
+        } else {
+        	System.out.println("BOBO WALANG GANON, GAR!!");
+        }
+        
+
+    }
+}
