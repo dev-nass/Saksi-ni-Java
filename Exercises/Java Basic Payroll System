@@ -1,0 +1,26 @@
+import java.util.Scanner;
+// February 7 2024
+// Note: some IDE have their preferred variable initialization, such us you can't declare multiple variable on a single line.
+// So the best approach is to do this kind of initialization.
+public class Main {
+	public static void main (String [] args) {
+		Scanner scanner = new Scanner (System.in);
+		
+		System.out.print("Enter your rate here: ");
+		double dRate = scanner.nextDouble();
+
+		System.out.print("Enter your hours of work here: ");
+		double dHoursWork = scanner.nextDouble();
+		
+		double dSalary = dRate * dHoursWork;
+		System.out.println("Your overall salary is "+dSalary);
+		
+		if (dSalary <= 10000) {
+			System.out.println("Mayaman!");
+		} else if (dSalary >= 10001 && dSalary <= 15000) {
+			System.out.println("Super yaman!");
+		} else if (dSalary >= 15001 && dSalary <= 20000) {
+			System.out.println("Anak ni Henry Sy");
+		}
+	}
+}
