@@ -1,0 +1,36 @@
+import java.util.Scanner;
+//February 14 2024
+public class Main {
+	public static void main (String [] args) {
+		Scanner scanner = new Scanner (System.in);
+		double dSquareSide; // use to get 1 side of the square. Since a square MUST have an equally even sides, hence only 1 variable needed.
+		double dLenghtAndWidth; // use for calculating the sum
+		int iChoiceOperation; // either area or perimeter
+		String sEndingChoice = ""; // if they want to go for another round
+		
+		do {
+			System.out.print("Enter a side of a square: ");
+			dSquareSide = scanner.nextDouble();
+			
+			System.out.println("Choose the number either area or perimeter of the square");
+			System.out.println("1. Area of the square");
+			System.out.println("2. Perimeter of the square");
+			System.out.print("Enter here: ");
+			iChoiceOperation = scanner.nextInt();
+			scanner.nextLine();
+			if (iChoiceOperation == 1) {
+				dLenghtAndWidth = Math.pow(dSquareSide, 2);
+				System.out.println("The area of the square that has a side of " +dSquareSide+ " is " +dLenghtAndWidth);
+			} else if (iChoiceOperation == 2) {
+				dLenghtAndWidth = dSquareSide * 4;
+				System.out.println("The perimeter of a square that has a side of " +dSquareSide+ " is " +dLenghtAndWidth);
+;			} else {
+				System.out.println("STOOOPID");
+			}
+			System.out.print("Do you want to go for another go: ");
+			sEndingChoice = scanner.nextLine();
+		} while (sEndingChoice.equalsIgnoreCase("yes") || sEndingChoice.equalsIgnoreCase("y"));
+		
+		System.out.println("YOU JUST EXITED THE LOOP!");
+	}
+}
