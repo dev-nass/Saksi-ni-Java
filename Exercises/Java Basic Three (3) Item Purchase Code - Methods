@@ -1,0 +1,38 @@
+import java.util.Scanner;
+// FEBRUARY 15 2024 10:48pm
+// ISSUE: What if the user wants to buy more than 3 items
+	public class Main {
+		public static void main (String [] args) {
+			Scanner scanner = new Scanner (System.in);
+			double d_Item1, d_Item2, d_Item3, d_Total;
+			
+			System.out.print("Enter here the price of your item 1: ");
+			d_Item1 = scanner.nextDouble();
+			
+			System.out.print("Enter here the price of your item 2: ");
+			d_Item2 = scanner.nextDouble();
+			
+			System.out.print("Enter here the price of your item 3: ");
+			d_Item3 = scanner.nextDouble();
+			
+			double d_TotalAmountOfCost = adder(d_Item1, d_Item2, d_Item3); // calls the adder method and total price!
+			
+			System.out.print("Enter the amount of money the you have: ");
+			double d_TotalAmountOfMoney = scanner.nextDouble();
+			
+			subracter(d_TotalAmountOfMoney, d_TotalAmountOfCost); // calls the subracter method to subract this two variable values. And pint how much the left over money.
+		}
+		
+		// what if the user only want to BUY 2 or wanting the to buy 4 and >.
+		static double adder (double d_Item1, double d_Item2, double d_Item3) {
+			double d_ItemsTotal = d_Item1 + d_Item2 + d_Item3;
+			System.out.println("The total amount of your purchase is: "+d_ItemsTotal);
+			return d_ItemsTotal;
+		}
+
+		static double subracter (double d_TotalAmountOfCost, double d_TotalAmountOfMoney) {
+			double d_MoneyChange = d_TotalAmountOfCost - d_TotalAmountOfMoney;
+			System.out.println("The total amount of money you have left is: "+d_MoneyChange);
+			return d_MoneyChange;
+		}
+	}
