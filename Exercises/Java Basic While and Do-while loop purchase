@@ -1,0 +1,55 @@
+import java.util.Scanner;
+// FEBRUARY 16 - MY Version from chatGPTs Edition
+/*
+ Variables Used:
+ String purchaseAgain (yes or no)
+ double totalAmount (calculate the total amount of price (totalAmount = totalAmount + productPrice))
+ double itemCount (calculate the total amount of items they want to purchase)
+ double productPrice (calculates the price for each product)
+ integer i (used for while loop with the condition (i <= itemCount) so the loop stops (delimiter) asking the user regarding an item price
+ String moneyAnswer ((yes or no) if they have money or not)
+ double totalAmount (used to calculate their overall money)
+ double moneyChange (used to calculate the change from (moneyChange = totalMoney - totalAmount))
+*/
+public class Main {
+	public static void main (String [] args) {
+		Scanner scanner = new Scanner (System.in);
+		String purchaseAgain = "";
+		do {
+			int i = 1, itemCount;
+			double totalAmount = 0;
+			System.out.print("Enter how many item you want: ");
+			itemCount = scanner.nextInt();
+			
+			while (i <= itemCount) {
+				System.out.print("Enter the price of product "+i+ ": ");
+				double productPrice = scanner.nextDouble();
+				totalAmount += productPrice;
+				scanner.nextLine();
+				i++;
+			}
+			System.out.println("The total amount of purchase is: "+totalAmount);
+			
+			System.out.print("Do you have your money on you: "); // just use to added some more spice
+			String moneyAnswer = scanner.nextLine();
+			
+			if (moneyAnswer.equalsIgnoreCase("Yes") || moneyAnswer.equalsIgnoreCase("Y")) {
+				System.out.print("Enter here the amount: ");
+				double totalMoney = scanner.nextDouble();
+				if (totalMoney >= totalAmount) {
+					double moneyChange = totalMoney - totalAmount;
+					System.out.println("The change you have left is: "+moneyChange);
+				} else {
+					System.out.println("KULANG PERA MO YA, BALIK KA NALANG!!");
+				}
+				
+			} else {
+				System.out.println("Invalid input!! STOOPID CREATURE");
+			}
+			scanner.nextLine();
+			System.out.print("Do you want to purchase Again: ");
+			purchaseAgain = scanner.nextLine();
+		} while (purchaseAgain.equalsIgnoreCase("Yes") || purchaseAgain.equalsIgnoreCase("Y"));
+		System.out.println("NASAAN LISENSIYA MO!!!");
+	}
+}
