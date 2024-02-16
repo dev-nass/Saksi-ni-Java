@@ -1,0 +1,25 @@
+import java.util.Scanner;
+// FEBRUARY 16 
+public class Main {
+	public static void main (String [] args) {
+		Scanner scanner = new Scanner (System.in);
+		
+		System.out.print("Enter the number of items you want to buy: ");
+		int itemCount = scanner.nextInt();
+		
+		double totalCost = 0;
+		
+		for(int i = 1; i <= itemCount; i++) {
+			System.out.print("Enter the price of the item "+i+ ": ");
+			double itemPrice = scanner.nextDouble();
+			totalCost += itemPrice;
+		}
+		System.out.println("The total amount is: " +totalCost);
+		System.out.print("Please enter the amount of money you have: ");
+		double moneyPocket = scanner.nextDouble();
+		
+		double moneyChange = moneyPocket - totalCost;
+		
+		System.out.println("Here your change: "+moneyChange);
+	}
+}
