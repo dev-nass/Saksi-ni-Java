@@ -1,0 +1,65 @@
+import java.util.Scanner;
+// Onting ISSUE Feb 20 2024
+public class Main {
+	
+	private int choiceNum;
+	
+	public void setter(int choiceNumPlaceHolder) {
+		choiceNum = choiceNumPlaceHolder;
+	}
+	
+	public int getter() {
+		return choiceNum;
+	}
+	
+	static void firstPattern () {	
+		for (int i = 1; i <= 5; i++) {
+			for (int j = 1; j <= i; j++) {
+				System.out.print("*");
+			}
+			System.out.println();
+		}
+	}
+	
+	static void secondPattern () {
+		for (int i = 1; i <= 5; i++) {
+			for (int j = i; j <= 5; j++) {
+				System.out.print("*");
+			}
+			System.out.println();
+		}
+	}
+	
+	static void thirdPattern () {
+		for (int i = 1; i <= 5; i++) {
+			for (int j = 1; j <= 5; j++) {
+				System.out.print("*");
+			}
+			System.out.println();
+		}
+	}
+	
+	static int inputReader (int choiceNum) {
+		Scanner scanner = new Scanner (System.in);
+		int receiver;
+		System.out.print("Enter here your chosen number: ");
+		choiceNum = scanner.nextInt();
+		return receiver = choiceNum;
+	}
+	
+	public static void main (String [] args) {
+		Main main = new Main ();
+		
+		if (main.inputReader(3) == 3) {
+			main.thirdPattern();
+		} else if (main.inputReader(2) == 2) {
+			main.secondPattern();
+		} else if (main.inputReader(1) == 1) {
+			main.firstPattern();
+		} else {
+			System.out.println("Invalid kana, lods!");
+		}
+		
+		
+	}
+}
