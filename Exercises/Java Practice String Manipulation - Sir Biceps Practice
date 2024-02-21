@@ -1,0 +1,149 @@
+import java.util.Scanner;
+// February 21 2024
+// Group 4
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String choice = ""; // used to retry the whole process 
+
+        do {
+            System.out.println();
+            System.out.println("Choose from the following (Enter the number)");
+            System.out.println("1. Word Counts");
+            System.out.println("2. Same and Not Same");
+            System.out.println("3. Code encryptor");
+            System.out.print("Enter here: ");
+            int numChoice = scanner.nextInt();
+            scanner.nextLine();
+            
+            String secondChance = ""; // used to retry for every numChoice
+
+            if (numChoice == 1) {
+                do {
+                    System.out.println();
+                    System.out.print("Enter a name: ");
+                    String yourName = scanner.nextLine();
+
+                    String[] numOfSpace = yourName.split(" ");
+                    int numOfWords = numOfSpace.length;
+
+                    System.out.println("Number of words are " + numOfWords);
+                    System.out.println();
+                    System.out.print("Do you want to go for another loop in number 1 (Yes / No): ");
+                    secondChance = scanner.nextLine();
+                } while (secondChance.equalsIgnoreCase("Yes") || secondChance.equalsIgnoreCase("YES"));
+            } 
+            
+            else if (numChoice == 2) {
+                do {
+                    System.out.println();
+                    String letterFinder = "";
+
+                    System.out.print("Enter first name: ");
+                    String nameOne = scanner.nextLine();
+                    
+                    System.out.print("Enter second name: ");
+                    String nameTwo = scanner.nextLine();
+                    
+                    System.out.print("Enter a letter to find: ");
+                    letterFinder = scanner.next();
+                    
+                    int indexOfLetterOne = nameOne.indexOf(letterFinder);
+                    int indexOfLetterTwo = nameTwo.indexOf(letterFinder);
+                    
+                    if (indexOfLetterOne == indexOfLetterTwo) {
+                        System.out.println("same!");
+                    } else {
+                        System.out.println("not the same po!");
+                    }
+                    scanner.nextLine();
+                    System.out.println();
+                    System.out.print("Do you want to go for another loop in number 2 (Yes / No): ");
+                    secondChance = scanner.nextLine();
+                } while (secondChance.equalsIgnoreCase("Yes") || secondChance.equalsIgnoreCase("YES"));
+            } 
+            
+            else if (numChoice == 3) {
+            	// Ñ is part of the code
+                do {
+                    int i = 0;
+                    int stringReceiver;
+                    String s;
+                    String stringPrinter = "";
+
+                    System.out.print("Enter any word that will be converted: ");
+                    System.out.print(" ");
+
+                    s = scanner.nextLine();
+                    stringReceiver = s.length();
+
+                    while (i < stringReceiver) {
+                        if (s.charAt(i) == 'a' || s.charAt(i) == 'A')
+                            stringPrinter = stringPrinter + " 1 ";
+                        else if (s.charAt(i) == 'b' || s.charAt(i) == 'B')
+                            stringPrinter = stringPrinter + " 2 ";
+                        else if (s.charAt(i) == 'c' || s.charAt(i) == 'C')
+                            stringPrinter = stringPrinter + " 3 ";
+                        else if (s.charAt(i) == 'd' || s.charAt(i) == 'D')
+                            stringPrinter = stringPrinter + " 4 ";
+                        else if (s.charAt(i) == 'e' || s.charAt(i) == 'E')
+                            stringPrinter = stringPrinter + " 5 ";
+                        else if (s.charAt(i) == 'f' || s.charAt(i) == 'F')
+                            stringPrinter = stringPrinter + " 6 ";
+                        else if (s.charAt(i) == 'g' || s.charAt(i) == 'G')
+                            stringPrinter = stringPrinter + " 7 ";
+                        else if (s.charAt(i) == 'h' || s.charAt(i) == 'H')
+                            stringPrinter = stringPrinter + " 8 ";
+                        else if (s.charAt(i) == 'i' || s.charAt(i) == 'I')
+                            stringPrinter = stringPrinter + " 9 ";
+                        else if (s.charAt(i) == 'j' || s.charAt(i) == 'J')
+                            stringPrinter = stringPrinter + " 10 ";
+                        else if (s.charAt(i) == 'k' || s.charAt(i) == 'K')
+                            stringPrinter = stringPrinter + " 11 ";
+                        else if (s.charAt(i) == 'l' || s.charAt(i) == 'L')
+                            stringPrinter = stringPrinter + " 12 ";
+                        else if (s.charAt(i) == 'm' || s.charAt(i) == 'M')
+                            stringPrinter = stringPrinter + " 13 ";
+                        else if (s.charAt(i) == 'n' || s.charAt(i) == 'N')
+                            stringPrinter = stringPrinter + " 14 ";
+                        else if (s.charAt(i) == 'ñ' || s.charAt(i) == 'Ñ')
+                            stringPrinter = stringPrinter + " 15 ";
+                        else if (s.charAt(i) == 'o' || s.charAt(i) == 'P')
+                            stringPrinter = stringPrinter + " 16 ";
+                        else if (s.charAt(i) == 'p' || s.charAt(i) == 'P')
+                            stringPrinter = stringPrinter + " 17 ";
+                        else if (s.charAt(i) == 'q' || s.charAt(i) == 'Q')
+                            stringPrinter = stringPrinter + " 18 ";
+                        else if (s.charAt(i) == 'r' || s.charAt(i) == 'R')
+                            stringPrinter = stringPrinter + " 19 ";
+                        else if (s.charAt(i) == 's' || s.charAt(i) == 'S')
+                            stringPrinter = stringPrinter + " 20 ";
+                        else if (s.charAt(i) == 't' || s.charAt(i) == 'T')
+                            stringPrinter = stringPrinter + " 21 ";
+                        else if (s.charAt(i) == 'u' || s.charAt(i) == 'U')
+                            stringPrinter = stringPrinter + " 22 ";
+                        else if (s.charAt(i) == 'v' || s.charAt(i) == 'V')
+                            stringPrinter = stringPrinter + " 23 ";
+                        else if (s.charAt(i) == 'w' || s.charAt(i) == 'W')
+                            stringPrinter = stringPrinter + " 24 ";
+                        else if (s.charAt(i) == 'x' || s.charAt(i) == 'X')
+                            stringPrinter = stringPrinter + " 25 ";
+                        else if (s.charAt(i) == 'y' || s.charAt(i) == 'Y')
+                            stringPrinter = stringPrinter + " 26 ";
+                        else if (s.charAt(i) == 'z' || s.charAt(i) == 'Z')
+                            stringPrinter = stringPrinter + " 27 ";
+                        i++;
+                    }
+
+                    System.out.println(" ");
+                    System.out.println("Converted words to numbers: " + stringPrinter);
+                    System.out.print("Do you want to go for another loop in number 3 (Yes / No): ");
+                    secondChance = scanner.nextLine();
+                } while (secondChance.equalsIgnoreCase("Yes") || secondChance.equalsIgnoreCase("YES"));
+            }
+            System.out.print("Do you want to choose from 1 to 3 again (Yes / No): ");
+            choice = scanner.nextLine();
+        } while (choice.equalsIgnoreCase("YES") || choice.equalsIgnoreCase("yes"));
+        System.out.println("Daghang Salamat sa paggamit ng aming code!!");
+    }
+}
