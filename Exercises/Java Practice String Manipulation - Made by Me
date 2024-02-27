@@ -1,7 +1,9 @@
 import java.util.Scanner;
 // FEB 24 
 // ANG HIRAP, PERO ENJOY OMG!!
-public class StringMethods {
+// FEB 28 - Realized na may mali sa choice 2 with the help of GPT I fixed and learned 
+// that whenever the indexOf a letter is not found it automatically outputs -1
+public class Main {
 	
 	public static void main (String [] args) {
 		Scanner scanner = new Scanner (System.in);
@@ -69,12 +71,12 @@ public class StringMethods {
 					
 					int twoIndexFirst = wordTwo.indexOf(letterFinder);
 					int twoIndexLast = wordTwo.lastIndexOf(letterFinder);
+			
 					
-					
-					
-					if (oneIndexFirst == twoIndexFirst) { // Targets the First appearance of the Letter to Find
+					// FEB 28 PART
+					if ((oneIndexFirst != -1 && twoIndexFirst != -1) && oneIndexFirst == twoIndexFirst) { // Targets the First appearance of the Letter to Find
 						System.out.println("Same");
-					} else if (oneIndexLast == twoIndexLast) { // Targets the Last Appearance of the Letter to Find
+					} else if ((oneIndexLast != -1 && twoIndexLast != -1) && oneIndexLast == twoIndexLast) { // Targets the Last Appearance of the Letter to Find
 						System.out.println("Same");
 					} else { // If neither, this is the last resort
 						System.out.println("Not the same");
