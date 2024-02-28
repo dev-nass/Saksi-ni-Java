@@ -1,0 +1,472 @@
+import java.util.Scanner;
+// FEBRUARY 29 2024
+// GROUP 4
+public class Main {
+	
+	public static void main (String [] args) {
+		Scanner scanner = new Scanner (System.in);
+		
+		String choice = "";
+		
+		do {
+			System.out.println();
+			System.out.println("!!Dashboard!!");
+			System.out.println("Choose from the following (enter the #)");
+			System.out.println("1. Calculator");
+			System.out.println("2. BMI Calculator");
+			System.out.println("3. Point of Sale");
+			System.out.println("4. Level 2 Problem");
+			System.out.println("5. Three (3) Manipulation");
+			System.out.print("Enter here you chosen one: ");
+			int dashboardChoice = scanner.nextInt();
+			
+			if (dashboardChoice == 1) {
+				String tryAgainCalculator = ""; // used to return to the dashboard of the calculator
+				do {
+					System.out.println();
+					System.out.println("CALCULATOR");
+					System.out.println("Choose from the following operations (enter the #)");
+					System.out.println("1. Addition");
+					System.out.println("2. Subraction");
+					System.out.println("3. Multiplication");
+					System.out.println("4. Divison");
+					System.out.println("5. Modulo");
+					System.out.print("Enter here you chosen one: ");
+					int operationChoice = scanner.nextInt();
+					scanner.nextLine();
+					
+					if (operationChoice == 1) {
+						String operationTryAgain = ""; // used for trying again each arithmetic operation
+						do {
+							System.out.println();
+							System.out.println("Addition \nEnter three numbers to add");
+							System.out.print("Enter your first number: ");
+							int num1 = scanner.nextInt();
+							System.out.print("Enter your second number: ");
+							int num2 = scanner.nextInt();
+							System.out.print("Enter your third number: ");
+							int num3 = scanner.nextInt();
+							scanner.nextLine();
+							
+							int finalAnswer = add(num1, num2, num3);
+							System.out.println("The answer is "+finalAnswer);
+							
+							System.out.print("Do you want to add again (Yes/No): ");
+							operationTryAgain = scanner.nextLine();
+						} while (operationTryAgain.equalsIgnoreCase("Yes"));
+					} else if (operationChoice == 2) {
+						String operationTryAgain = "";
+						do {
+							System.out.println();
+							System.out.println("Subraction \nEnter two numbers to subract");
+							System.out.print("Enter your first number: ");
+							int num1 = scanner.nextInt();
+							System.out.print("Enter your second number: ");
+							int num2 = scanner.nextInt();
+							scanner.nextLine();
+							
+							int finalAnswer = sub(num1, num2);
+							System.out.println("The answer is "+finalAnswer);
+							
+							System.out.print("Do you want to sub again (Yes/No): ");
+							operationTryAgain = scanner.nextLine();
+						} while (operationTryAgain.equalsIgnoreCase("Yes"));
+					} else if (operationChoice == 3) {
+						String operationTryAgain = "";
+						do {
+							System.out.println();
+							System.out.println("Multiplication \nEnter three numbers to multiply");
+							System.out.print("Enter your first number: ");
+							int num1 = scanner.nextInt();
+							System.out.print("Enter your second number: ");
+							int num2 = scanner.nextInt();
+							System.out.print("Enter your third number: ");
+							int num3 = scanner.nextInt();
+							scanner.nextLine();
+							
+							int finalAnswer = multi(num1, num2, num3);
+							System.out.println("The answer is "+finalAnswer);
+							
+							System.out.print("Do you want to multiply again (Yes/No): ");
+							operationTryAgain = scanner.nextLine();
+						} while (operationTryAgain.equalsIgnoreCase("Yes"));
+					} else if (operationChoice == 4) {
+						String operationTryAgain = "";
+						do {
+							System.out.println();
+							System.out.println("Divison \nEnter two numbers to divide");
+							System.out.print("Enter your first number: ");
+							double num1 = scanner.nextInt();
+							System.out.print("Enter your second number: ");
+							double num2 = scanner.nextInt();
+							scanner.nextLine();
+							
+							double finalAnswer = div(num1, num2);
+							System.out.println("The answer is "+finalAnswer);
+							
+							System.out.print("Do you want to divide again (Yes/No): ");
+							operationTryAgain = scanner.nextLine();
+						} while (operationTryAgain.equalsIgnoreCase("Yes"));
+					} else if (operationChoice == 5) {
+						String operationTryAgain = "";
+						do {
+							System.out.println();
+							System.out.println("Modulo \nEnter two numbers to modulo");
+							System.out.print("Enter your first number: ");
+							double num1 = scanner.nextInt();
+							System.out.print("Enter your second number: ");
+							double num2 = scanner.nextInt();
+							scanner.nextLine();
+							
+							double finalAnswer = modulo(num1, num2);
+							System.out.println("The answer is "+finalAnswer);
+							
+							System.out.print("Do you want to modulo again (Yes/No): ");
+							operationTryAgain = scanner.nextLine();
+						} while (operationTryAgain.equalsIgnoreCase("Yes"));
+					} else {
+						System.out.println();
+						System.out.println("INVALID!!");
+					}
+					
+					System.out.println();
+					System.out.print("Do you want to return to the calculators dashboard (Yes/No): ");
+					tryAgainCalculator = scanner.nextLine();
+				} while (tryAgainCalculator.equalsIgnoreCase("Yes"));
+			}
+			
+			else if (dashboardChoice == 2) {
+				String tryAgainCalculator = ""; // used to return to the dashboard of the calculator
+				do {
+					System.out.println();
+					System.out.print("Enter your height in meters: ");
+					double height = scanner.nextDouble();
+					System.out.print("Enter your weigth in kg: ");
+					double weigth = scanner.nextDouble();
+					scanner.nextLine();   
+					
+					double BMI = weigth / (height*height);
+					System.out.println("Your BMI is: "+BMI);
+					   
+					if (BMI > 0 && BMI <= 18.4) {
+						System.out.println("Underweight");
+					} else if (BMI >= 18.5 && BMI <= 24.9) {
+						System.out.println("Normal");
+					} else if (BMI >= 25.0 && BMI <= 39.9) {
+						System.out.println("Overweight");
+					} else {
+						System.out.println("Obese");
+					}
+					
+					System.out.print("Do you want to use BMI calculator (Yes/No): ");
+					tryAgainCalculator = scanner.nextLine();
+				} while (tryAgainCalculator.equalsIgnoreCase("Yes"));
+			}
+			
+			else if (dashboardChoice == 3) {
+				String tryAgainCalculator = ""; // used to return to the dashboard of the calculator
+				do  {
+					final int penPrice = 5;
+			        final int paperPrice = 10;
+			        int itemChoice; // pang if else pen or paper
+			        int ilan;
+			        int totalAmount; // presyo
+			        
+			        System.out.println();
+			        System.out.println("Enter your which item you want to purchase, enter the number only");
+			        System.out.println("1. Pen (php 5)");
+			        System.out.println("2. Paper (php 10)");
+			        System.out.print("Enter here the full number: ");
+			        itemChoice = scanner.nextInt();
+			        scanner.nextLine();
+			        
+			        if (itemChoice == 1) {
+			        	System.out.println();
+			            System.out.print("Ilang pen: ");
+			            ilan = scanner.nextInt();
+			            System.out.println("You purchased paper");
+			            totalAmount =  ilan * penPrice;
+			            System.out.println("The total amount is " +totalAmount);
+			        } else if (itemChoice == 2) {
+			        	System.out.println();
+			            System.out.print("Ilang paper: ");
+			            ilan = scanner.nextInt();
+			            System.out.println("You purchased paper");
+			            totalAmount =  ilan * paperPrice;
+			            System.out.println("The total amount is " +totalAmount);
+			        } else {
+			        	System.out.println("BOBO WALANG GANON, GAR!!");
+			        }
+					
+			        scanner.nextLine();
+			        System.out.println();
+					System.out.print("Do you want to make another purchase (Yes/No): ");
+					tryAgainCalculator = scanner.nextLine();
+				} while (tryAgainCalculator.equalsIgnoreCase("Yes"));
+			}
+			
+			else if (dashboardChoice == 4) {
+				String tryAgainCalculator = ""; // used to return to the dashboard of the calculator
+				int setfourAnswer = 0;
+				do  {
+					System.out.println();
+					do {
+						System.out.print("10 + 69 + 39 = ");
+						setfourAnswer = scanner.nextInt();
+					} while (setfourAnswer != 118);
+					System.out.println("You are correct!");
+					
+					scanner.nextLine();
+					System.out.println();
+				   System.out.print("Do you want to solve again (Yes/No): ");
+				   tryAgainCalculator = scanner.nextLine();
+				} while (tryAgainCalculator.equalsIgnoreCase("Yes"));
+				
+			}
+			
+			else if (dashboardChoice == 5) {
+				String tryAgainTheWhole = "";
+				do {
+					System.out.println();
+					System.out.println("Choose from the following (Enter the chosen number)");
+					System.out.println("1. Word Counts");
+					System.out.println("2. Same and Not Same");
+					System.out.println("3. Letter Encrytor");
+					System.out.print("Enter here your chosen number: ");
+					int chosenNum = scanner.nextInt();
+					scanner.nextLine();
+					System.out.println();
+					
+					String tryAgainTheChosenNum = "";
+					if (chosenNum == 1) {
+						do {
+							// ISSUE: Doesn't print out the EACH index of spaces
+							// THIS PART IS USED TO COUNT THE NUMBER OF WORDS
+							System.out.print("Enter here your name: ");
+							String word = scanner.nextLine();
+							
+							String[] wordSplitter = word.split(" ");
+							int wordCount = wordSplitter.length;
+							
+							System.out.println("The total number of words is "+wordCount);
+							
+							// THIS PART IS USED TO COUNT THE SPACES
+							int i = 0;
+							int totalSpaces = 0;
+							while (i < word.length()) {
+								if (word.charAt(i) == ' ') {
+									totalSpaces = totalSpaces + 1;
+								}
+								i++;
+							}
+							System.out.println("The total number is of spaces is "+totalSpaces);
+							
+							System.out.println();
+							System.out.print("Do you want to enter another word (Yes/No): ");
+							tryAgainTheChosenNum = scanner.nextLine();
+						} while (tryAgainTheChosenNum.equalsIgnoreCase("Yes"));
+					} 
+					
+					else if (chosenNum == 2) {
+						do {
+		
+							System.out.print("Enter here your first word: ");
+							String wordOne = scanner.nextLine();
+							
+							System.out.print("Enter here your second word: ");
+							String wordTwo = scanner.nextLine();
+							
+							System.out.print("Enter here the letter you want to find: ");
+							String letterFinder = scanner.next();
+							
+							
+							int oneIndexFirst = wordOne.indexOf(letterFinder);
+							int oneIndexLast = wordOne.lastIndexOf(letterFinder);
+							
+							int twoIndexFirst = wordTwo.indexOf(letterFinder);
+							int twoIndexLast = wordTwo.lastIndexOf(letterFinder);
+					
+							
+							if ((oneIndexFirst != -1 && twoIndexFirst != -1) && oneIndexFirst == twoIndexFirst) { // Targets the First appearance of the Letter to Find
+								System.out.println("Same");
+							} else if ((oneIndexLast != -1 && twoIndexLast != -1) && oneIndexLast == twoIndexLast) { // Targets the Last Appearance of the Letter to Find
+								System.out.println("Same");
+							} else { 
+								System.out.println("Not the same");
+							}
+							
+							scanner.nextLine();
+							System.out.println();
+							System.out.print("Do you want to enter another two sets of word (Yes/No): ");
+							tryAgainTheChosenNum = scanner.nextLine();
+						} while (tryAgainTheChosenNum.equalsIgnoreCase("Yes"));
+					} 
+					
+					else if (chosenNum == 3) {
+						do {
+							
+							System.out.print("Enter here the word: ");
+							String word = scanner.nextLine();
+							
+							System.out.print(word+ " converted into numbers ");
+							int i = 0;
+							while (i < word.length()) {
+								if (word.charAt(i) == 'A' || word.charAt(i) == 'a') {
+									System.out.print(1+ " ");
+								}
+								
+								else if (word.charAt(i) == 'B' || word.charAt(i) == 'b') {
+									System.out.print(2+ " ");
+								}
+								
+								else if (word.charAt(i) == 'C' || word.charAt(i) == 'c') {
+									System.out.print(3+ " ");
+								}
+								
+								else if (word.charAt(i) == 'D' || word.charAt(i) == 'd') {
+									System.out.print(4+ " ");
+								}
+								
+								else if (word.charAt(i) == 'E' || word.charAt(i) == 'e') {
+									System.out.print(5+ " ");
+								}
+								
+								else if (word.charAt(i) == 'F' || word.charAt(i) == 'f') {
+									System.out.print(6+ " ");
+								}
+								
+								else if (word.charAt(i) == 'G' || word.charAt(i) == 'g') {
+									System.out.print(7+ " ");
+								}
+								
+								else if (word.charAt(i) == 'H' || word.charAt(i) == 'h') {
+									System.out.print(8+ " ");
+								}
+								
+								else if (word.charAt(i) == 'I' || word.charAt(i) == 'i') {
+									System.out.print(9+ " ");
+								}
+								
+								else if (word.charAt(i) == 'J' || word.charAt(i) == 'j') {
+									System.out.print(10+ " ");
+								}
+								
+								else if (word.charAt(i) == 'K' || word.charAt(i) == 'k') {
+									System.out.print(11+ " ");
+								}
+								
+								else if (word.charAt(i) == 'L' || word.charAt(i) == 'l') {
+									System.out.print(12+ " ");
+								}
+								
+								else if (word.charAt(i) == 'M' || word.charAt(i) == 'm') {
+									System.out.print(13+ " ");
+								}
+								
+								else if (word.charAt(i) == 'N' || word.charAt(i) == 'n') {
+									System.out.print(14+ " ");
+								}
+								
+								else if (word.charAt(i) == 'O' || word.charAt(i) == 'o') {
+									System.out.print(15+ " ");
+								}
+								
+								else if (word.charAt(i) == 'P' || word.charAt(i) == 'p') {
+									System.out.print(16+ " ");
+								}
+								
+								else if (word.charAt(i) == 'Q' || word.charAt(i) == 'q') {
+									System.out.print(17+ " ");
+								}
+								
+								else if (word.charAt(i) == 'R' || word.charAt(i) == 'r') {
+									System.out.print(18+ " ");
+								}
+								
+								else if (word.charAt(i) == 'S' || word.charAt(i) == 's') {
+									System.out.print(19+ " ");
+								}
+								
+								else if (word.charAt(i) == 'T' || word.charAt(i) == 't') {
+									System.out.print(20+ " ");
+								}
+								
+								else if (word.charAt(i) == 'U' || word.charAt(i) == 'u') {
+									System.out.print(21+ " ");
+								}
+								
+								else if (word.charAt(i) == 'V' || word.charAt(i) == 'v') {
+									System.out.print(22+ " ");
+								}
+								
+								else if (word.charAt(i) == 'X' || word.charAt(i) == 'x') {
+									System.out.print(23+ " ");
+								}
+								
+								else if (word.charAt(i) == 'Y' || word.charAt(i) == 'y') {
+									System.out.print(24+ " ");
+								}
+								
+								else if (word.charAt(i) == 'Z' || word.charAt(i) == 'z') {
+									System.out.print(25+ " ");
+								}
+								i++;
+							}
+							
+							System.out.println();
+							System.out.println();
+							System.out.print("Do you want to enter another word to be converted (Yes/No): ");
+							tryAgainTheChosenNum = scanner.nextLine();
+						} while (tryAgainTheChosenNum.equalsIgnoreCase("Yes"));
+					} 
+					
+					else {
+						System.out.println("INVALID INPUT!!");
+					}
+					
+					System.out.println();
+					System.out.print("Do you want to return to the String dashboard (Yes/No): ");
+					tryAgainTheWhole = scanner.nextLine();
+				} while (tryAgainTheWhole.equalsIgnoreCase("Yes"));
+					System.out.println();
+					System.out.println("Maraming Thank you sa paggamit ng aking String Manipulation Code");
+			}
+			
+			else {
+				scanner.nextLine();
+				System.out.println("INVALID!! WALANG GANON");
+			}
+			
+			
+			System.out.print("Do you want to return to the  Main dashboard (Yes/no): ");
+			choice = scanner.nextLine();
+		} while (choice.equalsIgnoreCase("Yes"));
+		
+		System.out.println("Nag-bounce kana sa lahat ng code ko, ya!");
+	}
+	
+	public static int add(int a, int b, int c) {
+		int totalAnswer = a + b + c;
+		return totalAnswer;		
+	}
+	
+	public static int sub(int a, int b) {
+		int totalAnswer = a - b;
+		return totalAnswer;
+	}
+	
+	public static int multi(int a, int b, int c) {
+		int totalAnswer = a * b * c;
+		return totalAnswer;
+	}
+	
+	public static double div(double a, double b) {
+		double totalAnswer = a / b;
+		return totalAnswer;
+	}
+	
+	public static double modulo(double a, double b) {
+		double totalAnswer = a % b;
+		return totalAnswer;
+	}
+}
