@@ -1,0 +1,14 @@
+
+// March 2 2024
+// Part of our wrriten activity for sir
+public class testingGround {
+	public static void main (String [] args) {
+		String remark = "";
+		int num = 0;
+		 do {
+			 remark = remark + num + " ";
+			 num += 3;
+		 } while (num < 10);
+		 System.out.println(remark);
+	}
+}
