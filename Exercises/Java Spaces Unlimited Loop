@@ -1,0 +1,22 @@
+import java.util.Scanner;
+
+// March 06 2024
+// CHATGPT finished the code
+
+public class testingGround {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        String inputter;
+        String[] wordsplitter;
+
+        do {
+            System.out.print("Enter your name: ");
+            inputter = scanner.nextLine();
+            wordsplitter = inputter.split(" "); 
+            System.out.println("You have " + (wordsplitter.length - 1) + " spaces."); // counts the subset of string not the actual spaces
+        } while (inputter.contains(" "));
+        
+        System.out.println("No spaces detected. Exiting loop.");
+    }
+}
