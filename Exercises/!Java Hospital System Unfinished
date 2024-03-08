@@ -1,11 +1,11 @@
 import java.util.Scanner;
 import java.util.Random; // used for outpatient care, wherein patients don't have a choice which room they prefer
 
-public class testingGround {
+public class Hospital {
 	
 	static Scanner scanner = new Scanner (System.in);
 	static Random random = new Random ();
-	static testingGround hospital = new testingGround ();
+	static Hospital hospital = new Hospital ();
 	
 	private String patientName; // Encapsulation; to get the patient name
 
@@ -33,7 +33,7 @@ public class testingGround {
 		int iAppointmentChoiceKind = 0; // used to select what kind of appointment they want to make
 		String yourName = "";
 		do {
-			System.out.println("HOSPITAL");	
+			System.out.println("YOU ENTERED THE HOSPITAL");	
 		    System.out.println();
 		  do { // ensures that the loop will iterate as long as the user doesn't input the write format	
 		    System.out.print("Can you enter your name here: "); 
@@ -56,13 +56,10 @@ public class testingGround {
 		scanner.nextLine();
 		
 		if (iAppointmentChoiceKind == 1) {
-			System.out.println("You are within Inpatient Care"); // remove this
 			InpatientCare();
 		} else if (iAppointmentChoiceKind == 2) {
-			System.out.println("You are within Outapetient Care"); // remove this
 			OutpatientCare();
 		} else if (iAppointmentChoiceKind == 3) {
-			System.out.println("You are within Emergency Care"); // remove this
 			EmergencyCare();
 		} else {
 			System.out.println("Invalid Input");
@@ -72,6 +69,8 @@ public class testingGround {
 		System.out.print("Do you want to make another appointment (Yes/No): ");
 		sAppointmentChoiceAgain = scanner.nextLine();
 		} while (sAppointmentChoiceAgain.equalsIgnoreCase("Yes"));
+		System.out.println();
+		System.out.println("YOU HAVE EXIT THE HOSPITAL");
 	}
 	
 	
@@ -99,7 +98,7 @@ public class testingGround {
 			System.out.print("Enter here the number: ");
 			iInpattientCareIllness = scanner.nextInt();
 			
-			System.out.print("How long do you intend to stay: ");
+			System.out.print("How long do you intend to stay (day): ");
 			iStayDuration = scanner.nextInt();
 			scanner.nextLine();
 			System.out.println();
@@ -114,7 +113,7 @@ public class testingGround {
 				System.out.println("Room Number: 1101"); // interchangeable
 				System.out.println("Length of Stay: "+ iStayDuration+ " days");
 				iTotalBill = iCostPerHours * (24 * iStayDuration);
-				System.out.println("Total bill ₱: "+iTotalBill);
+				System.out.println("Total bills ₱: "+iTotalBill);
 			} else if (iInpattientCareIllness == 2) {
 				hospital.displayPattientName();
 				System.out.println("Appointment: Joint Replacement");
@@ -125,7 +124,7 @@ public class testingGround {
 				System.out.println("Room Number: 1102"); // interchangeable
 				System.out.println("Length of Stay: "+ iStayDuration+ " days");
 				iTotalBill = iCostPerHours * (24 * iStayDuration);
-				System.out.println("Total bill : ₱"+iTotalBill);
+				System.out.println("Total bills : ₱"+iTotalBill);
 			} else if (iInpattientCareIllness == 3) {
 				hospital.displayPattientName();
 				System.out.println("Appointment: Flu");
@@ -137,10 +136,10 @@ public class testingGround {
 				System.out.println("Room Number: 1103"); // interchangeable
 				System.out.println("Length of Stay: "+ iStayDuration+ " days");
 				iTotalBill = iCostPerHours * (24 * iStayDuration);
-				System.out.println("Total bill : ₱"+iTotalBill);
+				System.out.println("Total bills : ₱"+iTotalBill);
 			} else if (iInpattientCareIllness == 4) {
 				hospital.displayPattientName();
-				System.out.println("Appointment: Flu");
+				System.out.println("Appointment: Childbirth");
 				sDoctorName = "Dr. Alexander Whitmore"; // interchangeable
 				System.out.println("Doctor name: "+sDoctorName);
 				System.out.println("Schedule: ");
@@ -149,10 +148,10 @@ public class testingGround {
 				System.out.println("Room Number: 1104"); // interchangeable
 				System.out.println("Length of Stay: "+ iStayDuration+ " days");
 				iTotalBill = iCostPerHours * (24 * iStayDuration);
-				System.out.println("Total bill : ₱"+iTotalBill);
+				System.out.println("Total bills : ₱"+iTotalBill);
 			} else if (iInpattientCareIllness == 5) {
 				hospital.displayPattientName();
-				System.out.println("Appointment: Flu");
+				System.out.println("Appointment: Surgical Operation");
 				sDoctorName = "Dr. Evelyn Chang"; // interchangeable
 				System.out.println("Doctor name: "+sDoctorName);
 				System.out.println("Schedule: ");
@@ -161,7 +160,7 @@ public class testingGround {
 				System.out.println("Room Number: 1105"); // interchangeable
 				System.out.println("Length of Stay: "+ iStayDuration+ " days");
 				iTotalBill = iCostPerHours * (24 * iStayDuration);
-				System.out.println("Total bill : ₱"+iTotalBill);
+				System.out.println("Total bills : ₱"+iTotalBill);
 			} else if (iInpattientCareIllness == 6) {
 				System.out.print("State the specific illness: ");
 				String sOtherIllness = scanner.nextLine();
@@ -176,7 +175,7 @@ public class testingGround {
 				System.out.println("Room Number: 1106"); // interchangeable
 				System.out.println("Length of Stay: "+ iStayDuration+ " days");
 				iTotalBill = iCostPerHours * (24 * iStayDuration);
-				System.out.println("Total bill : ₱"+iTotalBill);
+				System.out.println("Total bills : ₱"+iTotalBill);
 			} else {
 				System.out.println("Invalid Input");
 			}
@@ -190,8 +189,10 @@ public class testingGround {
 		final int iCostPerSession = 500; // used to compute the cost per session
 		String sOutpatientCareAgain = "";
 		int iOutpattientCareIllness = 0; // used to select which diseases they want to be diagnosed with
+		String sOtherDiseases = ""; // will be used if they select number 6
 		int iRandomNumberReceiver = 0; // will receive the random numeric value
 		String sDoctorName = ""; // used to receive the doctors name
+		
 		do {
 			System.out.println();
 			System.out.println("For what condition are you seeking outpatient care?"); // CHANGE THIS
@@ -239,7 +240,157 @@ public class testingGround {
 					System.out.println("Designated Room: 2103");
 					System.out.println("Total payment: ₱"+iCostPerSession);
 				}
-			} // else if diarreha
+			} else if (iOutpattientCareIllness == 2) {
+				iRandomNumberReceiver = random.nextInt(3)+1;
+				if (iRandomNumberReceiver == 1) {
+					hospital.displayPattientName();
+					System.out.println("Appointment: Diarrhea");
+					sDoctorName = "Dr. Kim Rea";
+					System.out.println("Doctor Name: "+sDoctorName);
+					System.out.println("Schedule: ");
+					System.out.println("Date: January 26 2029"); // interchangeable
+					System.out.println("Time: 12:30pm - 4:00pm"); // interchangeable
+					System.out.println("Designated Room: 2104");
+					System.out.println("Total payment: ₱"+iCostPerSession);
+				} else if (iRandomNumberReceiver == 2) {
+					hospital.displayPattientName();
+					System.out.println("Appointment: Diarrhea");
+					sDoctorName = "Dr. Kim Rea Jr.";
+					System.out.println("Doctor Name: "+sDoctorName);
+					System.out.println("Schedule: ");
+					System.out.println("Date: January 27 2037"); // interchangeable
+					System.out.println("Time: 1:00pm - 5:00pm"); // interchangeable
+					System.out.println("Designated Room: 2105");
+					System.out.println("Total payment: ₱"+iCostPerSession);
+				} else if (iRandomNumberReceiver == 3) {
+					hospital.displayPattientName();
+					System.out.println("Appointment: Diarrhea");
+					sDoctorName = "Dr. Kim Rea II";
+					System.out.println("Doctor Name: "+sDoctorName);
+					System.out.println("Schedule: ");
+					System.out.println("Date: January 28 2032"); // interchangeable
+					System.out.println("Time: 2:00pm - 6:00pm"); // interchangeable
+					System.out.println("Designated Room: 2106");
+					System.out.println("Total payment: ₱"+iCostPerSession);
+				}
+			} else if (iOutpattientCareIllness == 3) {
+				iRandomNumberReceiver = random.nextInt(3)+1;
+				if (iRandomNumberReceiver == 1) {
+					hospital.displayPattientName();
+					System.out.println("Appointment: Chicken Fox");
+					sDoctorName = "Dr. Jake Foxy";
+					System.out.println("Doctor Name: "+sDoctorName);
+					System.out.println("Schedule: ");
+					System.out.println("Date: February 26 2029"); // interchangeable
+					System.out.println("Time: 12:30pm - 4:00pm"); // interchangeable
+					System.out.println("Designated Room: 2107");
+					System.out.println("Total payment: ₱"+iCostPerSession);
+				} else if (iRandomNumberReceiver == 2) {
+					hospital.displayPattientName();
+					System.out.println("Appointment: Chicken Fox");
+					sDoctorName = "Dr. Jake Foxy Jr.";
+					System.out.println("Doctor Name: "+sDoctorName);
+					System.out.println("Schedule: ");
+					System.out.println("Date: February 27 2037"); // interchangeable
+					System.out.println("Time: 1:00pm - 5:00pm"); // interchangeable
+					System.out.println("Designated Room: 2108");
+					System.out.println("Total payment: ₱"+iCostPerSession);
+				} else if (iRandomNumberReceiver == 3) {
+					hospital.displayPattientName();
+					System.out.println("Appointment: Chicken Fox");
+					sDoctorName = "Dr. Jake Foxy II";
+					System.out.println("Doctor Name: "+sDoctorName);
+					System.out.println("Schedule: ");
+					System.out.println("Date: February 28 2032"); // interchangeable
+					System.out.println("Time: 2:00pm - 6:00pm"); // interchangeable
+					System.out.println("Designated Room: 2109");
+					System.out.println("Total payment: ₱"+iCostPerSession);
+				}
+			} else if (iOutpattientCareIllness == 4) {
+				iRandomNumberReceiver = random.nextInt(3)+1;
+				
+				if (iRandomNumberReceiver == 1) {
+					hospital.displayPattientName();
+					System.out.println("Appointment: Common Cold");
+					sDoctorName = "Dr. Leroy Cold";
+					System.out.println("Doctor Name: "+sDoctorName);
+					System.out.println("Schedule: ");
+					System.out.println("Date: June 26 2029"); // interchangeable
+					System.out.println("Time: 12:30pm - 4:00pm"); // interchangeable
+					System.out.println("Designated Room: 2110");
+					System.out.println("Total payment: ₱"+iCostPerSession);
+				} else if (iRandomNumberReceiver == 2) {
+					hospital.displayPattientName();
+					System.out.println("Appointment: Common Cold");
+					sDoctorName = "Dr. Leroy Cold Jr.";
+					System.out.println("Doctor Name: "+sDoctorName);
+					System.out.println("Schedule: ");
+					System.out.println("Date: June 30 2037"); // interchangeable
+					System.out.println("Time: 1:00pm - 5:00pm"); // interchangeable
+					System.out.println("Designated Room: 2111");
+					System.out.println("Total payment: ₱"+iCostPerSession);
+				} else if (iRandomNumberReceiver == 3) {
+					hospital.displayPattientName();
+					System.out.println("Appointment: Common Cold");
+					sDoctorName = "Dr. Leroy Cold II";
+					System.out.println("Doctor Name: "+sDoctorName);
+					System.out.println("Schedule: ");
+					System.out.println("Date: June 28 2032"); // interchangeable
+					System.out.println("Time: 2:00pm - 6:00pm"); // interchangeable
+					System.out.println("Designated Room: 2112");
+					System.out.println("Total payment: ₱"+iCostPerSession);
+				}
+			} else if (iOutpattientCareIllness == 5) {
+				iRandomNumberReceiver = random.nextInt(3)+1;
+				
+				if (iRandomNumberReceiver == 1) {
+					hospital.displayPattientName();
+					System.out.println("Appointment: Asthma");
+					sDoctorName = "Dr. Ash";
+					System.out.println("Doctor Name: "+sDoctorName);
+					System.out.println("Schedule: ");
+					System.out.println("Date: May 26 2029"); // interchangeable
+					System.out.println("Time: 12:30pm - 4:00pm"); // interchangeable
+					System.out.println("Designated Room: 2113");
+					System.out.println("Total payment: ₱"+iCostPerSession);
+				} else if (iRandomNumberReceiver == 2) {
+					hospital.displayPattientName();
+					System.out.println("Appointment: Asthma");
+					sDoctorName = "Dr. LAsh Jr.";
+					System.out.println("Doctor Name: "+sDoctorName);
+					System.out.println("Schedule: ");
+					System.out.println("Date: May 30 2037"); // interchangeable
+					System.out.println("Time: 1:00pm - 5:00pm"); // interchangeable
+					System.out.println("Designated Room: 2114");
+					System.out.println("Total payment: ₱"+iCostPerSession);
+				} else if (iRandomNumberReceiver == 3) {
+					hospital.displayPattientName();
+					System.out.println("Appointment: Asthma");
+					sDoctorName = "Dr. Ash II";
+					System.out.println("Doctor Name: "+sDoctorName);
+					System.out.println("Schedule: ");
+					System.out.println("Date: May 28 2032"); // interchangeable
+					System.out.println("Time: 2:00pm - 6:00pm"); // interchangeable
+					System.out.println("Designated Room: 2115");
+					System.out.println("Total payment: ₱"+iCostPerSession);
+				}
+			} else if (iOutpattientCareIllness == 6) {
+				System.out.print("Specify here the disease: ");
+				sOtherDiseases = scanner.nextLine();
+				
+				hospital.displayPattientName();
+				System.out.println("Appointment: "+sOtherDiseases);
+				sDoctorName = "Dr. All Mighty Rounder";
+				System.out.println("Doctor Name: "+sDoctorName);
+				System.out.println("Schedule: ");
+				System.out.println("Date: May 1 2032"); // interchangeable
+				System.out.println("Time: 2:00pm - 6:00pm"); // interchangeable
+				System.out.println("Designated Room: 2116");
+				System.out.println("Total payment: ₱"+iCostPerSession);
+				
+			} else {
+				System.out.println("Invalid Input!");
+			}
 			
 			System.out.print("Do you still seek outpatient care (Yes/No): ");
 			sOutpatientCareAgain = scanner.nextLine();
@@ -247,10 +398,33 @@ public class testingGround {
 	}
 	
 	static void EmergencyCare () {
+		final int iCostPerHours = 100;
 		String sEmergencyCareAgain = "";
+		String sEmergenyCareCause = ""; //holds the value as to what kind of disease the patient specify
+		String sDoctorName = "";
+		int iStayDuration = 0; // used to let the patient select how long they intend to stay
+		int iTotalBill = 0; // move this after the loop or inside every conditional statements
+		
+		
 		do {
-			System.out.println("You are within the loop of Emergency Care");
-			System.out.print("Do you want to go again: ");
+			System.out.println();
+			System.out.print("Please specify the medical condition requiring immediate attention: ");
+			sEmergenyCareCause = scanner.nextLine();
+			
+			System.out.print("How long do you intend to stay (day): ");
+			iStayDuration = scanner.nextInt();
+			scanner.nextLine();
+			System.out.println();
+			
+			hospital.displayPattientName();
+			System.out.println("Emergency Appointment: "+sEmergenyCareCause);
+			sDoctorName = "Dr. Gregory";
+			System.out.println("Doctor Name: "+sDoctorName);
+			System.out.println("Designated Room: ER-1000");
+			iTotalBill = iCostPerHours * (24 * iStayDuration);
+			System.out.println("Total payment: ₱"+iTotalBill);
+			
+			System.out.print("Do you still seek emergency care: ");
 			sEmergencyCareAgain = scanner.nextLine();
 		} while (sEmergencyCareAgain.equalsIgnoreCase("Yes"));
 	}
