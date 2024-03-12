@@ -1,3 +1,5 @@
+// GROUP 4
+
 import java.util.Scanner;
 import java.util.Random; // used for outpatient care, wherein patients don't have a choice which room they prefer
 
@@ -38,11 +40,24 @@ public class Hospital {
 		  do { // ensures that the loop will iterate as long as the user doesn't input the write format	
 		    System.out.print("Can you enter your name here: "); 
 		    yourName = scanner.nextLine();
+		    
+		    while (yourName.isEmpty()) {
+		    	System.out.print("Can you enter your name here: "); 
+			    yourName = scanner.nextLine();
+		    }
+		    
 		    while (containingDigits(yourName)) {
 		    	System.out.println();
 		    	System.out.println("No Numeric Value");
 		    	System.out.print("Can you enter your name here again: "); 
 		    	yourName = scanner.nextLine();
+		    	
+		    	 while (yourName.isEmpty()) {
+		    		 	System.out.println();
+		    		    System.out.println("No input");
+				    	System.out.print("Can you enter your name here: "); 
+					    yourName = scanner.nextLine();
+				    }
 		    }
 		  } while ((containingDigits(yourName)));
 		hospital.setterPatientName(yourName); // ensures that the inputed name here will go to the setterPatient function / method above
