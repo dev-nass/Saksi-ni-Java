@@ -1,0 +1,22 @@
+import java.util.Scanner;
+// March 13 2024
+public class Main {
+	
+	public static void main (String [] args) {
+		
+		Scanner scanner = new Scanner (System.in);
+		
+		System.out.print("Enter here a number: ");
+		int iNum = scanner.nextInt();
+		
+		if (iNum % 5 == 0 && iNum % 2 == 0) {
+			System.out.println("HiFiveEven");
+		} else if (iNum % 5 == 0) {
+			System.out.println("HiFive");
+		} else if (iNum % 2 == 0) {
+			System.out.println("HiEven");
+		} else {
+			System.out.println("Okay lang naman!");
+		}
+	}
+}
