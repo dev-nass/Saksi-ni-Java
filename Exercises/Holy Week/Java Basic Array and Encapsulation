@@ -1,0 +1,53 @@
+import java.util.Scanner;
+// March 21 2024
+
+// Encapsulation with Array
+// Main goal - supposedly learn how to return array type in methods - but didn't achieve 
+// Don't know how to make the index of an array starts with 1
+// ChatGPT has answers
+
+
+public class Main {
+	
+	static Scanner scanner = new Scanner (System.in);
+	
+	public static String [] sSeriesOfName = {"Jonas", "Vince", "Macawile"}; 
+	
+	private int iNameChoice = 0;
+	
+	public void nameChoiceSetter(int nameChoice) {
+		iNameChoice = nameChoice;
+	}
+	
+	public void displayNameChoice() {
+		int index = 0;
+		
+		if (iNameChoice == 0) {
+			System.out.println(sSeriesOfName[0]);
+			System.out.println("The name "+sSeriesOfName[0]+ " has the index of " +index);
+		}
+		
+		if (iNameChoice == 1) {
+			index = index + 1;
+			System.out.println(sSeriesOfName[1]);
+			System.out.println("The name "+sSeriesOfName[1]+ " has the index of " +index);
+		}
+		
+		if (iNameChoice == 2) {
+			index = index + 2;
+			System.out.println(sSeriesOfName[2]);
+			System.out.println("The name "+sSeriesOfName[2]+ " has the index of " +index);
+		}
+ 	}
+	
+	public static void main (String [] args) {
+		Main main = new Main ();
+		
+		System.out.print("Enter a random number here: ");
+		int iNameChoiceMain = scanner.nextInt();
+		
+		main.nameChoiceSetter(iNameChoiceMain);
+		main.displayNameChoice();
+	}
+	
+}
