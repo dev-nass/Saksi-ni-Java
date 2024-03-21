@@ -1,0 +1,81 @@
+import java.util.Scanner;
+// March 21 2024 
+
+// ENUMERATE (ENUM) 
+// OOP - ENCAPSULATION
+// CREATING OBJECT
+// Conditional Statements and Sequential Programming
+
+public class Main {
+	
+	static Scanner scanner = new Scanner (System.in);
+	
+	enum Day { // enum short for enumerate - enumerate / declare series of constant values
+		Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday;
+	}
+	
+	public Day getFavoriteDay1() {
+        return Day.Sunday; // Return an enum constant
+    }
+	
+	public Day getFavoriteDay2() {
+        return Day.Monday; // Return an enum constant
+    }
+	
+	public Day getFavoriteDay3() {
+        return Day.Tuesday; // Return an enum constant
+    }
+
+	public Day getFavoriteDay4() {
+        return Day.Wednesday; // Return an enum constant
+    }
+
+	public Day getFavoriteDay5() {
+        return Day.Thursday; // Return an enum constant
+    }
+
+	public Day getFavoriteDay6() {
+        return Day.Friday; // Return an enum constant
+    }
+
+	public Day getFavoriteDay7() {
+        return Day.Saturday; // Return an enum constant
+    }
+	
+	// encapsulation
+	private String sFavouriteDay = "";
+	
+	public void setterDay(String sFavouriteDayChoice) {
+		sFavouriteDay = sFavouriteDayChoice;
+	}
+	
+	public void displayDay() {
+		if (sFavouriteDay.equalsIgnoreCase("Sunday")) {
+			System.out.println("Your favourite day of the week is "+getFavoriteDay1());
+ 		} else if (sFavouriteDay.equalsIgnoreCase("Monday")) {
+			System.out.println("Your favourite day of the week is "+getFavoriteDay2());
+		} else if (sFavouriteDay.equalsIgnoreCase("Tuesday")) {
+			System.out.println("Your favourite day of the week is "+getFavoriteDay3());
+		} else if (sFavouriteDay.equalsIgnoreCase("Wednesday")) {
+			System.out.println("Your favourite day of the week is "+getFavoriteDay4());
+		} else if (sFavouriteDay.equalsIgnoreCase("Thursday")) {
+			System.out.println("Your favourite day of the week is "+getFavoriteDay5());
+		} else if (sFavouriteDay.equalsIgnoreCase("Friday")) {
+			System.out.println("Your favourite day of the week is "+getFavoriteDay6());
+		} else if (sFavouriteDay.equalsIgnoreCase("Saturday")) {
+			System.out.println("Your favourite day of the week is "+getFavoriteDay7());
+		} else {
+			System.out.println("Wala naman atang ganon idol!!");
+		}
+	}
+	
+	public static void main (String [] args) {
+		Main main = new Main(); // creates an object
+		
+		System.out.print("Enter the name of your favourite day of the week: ");
+		String sChoiceDay = scanner.nextLine();
+		main.setterDay(sChoiceDay);
+		main.displayDay();
+	}
+	
+}
