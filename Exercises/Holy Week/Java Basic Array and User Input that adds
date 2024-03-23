@@ -1,0 +1,32 @@
+import java.util.Scanner;
+// March 23
+
+// Array
+public class Main {
+	
+	public static void main (String [] args) {
+		Scanner scanner = new Scanner (System.in);
+		int[] iUserArray = new int[3];
+		
+		int iLoopIndicator = 0;
+		
+		// THIS LOOP ASK THE USER MULTIPLE TIMES
+		for(int i = 0; i < iUserArray.length; i++) { 
+			System.out.print("Enter the " +(i+1)+ " #element: ");
+			iUserArray[i] = scanner.nextInt();
+		}
+		
+		System.out.println();
+		
+		// THIS LOOP PRINTS ALL THE INPUTTED VALUED BY THE USER
+		// In a foreeach loop, for each iteration all values of the array
+		// is passed to 'int a' therefore, the correct way of using this as stated below not -
+		// sum += iUserArray[a]
+		int sum = 0;
+		for (int a : iUserArray) {
+		    sum += a; // Adding the value of each element directly
+		}
+		
+		System.out.println("The sum of everything is "+sum);
+	}
+}
