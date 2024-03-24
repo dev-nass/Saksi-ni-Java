@@ -1,0 +1,37 @@
+// MARCH 24
+
+// MAIN CLASS
+// creation of object
+// execution
+public class Main {
+	
+	public static void main (String [] args) {
+		Coffee coffee1 = new Coffee("Kopiko"); // used to pass the argument in the constructor at Coffee
+		Coffee coffee2 = new Coffee("Nescafe White"); // used to pass the argument in the constructor at Coffee
+		Human human = new Human(); // used to use the drinkingmethod that's in the HUMAN class
+		
+		human.drinkingMethod(coffee1);
+		human.drinkingMethod(coffee2);
+	}
+}
+
+//HUMAN CLASS
+//contains the method
+public class Human {
+	void drinkingMethod(Coffee coffee) {
+		System.out.println("You are drinking " +coffee.sGlobalCoffeeName);
+	}
+}
+
+//COFFEE class
+//contains the attributes and constructor
+public class Coffee {
+	
+	String sGlobalCoffeeName;
+	
+	Coffee(String coffee) {
+		this.sGlobalCoffeeName = coffee;
+	}
+}
+
+
