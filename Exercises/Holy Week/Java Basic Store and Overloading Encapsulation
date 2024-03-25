@@ -1,0 +1,56 @@
+import java.util.Scanner;
+// MARCH 25
+
+// RECREATION OF RON'S STI Encapsulation which was sent in FEB 20
+public class Main {
+	
+	static Scanner scanner = new Scanner(System.in);
+	static Main main = new Main();
+	
+	private String sPrivateItemName = "";
+	private double dPrivateItemPrice = 0;
+	private int iPrivateItemQuantity = 0;
+	private double iPrivateItemDue = 0;
+	
+	public void setItemName (String settedItemName) {
+		sPrivateItemName = settedItemName;
+	}
+	
+	public void setItemPriceQuantity(double settedItemPrice, int settedItemQuantity) {
+		dPrivateItemPrice = settedItemPrice;
+		iPrivateItemQuantity = settedItemQuantity;
+	}
+	
+	public void setItemDue(double totalCost) {
+		iPrivateItemDue = totalCost;
+	}
+	
+	public void inputReader() {
+		System.out.print("Enter here the name: ");
+		String readName = scanner.nextLine();
+		
+		System.out.print("Enter here the quantity and price (seperated by space): ");
+		int readQuantity = scanner.nextInt();
+		double readPrice = scanner.nextDouble();
+		
+		main.setItemName(readName);
+		main.setItemPriceQuantity(readPrice, readQuantity);
+	}
+	
+	public void calculationEnjoyer() {
+		iPrivateItemDue = dPrivateItemPrice * iPrivateItemQuantity;
+	}
+	
+	public void outputEnjoyer() {
+		System.out.println("The item you purchased is: "+sPrivateItemName);
+		System.out.println("The item price is: "+dPrivateItemPrice);
+		System.out.println("The item quantity is: "+iPrivateItemQuantity);
+		System.out.println("The amount is: "+iPrivateItemDue);
+	}
+	
+	public static void main (String[] args) {
+		main.inputReader();
+		main.calculationEnjoyer();
+		main.outputEnjoyer();
+	}
+}
