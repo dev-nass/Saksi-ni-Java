@@ -1,0 +1,42 @@
+import java.util.Scanner;
+// MARCH 25
+// Constructor that accepts user's input.
+
+// MAIN CLASS
+public class Main {
+	
+	static Scanner scanner = new Scanner(System.in);
+	
+	public static void main (String [] args) {
+		System.out.print("Enter here your name: ");
+		String sMainName = scanner.nextLine();
+		
+		System.out.print("Emter here your age: ");
+		int iMainAge = scanner.nextInt();
+		
+		Human human1 = new Human(sMainName, iMainAge);
+		
+		human1.nameDisplayer();
+		human1.ageDisplayer();
+	}
+}
+
+// HUMAN CLASS
+public class Human {
+	
+	String sGlobalName;
+	int iGlobalAge;
+	
+	Human(String name, int age) {
+		this.sGlobalName = name;
+		this.iGlobalAge = age;
+	}
+	
+	void nameDisplayer() {
+		System.out.println("The name of the person is "+this.sGlobalName);
+	}
+	
+	void ageDisplayer() {
+		System.out.println("The age of the person is "+this.iGlobalAge);
+	}
+}
