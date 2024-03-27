@@ -1,0 +1,64 @@
+import java.util.Scanner;
+// MARCH 27
+
+// String Manipulation that can handle
+// Digit Detector (/)
+// No Value Detector (/)
+// Case Sensitivity in the letter being find 
+
+public class testingGround {
+	
+	static Scanner scanner = new Scanner(System.in);
+	
+	static boolean digitChecker (String sDigitChecker) {
+		for (char a : sDigitChecker.toCharArray()) {
+			if (Character.isDigit(a)) {
+				return true;
+				}	
+			}	
+		return false;
+	}
+	
+	static void digitCheckerLoop (String sDigitChecker1, String sDigitChecker2) {
+		
+		while (digitChecker(sDigitChecker1) || digitChecker(sDigitChecker2) != false) {
+			System.out.println();
+			System.out.println("YOU HAVE ENTERED A NUMERIC VALUE");
+			System.out.println();
+			System.out.print("Enter a word here: ");
+			sDigitChecker1 = scanner.nextLine();
+			
+			System.out.print("Enter the second word here: ");
+			sDigitChecker2 = scanner.nextLine();
+		}
+	}
+	
+	
+	static boolean emptyCheckerLoop (String sEmptyChekcer1, String sEmptyChekcer2) {
+		while (sEmptyChekcer1.isBlank() || sEmptyChekcer2.isBlank() != false) {
+			System.out.println();
+			System.out.println("YOU HAVE FAILED TO ENTER A VALUE");
+			System.out.println();
+			
+			System.out.print("Enter a word again: ");
+			sEmptyChekcer1 = scanner.nextLine();
+			
+			System.out.print("Enter the second word again: ");
+			sEmptyChekcer2 = scanner.nextLine();
+		}
+		return false;
+	}
+	
+	public static void main(String[] args) {
+		System.out.print("Enter a word here: ");
+		String sFirstWord = scanner.nextLine();
+		
+		System.out.print("Enter the second word here: ");
+		String sSecondWord = scanner.nextLine();
+		
+		while (digitChecker(sFirstWord) || digitChecker(sSecondWord) != false) {
+			digitCheckerLoop (sFirstWord, sSecondWord);
+			emptyCheckerLoop (sFirstWord, sSecondWord);
+		}
+	}
+}
