@@ -1,0 +1,93 @@
+import java.util.Scanner;
+
+// MARCH 27 and 28 
+// NEED FOR IMPROVEMENT: THE LETTER TO BE FIND CAN BE STORED WITH NUMERIC OR NULL
+// or can leave as that since the code has if and else so it will only show "NEITHER OF TWO WORDS CONTAINS __"
+
+// FEATURES (INPUT VALIDATION):
+// Digit Value Detector (/)
+// NULL Detector (/)
+// Case Sensitivity (/)
+
+// LOGIC: 
+// Methods digitCheckerLoop and emptyChecker will ceaselessly call upon each other and will check the based values to their attributes (variable)
+// Moreover, this happens because both methods are well structured and are called in the main method. 	
+// The caseSensitiveChecker method is pretty self explanatory, did that with the aid of chapGPT
+// so basically I learned that when use variable.toUpperCase() you to either:
+// variableSame = variableSame.toUpperCase(); or String sNewVariable = variableSame.toUpperCase();
+//        assign it directly to it self    --   create a new variable that will hold the upper cased value
+public class Main {
+	
+	static Scanner scanner = new Scanner(System.in);
+	
+	static boolean digitChecker(String methodDigitChecker) {
+		for (char a : methodDigitChecker.toCharArray()) {
+			if (Character.isDigit(a)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	static void digitCheckerLoop (String digitLoopStringVar1, String digitLoopStringVar2) {
+		while (digitChecker(digitLoopStringVar1) || digitChecker(digitLoopStringVar2) != false) {
+			System.out.println("NUMERIC VALUE DETECTED");
+			System.out.print("Enter the first word again: ");
+			digitLoopStringVar1 = scanner.nextLine();
+			System.out.print("Enter the second word again: ");
+			digitLoopStringVar2 = scanner.nextLine();
+			emptyChecker(digitLoopStringVar1, digitLoopStringVar2); // ensure that the attributes in this method actually takes input and is not empty
+		}
+	}
+	
+	static void emptyChecker (String methodEmptyCheckerVar1, String methodEmptyCheckerVar2) {
+		while (methodEmptyCheckerVar1.isEmpty() || methodEmptyCheckerVar2.isEmpty()) {
+			System.out.println("NO VALUE DETECTED");
+			System.out.print("Enter the first word again: ");
+			methodEmptyCheckerVar1 = scanner.nextLine();
+			System.out.print("Enter the second word again: ");
+			methodEmptyCheckerVar2 = scanner.nextLine();
+			digitCheckerLoop(methodEmptyCheckerVar1, methodEmptyCheckerVar2); // ensures that the attributes in this method do not contain any numeric value
+		}
+	}
+	
+	static void caseSensitiveChecker (String caseSensitiveCheckerVar1, String caseSensitiveCheckerVar2, String caseSensitiveCheckerVar3) {
+		String UppercaseSensitiveCheckerVar1 = caseSensitiveCheckerVar1.toUpperCase();
+		String UppercaseSensitiveCheckerVar2 = caseSensitiveCheckerVar2.toUpperCase();
+		
+		int indexOfVar1 = UppercaseSensitiveCheckerVar1.indexOf(caseSensitiveCheckerVar3);
+		int indexOfVar2 = UppercaseSensitiveCheckerVar2.indexOf(caseSensitiveCheckerVar3);
+		
+		if (UppercaseSensitiveCheckerVar1.contains(caseSensitiveCheckerVar3.toUpperCase()) && UppercaseSensitiveCheckerVar2.contains(caseSensitiveCheckerVar3.toUpperCase())) {
+		    System.out.println("BOTH WORDS CONTAIN " + caseSensitiveCheckerVar3);
+		    System.out.println("The letter " + caseSensitiveCheckerVar3 + " is at the index of " + (indexOfVar1 + 1) + " in the word " + caseSensitiveCheckerVar1);
+		    System.out.println("The letter " + caseSensitiveCheckerVar3 + " is at the index of " + (indexOfVar2 + 1) + " in the word " + caseSensitiveCheckerVar2);
+		} else if (UppercaseSensitiveCheckerVar1.contains(caseSensitiveCheckerVar3.toUpperCase())) {
+		    System.out.println("ONLY THE FIRST WORD CONTAINS IT");
+		    System.out.println("The letter " + caseSensitiveCheckerVar3 + " is at the index of " + (indexOfVar1 + 1) + " in the word " + caseSensitiveCheckerVar1);
+		} else if (UppercaseSensitiveCheckerVar2.contains(caseSensitiveCheckerVar3.toUpperCase())) {
+		    System.out.println("ONLY THE SECOND WORD CONTAINS IT");
+		    System.out.println("The letter " + caseSensitiveCheckerVar3 + " is at the index of " + (indexOfVar2 + 1) + " in the word " + caseSensitiveCheckerVar2);
+		} else {
+		    System.out.println("NEITHER OF THE TWO WORDS CONTAINS " + caseSensitiveCheckerVar3);
+		}
+	}
+	
+	public static void main (String[] args) {
+		System.out.print("Enter the first word: ");
+		String sFirstWord = scanner.nextLine();
+		
+		System.out.print("Enter the second word: ");
+		String sSecondWord = scanner.nextLine();
+		
+		digitCheckerLoop(sFirstWord, sSecondWord);
+		emptyChecker(sFirstWord, sSecondWord);
+		
+		System.out.print("Enter here the word you want to find: ");
+		String sWordToFind = scanner.nextLine();
+	
+		caseSensitiveChecker (sFirstWord, sSecondWord, sWordToFind);
+		
+	}
+	
+}
