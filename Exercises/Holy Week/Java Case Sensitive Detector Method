@@ -1,0 +1,38 @@
+import java.util.Scanner;
+// MARCH 31, 2024 
+
+// Capital Detector Method Code
+// NEEDS FOR IMRPOVEMENT:
+// Include which letter is the caps and in lower case
+// Add a loop that whenever the user input a caps value it will loop again
+
+public class Main {
+	
+	static Scanner scanner = new Scanner(System.in);
+	
+	static void capsDetector (String capsDetectorVar) {
+		boolean bCapsDetecBool = false;
+		
+		for (char a : capsDetectorVar.toCharArray()) {
+			if (Character.isUpperCase(a)) {
+				 bCapsDetecBool = true;
+				 break;
+			} else {
+				 bCapsDetecBool = false;
+			}
+		}
+
+		if (bCapsDetecBool == true) {
+			System.out.println("You have capital letter");
+		} else {
+			System.out.println("You no capital letter");
+		}
+	}
+	
+	public static void main(String[] args) {
+		System.out.print("Enter here your name: ");
+		String sName = scanner.nextLine();
+		
+		capsDetector(sName);
+	}
+}
