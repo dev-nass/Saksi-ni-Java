@@ -1,0 +1,39 @@
+import java.util.Scanner;
+// GROUP 4 April 03, 2024
+
+// Array and Already Exist Number
+public class testingGround {
+	
+	static Scanner scanner = new Scanner(System.in);
+	
+	public static void main (String[] args) {
+		int [] iOriginalArray = new int [10];
+		int iOriginalArrayLength = iOriginalArray.length;
+		
+		for (int i = 0; i < iOriginalArray.length; i++) {
+			System.out.print("Enter the "+(i+1)+ " value : ");
+			iOriginalArray [i] = scanner.nextInt();
+		}
+		
+		System.out.print("Enter a number here to be searched: ");
+		int iNumberFinder = scanner.nextInt();
+	
+		boolean flagTracker = false;
+		
+		for (int j = 0; j < iOriginalArrayLength; j++) {
+			// The PROCESS of checking happens here
+			if (iNumberFinder == iOriginalArray[j]) {
+				System.out.println("THE NUMBER "+iOriginalArray[j]+ " already exist");
+				flagTracker = true;
+				break; // added by CHATGPT - "Since the number is found"
+			}
+		}
+		
+		// this CONDITION will do the opposite of the value assigned
+		if (!flagTracker) { // so the NOT logical operator here will return the value of flagTracker variable to FALSE, because regardless whether 
+							// the number will be found or not it will still go to the FOR loop hence making flagTracker true
+			System.out.println("The number "+iNumberFinder+ " doesn't exist in the array");
+		}
+		
+	}
+}
