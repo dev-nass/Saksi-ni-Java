@@ -16,7 +16,7 @@ public class testingGround {
 		}
 		
 		System.out.println();
-		System.out.println("THE EVEN NUMBERS ARE: ");
+		System.out.println("THE POSITIVE NUMBERS ARE: ");
 		for (int a : iOriginalArray) {
 			if(a >= 0) {
 				System.out.println(a);
