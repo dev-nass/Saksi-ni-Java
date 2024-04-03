@@ -1,0 +1,39 @@
+import java.util.Scanner;
+// GROUP 4 April 03, 2024
+
+// REVERSED ARRAY
+public class testingGround {
+	
+	static Scanner scanner = new Scanner(System.in);
+	
+	public static void main (String[] args) {
+		int [] iOriginalArray = new int [10];
+		int iOriginalArrayLength = iOriginalArray.length;
+		
+		
+		for (int i = 0; i < iOriginalArray.length; i++) {
+			System.out.print("Enter the "+(i+1)+ " value : ");
+			iOriginalArray [i] = scanner.nextInt();
+		}
+		
+		System.out.println();
+		System.out.println("ORIGINAL ORDER: "); 
+		for (int a : iOriginalArray) {
+			System.out.println(a);
+		}
+		
+		int [] iReversedArray = new int [iOriginalArrayLength];
+		
+		// Will continue to iterate and store iOriginalArray values to iReversedArray
+		for (int a = iOriginalArrayLength - 1, j = 0; a >= 0; a--, j++) {
+		    iReversedArray[j] = iOriginalArray[a]; 
+		}
+
+		System.out.println();
+		System.out.println("REVERSED ORDER: ");
+		for (int b : iReversedArray) {
+			System.out.println(b);
+		}
+	
+	}
+}
