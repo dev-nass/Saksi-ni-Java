@@ -1,0 +1,27 @@
+import java.util.Scanner;
+// GROUP 4 April 03, 2024
+
+// Array and Negative Integers
+public class testingGround {
+	
+	static Scanner scanner = new Scanner(System.in);
+	
+	public static void main (String[] args) {
+		int [] iOriginalArray = new int [20];
+		int iOriginalArrayLength = iOriginalArray.length;
+		
+		for (int i = 0; i < iOriginalArray.length; i++) {
+			System.out.print("Enter the "+(i+1)+ " value : ");
+			iOriginalArray [i] = scanner.nextInt();
+		}
+		
+		System.out.println();
+		System.out.println("THE NEGATIVE NUMBERS ARE: ");
+		for (int a : iOriginalArray) {
+			if(a < 0) {
+				System.out.println(a);
+			}
+		}
+	
+	}
+}
