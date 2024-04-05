@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+// April 05, 2024
+// Java Array Largest and Smallest Value
+
+public class Main {
+	
+	static Scanner scanner = new Scanner(System.in);
+	
+	public static void main(String[] args) {
+		
+		int[] iArray = new int[5];
+		
+		for(int i = 0; i < iArray.length; i++) {
+			System.out.print("Enter a value here: ");
+			iArray[i] = scanner.nextInt();
+		}
+		
+		int iIndicatorHigh = iArray[0];
+		int iIndicatorLow = iArray[0];
+		
+		/* Expect that the input is 1, 2, 3, 4, 5
+		 * in the first loop iIndicatorHigh and iIndidcatorLow contains 1
+		 * as the loop iterates the value of J hence the indexes being compared changes as well
+		 * as the iIndicatorHigh changes value the iIndicatorLow does not
+		 * because even if in the first iteration of for loop that else if evaluates to false
+		 * the iIndicatorLow still has the 1 value inside it.
+		 */
+		
+		for (int j = 0; j < iArray.length; j++) {
+			if (iArray[j] > iIndicatorHigh) {
+				iIndicatorHigh = iArray[j]; // overwrite the initial value which is iArray[0]
+			} else if (iArray[j] < iIndicatorLow) {
+				iIndicatorLow = iArray[j]; // overwrite the initial value which is iArray[0]
+			}
+		}
+		
+		System.out.println("The largest is "+iIndicatorHigh);
+		System.out.println("The smallest is "+iIndicatorLow);
+	}
+}
