@@ -1,0 +1,64 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+// April 05, 2024
+/* Learned about the util.Arrays today
+ * String.valueOf(integer or any other data type variable) convert anything to string (series of characters)
+ * Array.toString (ArrayVariable) - converts array to string (series of characters)
+ * 
+ * if (aFlag) - true
+ * else if (!aFlag) - false
+ * 
+ * TRIED MAKING 3 conditions
+ * 1. Both of them contains Zero's and Non-zero's
+ * 2. Only contains Zero's
+ * 3. Only contains Non zero's
+ * 
+ * don't know if i'm dumb as of this moment but I can't think of a solution to make this happen
+ */
+
+public class Main {
+	
+	static Scanner scanner = new Scanner(System.in);
+	
+	public static void main(String[] args) {
+		int [] iArray = new int[5];
+		
+		for (int i = 0; i < iArray.length; i++) {
+			System.out.print("Enter the " +(i+1)+ " value here: ");
+			iArray[i] = scanner.nextInt();
+		}
+		
+		System.out.println(); // used for SPACING
+		String striArray = Arrays.toString(iArray); // used to verify the if / else statements
+		
+		if (striArray.contains("0")) {
+			System.out.println("The numbers you inputed are combination of Both");
+			System.out.println("The number's that only contains zero are: ");
+			for (int a : iArray) {
+				if (String.valueOf(a).contains("0")) {
+					System.out.println(a);
+				}
+			}
+			System.out.println();
+			System.out.println("The number's that contains non zero are");
+			for (int a : iArray) {
+				if (!String.valueOf(a).contains("0")) {
+					System.out.println(a);
+				}
+			}
+		}
+		else if (!striArray.contains("0")) {
+			System.out.println("All the numbers doesn't contain zero: ");
+			for (int a : iArray) {
+				if (!String.valueOf(a).contains("0")) {
+					System.out.println(a);
+				}
+			}
+		}
+		
+		else {
+			System.out.println("BOBO MO MAG CODE YA");
+		}
+	}
+}
