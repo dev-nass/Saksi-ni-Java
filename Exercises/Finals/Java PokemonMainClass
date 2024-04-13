@@ -1,0 +1,64 @@
+import java.util.Scanner;
+// April 13, 2024
+
+// GROUP 4
+
+public class PokemonMainClass {
+	
+	static Scanner scanner = new Scanner(System.in);
+	public static String sTrainerName;
+	public static String sPokemonInfoEnsurance;
+	
+	static PokemonSubClass pokemonSubClass;
+	public static String sMainPokemonNickName;
+	public static String sMainPokemonType;
+	public static int iMainPokemonLevel;
+	public static double dMainPokemonMaxHP;
+	public static double dMainPokemonMaxDef;
+	
+	public static String sTryAgainChoice = "";
+	
+	public static void main (String[] args) {
+		do {
+			System.out.println("IN THIS PROGRAM, YOU ARE A POKEMON TRAINER");
+			System.out.println(); // SPACE
+			System.out.print("Kindly enter your trainer name here: ");
+			sTrainerName = scanner.nextLine();
+			System.out.println(); // SPACE
+			System.out.println("You are forcefully given a Pikachu as your starter pokemon");
+			System.out.println(); // SPACE
+			
+			do {
+				System.out.print("Enter a nickname for your Pikachu: ");
+				sMainPokemonNickName = scanner.nextLine();
+				System.out.print("Enter the type of your Pikachu: ");
+				sMainPokemonType = scanner.nextLine();
+				System.out.print("Enter the level of your Pikachu: ");
+				iMainPokemonLevel = scanner.nextInt();
+				System.out.print("Enter the max hp of your Pikachu in floating format: ");
+				dMainPokemonMaxHP = scanner.nextDouble();
+				System.out.print("Enter the max def of your Pikachu in flaoting format: ");
+				dMainPokemonMaxDef = scanner.nextDouble();
+				scanner.nextLine();
+				
+				pokemonSubClass = new PokemonSubClass(sMainPokemonNickName, sMainPokemonType, iMainPokemonLevel, dMainPokemonMaxHP, dMainPokemonMaxDef);
+				
+				pokemonSubClass.PokemonInfoPrinter();
+				System.out.print("Are you sure about the information of your Pikachu (Yes/No): ");
+				sPokemonInfoEnsurance = scanner.nextLine();
+			} while (sPokemonInfoEnsurance.equalsIgnoreCase("No"));
+			
+			System.out.println(); // SPACE
+			pokemonSubClass.PokemonMoveLoop();
+			System.out.println(); // SPACE
+			
+			System.out.print("Do you want to go for another adventure (Yes/No): ");
+			sTryAgainChoice = scanner.nextLine();
+		} while (sTryAgainChoice.equalsIgnoreCase("Yes"));
+		
+		System.out.println(); // SPACE
+		System.out.println("WISHING YOU LUCK ON YOUR FUTURE ENDEAVORS "+sTrainerName);
+		System.out.println("THANK YOU FOR USING THIS SHORT PROGRAM");
+	}
+
+}
