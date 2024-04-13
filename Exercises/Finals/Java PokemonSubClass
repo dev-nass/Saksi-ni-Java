@@ -1,0 +1,84 @@
+import java.util.Scanner;
+
+public class PokemonSubClass {
+	
+	static Scanner scanner = new Scanner (System.in);
+	
+	String sSubPokemonNickName;
+	String sSubPokemonType;
+	int iSubPokemonLevel;
+	double dSubPokemonMaxHP;
+	double dSubPokemonMaxDef;
+	
+	
+	PokemonSubClass (String sNickName, String sPokemonType, int iPokemonLevel, double dMaxHP, double dMaxDef) {
+		this.sSubPokemonNickName = sNickName;
+		this.sSubPokemonType = sPokemonType;
+		this.iSubPokemonLevel = iPokemonLevel;
+		this.dSubPokemonMaxHP = dMaxHP;
+		this.dSubPokemonMaxDef = dMaxDef;
+	}
+	
+	// MAINLY USED FOR PRINTING THE INFO FOR EACH INSTANCE OF THIS CLASS
+	void PokemonInfoPrinter() {
+		System.out.println(); // SPACE
+		System.out.println("Pokemon:  Pikachu");
+		System.out.println("Nickname: "+this.sSubPokemonNickName);
+		System.out.println("Type:     "+this.sSubPokemonType);
+		System.out.println("Level:    "+this.iSubPokemonLevel);
+		System.out.println("Max HP:   "+this.dSubPokemonMaxHP);
+		System.out.println("Max DEF:  "+this.dSubPokemonMaxDef);
+		System.out.println(); // SPACE
+	}
+	
+	void PokemonMoveLoop() {
+		String sSubTryAgain = "";
+		int iMoveOfChoice = 0;
+		do {
+			System.out.println("Your "+this.sSubPokemonNickName+" can perform a lot of moves");
+			System.out.println("1. Thunderbolt");
+			System.out.println("2. Iron Tail");
+			System.out.println("3. Quick Attack");
+			System.out.println("4. Electro Ball");
+			System.out.print("Enter here the number of the move: ");
+			iMoveOfChoice = scanner.nextInt();
+			scanner.nextLine();
+			
+			if (iMoveOfChoice == 1) {
+				ThunderBolt();
+			} else if (iMoveOfChoice == 2) {
+				IronTail();
+			} else if (iMoveOfChoice == 3) {
+				QuickAttack();
+			} else if (iMoveOfChoice == 4) {
+				ElectroBall();
+			} else {
+				System.out.println("HALA AYOS MUNA CODE IDOOOL");
+			}
+			
+			System.out.println(); // SAPCE
+			System.out.print("Do you want your "+this.sSubPokemonNickName+" to perform another move (Yes/No): ");
+			sSubTryAgain = scanner.nextLine();
+		} while (sSubTryAgain.equalsIgnoreCase("Yes"));
+		
+		
+	}
+	
+	void ThunderBolt() {
+		System.out.println("PI-KA-CHU! *PERFORMED THUNDERBOLT*");
+	}
+	
+	void IronTail() {
+		System.out.println("PIKA PIKA! *PERFORMED IRON TAIL*");
+	}
+	
+	void QuickAttack() {
+		System.out.println("PIKACHU *PERFORMED QUICK ATTACK*");
+	}
+	
+	void ElectroBall() {
+		System.out.println("CHUUUU! *PERFORMED ELECTRO BALL*");
+	}
+	
+	
+}
