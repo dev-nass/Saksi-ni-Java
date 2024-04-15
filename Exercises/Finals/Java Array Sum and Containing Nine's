@@ -1,0 +1,58 @@
+import java.util.Scanner;
+import java.util.Arrays;
+
+// April 16, 2024
+// Array that gets the SUM and the 90 of the inputed values
+
+public class Main {
+	
+	static Scanner scanner = new Scanner(System.in);
+	
+	public static double sumCounterMethod(int numeroNgMgaSubjects,int[] sumArrayA) {
+		if (sumArrayA.length == 0) {
+			return 0;
+		}
+		
+		double iSumOfGrades = 0;
+		for (int a : sumArrayA) {
+			iSumOfGrades = iSumOfGrades + a;
+		}
+		
+		iSumOfGrades = iSumOfGrades / numeroNgMgaSubjects;
+		
+		System.out.println("The sum of your grade is "+iSumOfGrades);
+		return iSumOfGrades;
+	}
+
+	public static void ninetyCounterOnGrades(int[] sumArrayB) {
+		String valuesInArray = Arrays.toString(sumArrayB);
+
+		int iNineTies = 0;
+		if (valuesInArray.contains("9")) {
+			for (int a : sumArrayB) {
+				if (String.valueOf(a).contains("9")) {
+					iNineTies++;
+				}
+			}
+		}
+		
+		System.out.println("The number of 90's that you have is "+iNineTies);
+	}
+	
+	
+	public static void main (String[] args) {
+		System.out.print("Number of Subjects: ");
+		int iNumOfSubjects = scanner.nextInt();
+		
+		int[] iArray = new int[iNumOfSubjects];
+		
+		for (int i = 0; i < iArray.length; i++) {
+			System.out.print("Enter the grade for "+(i+1)+" subject: ");
+			iArray[i] = scanner.nextInt();
+		}
+		
+		sumCounterMethod(iNumOfSubjects, iArray);
+		ninetyCounterOnGrades(iArray);
+		
+	}
+}
