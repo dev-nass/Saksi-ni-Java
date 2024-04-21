@@ -1,0 +1,137 @@
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.RenderingHints;
+
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Login extends JPanel {
+
+	private Color color1;
+    private Color color2;
+
+    public Login(Color color1, Color color2) {
+        this.color1 = color1;
+        this.color2 = color2;
+    }
+	
+	
+	private static JFrame frame;
+	private static JPanel mainPanel;
+	private static JPanel mainPanel1;
+	private static JPanel mainPanel2;
+	private static JButton button1;
+	private static JButton button2;
+	
+	 protected void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+
+	        // Cast Graphics object to Graphics2D
+	        Graphics2D g2d = (Graphics2D) g;
+
+	        // Set rendering hints for better quality
+	        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
+	        int w = getWidth();
+	        int h = getHeight();
+
+	        Color color1 = new Color (0x052e16);
+	        Color color2 = new Color (0x15803d);
+
+	        // Create a gradient paint from color1 to color2
+	        GradientPaint gp = new GradientPaint(0, 0, color1, w, h, color2);
+
+	        // Set the paint to the graphics context
+	        g2d.setPaint(gp);
+
+	        // Fill a rectangle with the gradient paint
+	        g2d.fillRect(0, 0, w, h);
+	    }
+	
+	
+	
+	public static void main(String[] args) {
+		
+		// ------------ MAIN PANEL -------------- //
+		frame = new JFrame("ADMISSION APPLICATION");
+		
+		frame.setSize(900, 630);
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		ImageIcon appLogo = new ImageIcon("enlargeLogoKLD.png");
+		
+		// ----------- GRID MAIN PANEL ---------- //
+		mainPanel = new JPanel(); // MAIN PANEL
+		mainPanel.setLayout(new GridLayout(1, 2));
+		mainPanel.setBackground(Color.black);
+		
+		// --------------- LAYER 1 ---------- //
+		mainPanel1 = new JPanel(); // LAYER 1
+		mainPanel1.setLayout(new GridLayout(1,1));
+		ImageIcon kldBuilding = new ImageIcon("KLD_Building.png"); // KLD SIDE IMAGE
+		JLabel imageContainer = new JLabel ();
+		imageContainer.setIcon(kldBuilding);
+		mainPanel1.add(imageContainer);
+		
+		// --------------- LAYER 2 ---------- //
+		Login mainPanel2 = new Login(new Color(0x052e16), Color.BLUE);
+		mainPanel2.setLayout(new GridBagLayout());
+	
+		// WTH IF THIS????????
+		GridBagConstraints gridConstraints = new GridBagConstraints();
+		gridConstraints.gridx = 0;
+	    gridConstraints.gridy = 0;
+	    gridConstraints.insets = new Insets(0, 0, 0, 0); // Optional: Adjust margins
+		// ???????????????????
+	    
+		JPanel buttonContainer = new JPanel();
+		buttonContainer.setOpaque(false);
+		buttonContainer.setLayout(new GridLayout(3, 1));
+		
+		mainPanel2.add(buttonContainer);
+		
+		 		// ------- BUTTONS ---------//
+		button1 = new JButton("ADMIN");
+		button1.setFocusable(false);
+		// ADD ACTION LISTENER HERE
+		button1.setPreferredSize(new Dimension(100, 50));
+		buttonContainer.add(button1);
+		
+		JPanel spacerPanel = new JPanel();
+		spacerPanel.setOpaque(false);
+	    spacerPanel.setPreferredSize(new Dimension(0, 10)); // Adjust the height of the spacer (10 pixels)
+	    buttonContainer.add(spacerPanel);
+		
+		button2 = new JButton("ENROLLEE");
+		button2.setFocusable(false);
+		// ADDD ACTION LISTENER HERE
+		button1.setPreferredSize(new Dimension(100, 50));
+		buttonContainer.add(button2);
+		
+		
+		// --------- MAIN PANEL ADD ---------------//
+		frame.add(mainPanel);
+		mainPanel.add(mainPanel1);
+		mainPanel.add(mainPanel2);
+		
+		frame.setIconImage(appLogo.getImage());
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		
+		
+	}
+}
