@@ -1,0 +1,89 @@
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import java.awt.GridLayout;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
+
+public class EnrolleeFormz extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					EnrolleeFormz frame = new EnrolleeFormz();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public EnrolleeFormz() {
+		setTitle("Enrollee Form");
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(900, 630);
+		getContentPane().setLayout(null);
+		
+		JPanel gridPanel = new JPanel();
+		gridPanel.setBounds(-42, 0, 928, 593);
+		getContentPane().add(gridPanel);
+		gridPanel.setLayout(new GridLayout(1, 2, 0, 0));
+		
+		JPanel leftPanel = new JPanel();
+		ImageIcon kldBuilding = new ImageIcon("KLD_Building.png");
+		leftPanel.setLayout(new GridLayout(0, 1, 0, 0)); // USED TO OCCUPY THE WHOLE SPACE FOR IMG
+		JLabel imageContainer = new JLabel ();
+		imageContainer.setIcon(kldBuilding);
+		leftPanel.add(imageContainer);
+		gridPanel.add(leftPanel);
+		
+		JPanel rightPanel = new JPanel();
+		rightPanel.setBackground(new Color(0x14532d));
+		gridPanel.add(rightPanel);
+		rightPanel.setLayout(null);
+		
+		JButton loginBTN = new JButton("LOGIN");
+		loginBTN.setFont(new Font("Tahoma", Font.BOLD, 12));
+		loginBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		loginBTN.setBounds(184, 197, 100, 48);
+		loginBTN.setFocusable(false);
+		rightPanel.add(loginBTN);
+		
+		JButton registerBTN = new JButton("REGISTER");
+		registerBTN.setFont(new Font("Tahoma", Font.BOLD, 12));
+		registerBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		registerBTN.setBounds(184, 306, 100, 48);
+		registerBTN.setFocusable(false);
+		rightPanel.add(registerBTN);
+	}
+
+	private void setRelativePositionTo(Object object) {
+		// TODO Auto-generated method stub
+		
+	}
+}
