@@ -1,0 +1,125 @@
+DOCUMENTATION IN CREATING THE LOGIN PAGE:
+
+APRIL 21, 2024
+STEP 1: Create a JFrame named 'frame'
+- This frame has setSize(900, 600)
+
+STEP 2: Create a JPanel named 'mainPanel'
+- This will sit on top of the 'frame' and will act as the main
+container between the two proceeding panels.
+- This panel has setLayout(new GridLayout(1, 2) allowing the two(2) 
+elements on a single(1) row.
+- and add the 'mainPanel' to frame / frame.add(mainPanel)
+
+STEP 3: Created Two sub panels named 'mainPanel1' and 'mainPanel2'
+- These two will sit on top of the 'mainPanel' dividing the screen into
+two distinct parts.
+- Both of these are then added to the 'mainPanel' / mainPanel.add(mainPanel1) & mainPanel.add(mainPanel2)
+
+STEP 4: Configuration on 'mainPanel1'
+- This panel is intended to hold KLD_Building image, to achive that;
+- I first inserted an ImageIcon and added new JLabel named 'imageContainer'
+- I set the 'imageContainer' setIcon to ImageIcon, this will store take hold of the
+image.
+- I then added the 'imageContiner' to the 'mainPanel'
+- This method sucessfully added the KLD_Building.PNG to the left side of the frame
+
+STEP 5: All Set-up needed to add two(2) Buttons at the center of the 'mainPanel2'. These buttons
+are for ADMIN and ENROLLEE logins
+- I first set the layout of the 'mainPanel2' to GridBagLayout
+- Create an object called 'gidConstraints'for GridBagConstraints class.
+- Inserted this line of code, that I don't totally understand:
+*--------------------------------------------------*-----------------------------------*
+	gridConstraints.gridx = 0;
+	gridConstraints.gridy = 0;
+	gridConstraints.insets = new Insets(0, 0, 0, 0); // Optional: Adjust margins
+*--------------------------------------------------*-----------------------------------*
+- The code above was successfully centered a JPanel called 'buttonContainer' as ChatGPT said; The Panel had three(3) rows, and one(1) column,
+in grid layout, this will hold three elements:
+- button1, used for the 'ADMIN' login button
+- spacerPanel, used to add space between these two(2) buttons
+- button2, used for the 'ENROLLEE' login button
+- both buttons have setPreferredSize(new Dimension(100, 50))
+- 'buttonContainer' & 'spacerPanel' are both panel that setOpaque(false), because they are merely a container that wasn't intended to be shown
+
+STEP 6: Gradient Backgroundcolor for 'mainPanel2'
+- This code is inserted, totally don't understand as well:
+- This has '//editable' comment showing that, that line needed to be change to change the color
+*--------------------------------------------------*-----------------------------------*
+	public class Login extends JPanel {
+
+	private Color color1;
+    	private Color color2;
+
+    	public Login(Color color1, Color color2) {
+        	this.color1 = color1;
+        	this.color2 = color2;
+    	}
+
+
+
+	 protected void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+
+	        // Cast Graphics object to Graphics2D
+	        Graphics2D g2d = (Graphics2D) g;
+
+	        // Set rendering hints for better quality
+	        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
+	        int w = getWidth();
+	        int h = getHeight();
+
+	        Color color1 = new Color (0x052e16); // EDITABLE TO CHANGE THE COLOR
+	        Color color2 = new Color (0x15803d); // EDITABLE TO CHANGE THE COLOR
+
+	        // Create a gradient paint from color1 to color2
+	        GradientPaint gp = new GradientPaint(0, 0, color1, w, h, color2);
+
+	        // Set the paint to the graphics context
+	        g2d.setPaint(gp);
+
+	        // Fill a rectangle with the gradient paint
+	        g2d.fillRect(0, 0, w, h);
+	    }
+*--------------------------------------------------*-----------------------------------*
+
+- This one was added to
+- The code above needed a argument when it is called upon so I commented 'cannot be removed'
+*--------------------------------------------------*-----------------------------------*
+Login mainPanel2 = new Login(new Color(0x052e16), Color.BLUE); // CANNOT BE REMOVED
+mainPanel2.setLayout(new GridBagLayout());
+*--------------------------------------------------*-----------------------------------*
+
+STEP 6: Adding functionality 'ActionListener' to the buttons
+- Removed the gradient background to properly call the ActionListener implemented on the 'Login' class but it is requesting an argument due to this
+gradient codes, thus concluded on removing the gradient background for good.
+
+STEP 7: Learning how to let user input be stored within the database
+- This one is postponed, and just create another login window that allows the to login either as 'Admin' or 'Applicant'
+
+STEP 8:
+- Created 'EnrolleeFormzLogin' and succesfull with the following:
+- Put a show password checkbox beside the passwordfield to show it
+- Added 'reset' button that empty's both username textfield and password textfield
+- And added a hyperlinked link Jlabel at the buttom for the user's who wants to create an account.
+
+
+
+
+
+
+
+QUESTIONS:
+- How do we allow students' to input their information, and those information will be stored
+on the database.
+
+ADVANTAGES:
+- This System reduces the risk of valuable information to be handled incorrection, lost, and even tampered with (damage).
+- Reduces the time needed to retrieve the data.
+- Manual file based system can take many physical space, as folders continue to pile up.
+- Reduces data inconsistency, whem data exists in several locations but when a change is made, it is not applied on all files concurrently creating
+inconsitent data.
+
+DISADVANTAGE OF THIS SYSTEM:
+- Can't handle transferee: (transfer courses, previewers degree)
