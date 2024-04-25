@@ -1,0 +1,154 @@
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JPasswordField;
+import javax.swing.JCheckBox;
+import javax.swing.JButton;
+import javax.swing.JToggleButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class EnrolleeFormzLogin extends JFrame implements ActionListener {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField usernameTextField;
+	private JPasswordField passwordField;
+	private JCheckBox showpassChkBox;
+	private JButton loginBTN;
+	private JButton resetBTN;
+	private JLabel createnewAccLabel;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					EnrolleeFormzLogin frame = new EnrolleeFormzLogin();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public EnrolleeFormzLogin() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(900, 630);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLocationRelativeTo(null);
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setBounds(-60, -26, 1034, 644);
+		mainPanel.setBackground(new Color(0x14532d));
+		contentPane.add(mainPanel);
+		mainPanel.setLayout(null);
+		
+		JLabel usernameLabel = new JLabel("Username: ");
+		usernameLabel.setForeground(new Color(255, 255, 255));
+		usernameLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+		usernameLabel.setBounds(146, 143, 182, 97);
+		mainPanel.add(usernameLabel);
+		
+		JLabel passwordLabel = new JLabel("Password: ");
+		passwordLabel.setForeground(Color.WHITE);
+		passwordLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+		passwordLabel.setBounds(146, 268, 182, 97);
+		mainPanel.add(passwordLabel);
+		
+		usernameTextField = new JTextField();
+		usernameTextField.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		usernameTextField.setBounds(378, 175, 371, 40);
+		usernameTextField.setBackground(new Color(0xe2e8f0));
+		mainPanel.add(usernameTextField);
+		usernameTextField.setColumns(10);
+		
+		passwordField = new JPasswordField();
+		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		passwordField.setBackground(new Color(0xe2e8f0));
+		passwordField.setBounds(378, 300, 371, 40);
+		mainPanel.add(passwordField);
+		
+		showpassChkBox = new JCheckBox("Show Password");
+		showpassChkBox.setForeground(new Color(255, 255, 255));
+		showpassChkBox.setBackground(new Color(0x14532d));
+		showpassChkBox.setFont(new Font("Tahoma", Font.BOLD, 15));
+		showpassChkBox.setBounds(768, 285, 160, 70);
+		showpassChkBox.setFocusable(false);
+		passwordField.setEchoChar('•');
+		showpassChkBox.addActionListener(this);
+		mainPanel.add(showpassChkBox);
+		
+		loginBTN = new JButton("LOGIN");
+		loginBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		loginBTN.setFont(new Font("Tahoma", Font.BOLD, 15));
+		loginBTN.setFocusable(false);
+		loginBTN.setBounds(559, 410, 112, 52);
+		mainPanel.add(loginBTN);
+		
+		resetBTN = new JButton("RESET");
+		resetBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource()==resetBTN) {
+					usernameTextField.setText("");
+					passwordField.setText("");
+				}
+			}
+		});
+		resetBTN.setFont(new Font("Tahoma", Font.BOLD, 15));
+		resetBTN.setFocusable(false);
+		resetBTN.setBounds(325, 410, 112, 52);
+		mainPanel.add(resetBTN);
+		
+		createnewAccLabel = new JLabel("No Account Yet? Register Now!");
+		createnewAccLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource()==createnewAccLabel) {
+					// paste here the REGISTER FORM
+				}
+			}
+		});
+		createnewAccLabel.setForeground(new Color(255, 255, 255));
+		createnewAccLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		createnewAccLabel.setBounds(391, 500, 248, 40);
+		mainPanel.add(createnewAccLabel);
+		
+	
+		
+		
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (showpassChkBox.isSelected()) {
+			passwordField.setEchoChar((char)0);
+		} else {
+			passwordField.setEchoChar('•');
+		}
+	}
+}
