@@ -1,0 +1,321 @@
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class EnrolleeFormRegister extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField firstnameTField;
+	private JTextField middlenameTField;
+	private JTextField lastnameTField;
+	private JTextField ageTField;
+	private JTextField addressTField;
+	private JTextField religionTField;
+	private JTextField datebirthTField;
+	private JTextField contactnumTField;
+	private static JComboBox sexComboBox;
+	
+	private JButton submitBTN;
+	
+	// VARIABLES FOR THE DATABASE
+	private String firstNameJava;
+	private String middleNameJava;
+	private String lastNameJava;
+	private int ageJava;
+	private String addressJava;
+	private String religionJava;
+	private String genderJava;
+	private String dataOfBirthJava;
+	private String contanctNumberJava;
+
+	/**
+	 * Launch the application.
+	 */
+	
+	void insert () {
+		
+		
+		
+	}
+	
+	
+	public static void main(String[] args) throws ClassNotFoundException, SQLException  {
+		
+		
+		
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					EnrolleeFormRegister frame = new EnrolleeFormRegister();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public EnrolleeFormRegister() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(850, 820);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setBounds(0, 0, 970, 858);
+		mainPanel.setBackground(new Color(0x14532d));
+		contentPane.add(mainPanel);
+		mainPanel.setLayout(null);
+		
+		JLabel headingLabel = new JLabel("STUDENT ADMISSION");
+		headingLabel.setForeground(new Color(255, 255, 255));
+		headingLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+		headingLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		headingLabel.setBounds(250, 22, 400, 89);
+		mainPanel.add(headingLabel);
+		
+		JLabel applicantnameLabel = new JLabel("Applicant Information:");
+		applicantnameLabel.setForeground(new Color(255, 255, 255));
+		applicantnameLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		applicantnameLabel.setBounds(66, 121, 227, 44);
+		mainPanel.add(applicantnameLabel);
+		
+		firstnameTField = new JTextField();
+		firstnameTField.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		firstnameTField.setBackground(new Color(0xe2e8f0));
+		firstnameTField.setBounds(64, 177, 229, 44);
+		mainPanel.add(firstnameTField);
+		firstnameTField.setColumns(10);
+		
+		middlenameTField = new JTextField();
+		middlenameTField.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		middlenameTField.setBounds(321, 177, 196, 44);
+		middlenameTField.setBackground(new Color(0xe2e8f0));
+		mainPanel.add(middlenameTField);
+		middlenameTField.setColumns(10);
+		
+		lastnameTField = new JTextField();
+		lastnameTField.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lastnameTField.setBounds(546, 177, 229, 44);
+		lastnameTField.setBackground(new Color(0xe2e8f0));
+		mainPanel.add(lastnameTField);
+		lastnameTField.setColumns(10);
+		
+		JLabel firstnameLabel = new JLabel("First Name");
+		firstnameLabel.setForeground(new Color(255, 255, 255));
+		firstnameLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		firstnameLabel.setBounds(66, 215, 132, 44);
+		mainPanel.add(firstnameLabel);
+		
+		JLabel middlenameLabel = new JLabel("Middle Name");
+		middlenameLabel.setForeground(Color.WHITE);
+		middlenameLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		middlenameLabel.setBounds(321, 215, 132, 44);
+		mainPanel.add(middlenameLabel);
+		
+		JLabel lastnameLabel = new JLabel("Last Name");
+		lastnameLabel.setForeground(Color.WHITE);
+		lastnameLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lastnameLabel.setBounds(546, 215, 132, 44);
+		mainPanel.add(lastnameLabel);
+		
+		ageTField = new JTextField();
+		ageTField.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		ageTField.setColumns(10);
+		ageTField.setBackground(new Color(226, 232, 240));
+		ageTField.setBounds(66, 282, 96, 44);
+		mainPanel.add(ageTField);
+		
+		JLabel ageLabel = new JLabel("Age");
+		ageLabel.setForeground(Color.WHITE);
+		ageLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		ageLabel.setBounds(66, 319, 132, 44);
+		mainPanel.add(ageLabel);
+		
+		addressTField = new JTextField();
+		addressTField.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		addressTField.setColumns(10);
+		addressTField.setBackground(new Color(226, 232, 240));
+		addressTField.setBounds(183, 282, 334, 44);
+		mainPanel.add(addressTField);
+		
+		JLabel addressLabel = new JLabel("Address");
+		addressLabel.setForeground(Color.WHITE);
+		addressLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		addressLabel.setBounds(183, 319, 142, 44);
+		mainPanel.add(addressLabel);
+		
+		religionTField = new JTextField();
+		religionTField.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		religionTField.setColumns(10);
+		religionTField.setBackground(new Color(226, 232, 240));
+		religionTField.setBounds(546, 282, 229, 44);
+		mainPanel.add(religionTField);
+		
+		JLabel religionLabel = new JLabel("Religion");
+		religionLabel.setForeground(Color.WHITE);
+		religionLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		religionLabel.setBounds(546, 319, 142, 44);
+		mainPanel.add(religionLabel);
+		
+		sexComboBox = new JComboBox();
+		sexComboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		sexComboBox.setModel(new DefaultComboBoxModel(new String[] {"Male ", "Female"}));
+		sexComboBox.setToolTipText("");
+		sexComboBox.setBounds(66, 384, 142, 44);
+		mainPanel.add(sexComboBox);
+		
+		JLabel sexLabel = new JLabel("Sex");
+		sexLabel.setForeground(Color.WHITE);
+		sexLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		sexLabel.setBounds(66, 421, 132, 44);
+		mainPanel.add(sexLabel);
+		
+		datebirthTField = new JTextField("Month / Day / Year");
+		datebirthTField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				datebirthTField.setText("");
+			}
+		});
+		datebirthTField.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		datebirthTField.setColumns(10);
+		datebirthTField.setBackground(new Color(226, 232, 240));
+		datebirthTField.setBounds(238, 383, 279, 44);
+		mainPanel.add(datebirthTField);
+		
+		JLabel datebirthLabel = new JLabel("Date of Birth");
+		datebirthLabel.setForeground(Color.WHITE);
+		datebirthLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		datebirthLabel.setBounds(238, 421, 132, 44);
+		mainPanel.add(datebirthLabel);
+		
+		contactnumTField = new JTextField("09XXXXXXXXX");
+		contactnumTField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				contactnumTField.setText("");
+			}
+		});
+		contactnumTField.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		contactnumTField.setColumns(10);
+		contactnumTField.setBackground(new Color(226, 232, 240));
+		contactnumTField.setBounds(546, 384, 229, 44);
+		mainPanel.add(contactnumTField);
+		
+		JLabel lblContactNumber = new JLabel("Contact Number");
+		lblContactNumber.setForeground(Color.WHITE);
+		lblContactNumber.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblContactNumber.setBounds(546, 421, 142, 44);
+		mainPanel.add(lblContactNumber);
+		
+		JButton backBTN = new JButton("BACK");
+		backBTN.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		backBTN.setFocusable(false);
+		backBTN.setBounds(160, 539, 150, 44);
+		mainPanel.add(backBTN);
+		
+		submitBTN = new JButton("SUBMIT");
+		submitBTN.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        firstNameJava = firstnameTField.getText();
+		        middleNameJava = middlenameTField.getText();
+		        //lastNameJava = lastnameTField.getText();
+		        //ageJava = Integer.parseInt(ageTField.getText());
+		        //addressJava = addressTField.getText();
+		        //religionJava = religionTField.getText();
+		        //genderJava = (String) sexComboBox.getSelectedItem();
+		        //dataOfBirthJava = datebirthTField.getText();
+		        //contanctNumberJava = contactnumTField.getText();
+
+		        if (e.getSource() == submitBTN) {
+		            try {
+		                Class.forName("com.mysql.cj.jdbc.Driver");
+		                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system", "root", "");
+		                
+		                // Use PreparedStatement to safely insert data
+		                String query = "INSERT INTO applicant (FirstName, MiddleName) VALUES (?, ?)";
+		                PreparedStatement pstmt = con.prepareStatement(query);
+		                
+		                // Set parameters for the prepared statement
+		                pstmt.setString(1, firstNameJava);
+		                pstmt.setString(2, middleNameJava);
+		                
+
+		                // Execute the update (INSERT) operation
+		                pstmt.executeUpdate();
+		                
+		                System.out.println("Record inserted successfully");
+
+		                // Close resources
+		                pstmt.close();
+		                con.close();
+
+		            } catch (Exception ex) {
+		                System.out.println("Error: " + ex.getMessage());
+		            }
+		        }
+		    }
+		});
+
+		submitBTN.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		submitBTN.setFocusable(false);
+		submitBTN.setBounds(335, 539, 150, 44);
+		mainPanel.add(submitBTN);
+		
+		JButton resetBTN = new JButton("RESET");
+		resetBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource()==resetBTN) {
+					firstnameTField.setText("");
+					middlenameTField.setText("");
+					lastnameTField.setText("");
+				}
+			}
+		});
+		resetBTN.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		resetBTN.setFocusable(false);
+		resetBTN.setBounds(513, 539, 150, 44);
+		mainPanel.add(resetBTN);
+	}
+
+		
+	
+	
+	
+	
+	
+	
+	
+}
