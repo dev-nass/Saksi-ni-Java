@@ -1,0 +1,354 @@
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import javax.swing.ImageIcon;
+
+public class Student_Registration_Form extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField firstnameTField;
+	private JTextField middlenameTField;
+	private JTextField lastnameTField;
+	private JTextField ageTField;
+	private JTextField addressTField;
+	private JTextField religionTField;
+	private JTextField datebirthTField;
+	private JTextField contactnumTField;
+	private static JComboBox sexComboBox;
+	
+	private JButton submitBTN;
+	
+	// VARIABLES FOR THE DATABASE
+		private String firstNameJava;
+		private String middleNameJava;
+		private String lastNameJava;
+		private int ageJava;
+		private String addressJava;
+		private String religionJava;
+		private String genderJava;
+		private String dataOfBirthJava;
+		private String contanctNumberJava;
+		private JTextField guardianTField;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Student_Registration_Form frame = new Student_Registration_Form();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Student_Registration_Form() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(850, 820);
+		setLocationRelativeTo(null);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setBounds(-59, -30, 1046, 827);
+		mainPanel.setBackground(new Color(0xF5F5F5));
+		contentPane.add(mainPanel);
+		mainPanel.setLayout(null);
+		
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBounds(36, 25, 937, 115);
+		headerPanel.setBackground(new Color(0x14532d));
+		mainPanel.add(headerPanel);
+		
+		JLabel headingLabel = new JLabel("Applicant Registration Form");
+		headingLabel.setForeground(new Color(255, 255, 255));
+		headingLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
+		headingLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		headingLabel.setForeground(new Color(0x14532d));
+		headingLabel.setBounds(264, 127, 400, 89);
+		mainPanel.add(headingLabel);
+		
+		firstnameTField = new JTextField();
+		firstnameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		firstnameTField.setBackground(new Color(0xe2e8f0));
+		firstnameTField.setBounds(122, 240, 229, 44);
+		firstnameTField.setBorder(new LineBorder(new Color(0x14532d)));
+		mainPanel.add(firstnameTField);
+		firstnameTField.setColumns(10);
+		
+		middlenameTField = new JTextField();
+		middlenameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		middlenameTField.setBounds(379, 240, 196, 44);
+		middlenameTField.setBackground(new Color(0xe2e8f0));
+		middlenameTField.setBorder(new LineBorder(new Color(0x14532d)));
+		mainPanel.add(middlenameTField);
+		middlenameTField.setColumns(10);
+		
+		lastnameTField = new JTextField();
+		lastnameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lastnameTField.setBounds(609, 240, 229, 44);
+		lastnameTField.setBackground(new Color(0xe2e8f0));
+		lastnameTField.setBorder(new LineBorder(new Color(0x14532d)));
+		mainPanel.add(lastnameTField);
+		lastnameTField.setColumns(10);
+		
+		JLabel firstnameLabel = new JLabel("First Name");
+		firstnameLabel.setForeground(new Color(0, 0, 0));
+		firstnameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		firstnameLabel.setBounds(122, 274, 132, 44);
+		mainPanel.add(firstnameLabel);
+		
+		JLabel middlenameLabel = new JLabel("Middle Name");
+		middlenameLabel.setForeground(new Color(0, 0, 0));
+		middlenameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		middlenameLabel.setBounds(379, 274, 132, 44);
+		mainPanel.add(middlenameLabel);
+		
+		JLabel lastnameLabel = new JLabel("Last Name");
+		lastnameLabel.setForeground(new Color(0, 0, 0));
+		lastnameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		lastnameLabel.setBounds(609, 274, 132, 44);
+		mainPanel.add(lastnameLabel);
+		
+		ageTField = new JTextField();
+		ageTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		ageTField.setColumns(10);
+		ageTField.setBackground(new Color(226, 232, 240));
+		ageTField.setBorder(new LineBorder(new Color(0x14532d)));
+		ageTField.setBounds(122, 344, 96, 44);
+		mainPanel.add(ageTField);
+		
+		JLabel ageLabel = new JLabel("Age");
+		ageLabel.setForeground(new Color(0, 0, 0));
+		ageLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		ageLabel.setBounds(122, 381, 132, 44);
+		mainPanel.add(ageLabel);
+		
+		addressTField = new JTextField();
+		addressTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		addressTField.setColumns(10);
+		addressTField.setBackground(new Color(226, 232, 240));
+		addressTField.setBounds(251, 344, 334, 44);
+		addressTField.setBorder(new LineBorder(new Color(0x14532d)));
+		mainPanel.add(addressTField);
+		
+		JLabel addressLabel = new JLabel("Address");
+		addressLabel.setForeground(new Color(0, 0, 0));
+		addressLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		addressLabel.setBounds(251, 381, 142, 44);
+		mainPanel.add(addressLabel);
+		
+		religionTField = new JTextField();
+		religionTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		religionTField.setColumns(10);
+		religionTField.setBackground(new Color(226, 232, 240));
+		religionTField.setBorder(new LineBorder(new Color(0x14532d)));
+		religionTField.setBounds(609, 343, 229, 44);
+		mainPanel.add(religionTField);
+		
+		JLabel religionLabel = new JLabel("Religion");
+		religionLabel.setForeground(new Color(0, 0, 0));
+		religionLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		religionLabel.setBounds(609, 381, 142, 44);
+		mainPanel.add(religionLabel);
+		
+		sexComboBox = new JComboBox();
+		sexComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		sexComboBox.setModel(new DefaultComboBoxModel(new String[] {"Male ", "Female"}));
+		sexComboBox.setBorder(new LineBorder(new Color(0x14532d)));
+		sexComboBox.setToolTipText("");
+		sexComboBox.setBounds(122, 449, 142, 44);
+		mainPanel.add(sexComboBox);
+		
+		JLabel sexLabel = new JLabel("Sex");
+		sexLabel.setForeground(new Color(0, 0, 0));
+		sexLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		sexLabel.setBounds(122, 482, 132, 44);
+		mainPanel.add(sexLabel);
+		
+		datebirthTField = new JTextField("Month / Day / Year");
+		datebirthTField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				datebirthTField.setText("");
+			}
+		});
+		datebirthTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		datebirthTField.setColumns(10);
+		datebirthTField.setBackground(new Color(226, 232, 240));
+		datebirthTField.setBorder(new LineBorder(new Color(0x14532d)));
+		datebirthTField.setBounds(305, 448, 279, 44);
+		mainPanel.add(datebirthTField);
+		
+		JLabel datebirthLabel = new JLabel("Date of Birth");
+		datebirthLabel.setForeground(new Color(0, 0, 0));
+		datebirthLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		datebirthLabel.setBounds(305, 482, 132, 44);
+		mainPanel.add(datebirthLabel);
+		
+		contactnumTField = new JTextField("09XXXXXXXXX");
+		contactnumTField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				contactnumTField.setText("");
+			}
+		});
+		contactnumTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		contactnumTField.setColumns(10);
+		contactnumTField.setBackground(new Color(226, 232, 240));
+		contactnumTField.setBorder(new LineBorder(new Color(0x14532d)));
+		contactnumTField.setBounds(609, 448, 229, 44);
+		mainPanel.add(contactnumTField);
+		
+		JLabel lblContactNumber = new JLabel("Contact Number");
+		lblContactNumber.setForeground(new Color(0, 0, 0));
+		lblContactNumber.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		lblContactNumber.setBounds(609, 482, 142, 44);
+		mainPanel.add(lblContactNumber);
+		
+		JButton backBTN = new JButton("BACK");
+		backBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		backBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		backBTN.setFocusable(false);
+		backBTN.setBounds(217, 728, 150, 44);
+		mainPanel.add(backBTN);
+		
+		submitBTN = new JButton("SUBMIT");
+		submitBTN.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        firstNameJava = firstnameTField.getText();
+		        middleNameJava = middlenameTField.getText();
+		        //lastNameJava = lastnameTField.getText();
+		        //ageJava = Integer.parseInt(ageTField.getText());
+		        //addressJava = addressTField.getText();
+		        //religionJava = religionTField.getText();
+		        //genderJava = (String) sexComboBox.getSelectedItem();
+		        //dataOfBirthJava = datebirthTField.getText();
+		        //contanctNumberJava = contactnumTField.getText();
+
+		        if (e.getSource() == submitBTN) {
+		            try {
+		                Class.forName("com.mysql.cj.jdbc.Driver");
+		                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system", "root", "");
+		                
+		                // Use PreparedStatement to safely insert data
+		                String query = "INSERT INTO applicant (FirstName, MiddleName) VALUES (?, ?)";
+		                PreparedStatement pstmt = con.prepareStatement(query);
+		                
+		                // Set parameters for the prepared statement
+		                pstmt.setString(1, firstNameJava);
+		                pstmt.setString(2, middleNameJava);
+		                
+
+		                // Execute the update (INSERT) operation
+		                pstmt.executeUpdate();
+		                
+		                System.out.println("Record inserted successfully");
+
+		                // Close resources
+		                pstmt.close();
+		                con.close();
+
+		            } catch (Exception ex) {
+		                System.out.println("Error: " + ex.getMessage());
+		            }
+		        }
+		    }
+		});
+
+		submitBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		submitBTN.setFocusable(false);
+		submitBTN.setForeground(new Color(255, 255, 255));
+		submitBTN.setBackground(new Color(0x14532d));
+		submitBTN.setBorder(new LineBorder(new Color(0x14532d)));
+		submitBTN.setBounds(400, 728, 150, 44);
+		mainPanel.add(submitBTN);
+		
+		JButton resetBTN = new JButton("RESET");
+		resetBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource()==resetBTN) {
+					firstnameTField.setText("");
+					middlenameTField.setText("");
+					lastnameTField.setText("");
+				}
+			}
+		});
+		resetBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		resetBTN.setFocusable(false);
+		resetBTN.setForeground(new Color(255, 255, 255));
+		resetBTN.setBackground(new Color(0xb91c1c));
+		resetBTN.setBorder(new LineBorder(new Color(0xb91c1c)));
+		resetBTN.setBounds(575, 728, 150, 44);
+		mainPanel.add(resetBTN);
+		
+		JLabel subheadingLabel = new JLabel("Fill out the form carefully for registration");
+		subheadingLabel.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		subheadingLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		subheadingLabel.setBounds(305, 183, 324, 26);
+		mainPanel.add(subheadingLabel);
+		
+		guardianTField = new JTextField();
+		guardianTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		guardianTField.setColumns(10);
+		guardianTField.setBackground(new Color(226, 232, 240));
+		guardianTField.setBorder(new LineBorder(new Color(0x14532d)));
+		guardianTField.setBounds(122, 550, 463, 44);
+		mainPanel.add(guardianTField);
+		
+		JLabel guardianLabel = new JLabel("Guardian Name");
+		guardianLabel.setForeground(Color.BLACK);
+		guardianLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		guardianLabel.setBounds(122, 585, 142, 44);
+		mainPanel.add(guardianLabel);
+		
+		JLabel imageLabel = new JLabel("Picture");
+		imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		imageLabel.setBounds(609, 550, 196, 145);
+		imageLabel.setBackground(new Color(0xe3e8f1));
+		imageLabel.setBorder(new LineBorder(new Color(0x14532d)));
+		imageLabel.setOpaque(true);
+		mainPanel.add(imageLabel);
+		
+		JButton browseimageBTN = new JButton("...");
+		browseimageBTN.setBounds(815, 679, 23, 16);
+		browseimageBTN.setFocusable(false);
+		browseimageBTN.setBackground(new Color(0xfbbf24));
+		browseimageBTN.setBorder(new LineBorder(new Color(0xfbbf24)));
+		mainPanel.add(browseimageBTN);
+	}
+}
