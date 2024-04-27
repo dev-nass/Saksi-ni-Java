@@ -1,0 +1,167 @@
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
+import java.awt.GridLayout;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.JPasswordField;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+
+import java.awt.Button;
+import java.awt.Checkbox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class Login_Form extends JFrame implements ActionListener {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField usernameTField;
+	private JPasswordField passwordTField;
+	private JCheckBox showpassChkBox;
+	
+	
+	
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Login_Form frame = new Login_Form();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Login_Form() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(900, 630);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setBounds(-54, -38, 1016, 690);
+		contentPane.add(mainPanel);
+		mainPanel.setLayout(new GridLayout(1, 2));
+		
+		JPanel leftPanel = new JPanel();
+		leftPanel.setBackground(new Color(0x14532d));
+		mainPanel.add(leftPanel);
+		leftPanel.setLayout(null);
+		
+		JPanel rightPanel = new JPanel();
+		rightPanel.setBackground(new Color(0xF5F5F5));
+		mainPanel.add(rightPanel);
+		rightPanel.setLayout(null);
+		
+		JLabel loginHeaderLabel = new JLabel("LOGIN");
+		loginHeaderLabel.setBackground(new Color(0, 0, 160));
+		loginHeaderLabel.setFont(new Font("Segoe UI", Font.BOLD, 36));
+		loginHeaderLabel.setForeground(new Color(0x14532d));
+		loginHeaderLabel.setBounds(166, 72, 191, 116);
+		rightPanel.add(loginHeaderLabel);
+		
+		JLabel usernameLabel = new JLabel("Username:");
+		usernameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 18));
+		usernameLabel.setBounds(32, 190, 116, 29);
+		rightPanel.add(usernameLabel);
+		
+		usernameTField = new JTextField();
+		usernameTField.setForeground(new Color(0, 0, 0));
+		usernameTField.setFont(new Font("Segoe UI Historic", Font.PLAIN, 18));
+		usernameTField.setBounds(32, 219, 370, 52);
+		usernameTField.setBorder(new LineBorder(new Color(0x14532d)));
+		rightPanel.add(usernameTField);
+		usernameTField.setColumns(10);
+		
+		JLabel passwordLabel = new JLabel("Password:");
+		passwordLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 18));
+		passwordLabel.setBounds(29, 300, 116, 29);
+		rightPanel.add(passwordLabel);
+		
+		passwordTField = new JPasswordField();
+		passwordTField.setFont(new Font("Segoe UI Historic", Font.PLAIN, 18));
+		passwordTField.setBorder(new LineBorder(new Color(0x14532d)));
+		passwordTField.setBounds(29, 328, 370, 51);
+		passwordTField.setEchoChar('•');
+		rightPanel.add(passwordTField);
+		
+		showpassChkBox = new JCheckBox("Show Password");
+		showpassChkBox.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		showpassChkBox.setFocusable(false);
+		showpassChkBox.addActionListener(this);
+		showpassChkBox.setBounds(29, 385, 133, 21);
+		
+		rightPanel.add(showpassChkBox);
+		
+		JButton loginBTN = new JButton("Login");
+		
+		   
+		loginBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		loginBTN.setForeground(new Color(255, 255, 255));
+		loginBTN.setBackground(new Color(0x14532d));
+		loginBTN.setBorder(new LineBorder(new Color(0x14532d)));
+		loginBTN.setFocusable(false);
+		loginBTN.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		loginBTN.setBounds(160, 440, 116, 52);
+		rightPanel.add(loginBTN);
+		
+		JLabel newAccountLabel = new JLabel("I don't have an account");
+		newAccountLabel.setFont(new Font("Segoe UI Historic", Font.PLAIN, 15));
+		newAccountLabel.setBounds(105, 517, 157, 29);
+		rightPanel.add(newAccountLabel);
+		
+		JLabel registerLabel = new JLabel("Register");
+		registerLabel.setForeground(new Color(255, 0, 0));
+		registerLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		registerLabel.setBounds(269, 517, 171, 29);
+		rightPanel.add(registerLabel);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (showpassChkBox.isSelected()) {
+			passwordTField.setEchoChar((char)0);
+		} else {
+			passwordTField.setEchoChar('•');
+		}
+	}
+
+	
+
+	
+	
+	
+	
+}
