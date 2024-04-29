@@ -1,0 +1,119 @@
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.JTextField;
+import java.awt.Font;
+import javax.swing.JTable;
+
+public class Student_Profile extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField firstnameHolderTField;
+	private JTextField middlenameHolderTField;
+	private JTextField textField_1;
+	private JTable table_1;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Student_Profile frame = new Student_Profile();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Student_Profile() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(950, 680);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setBounds(-96, -39, 1143, 810);
+		mainPanel.setBackground(new Color(0xF5F5F5));
+		contentPane.add(mainPanel);
+		mainPanel.setLayout(null);
+		
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBounds(71, 38, 996, 95);
+		headerPanel.setBackground(new Color(0x14532d));
+		mainPanel.add(headerPanel);
+		
+		JLabel profileLabel = new JLabel("New label");
+		profileLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		profileLabel.setBounds(141, 211, 175, 166);
+		profileLabel.setBorder(new LineBorder(new Color(0x14532d)));
+		mainPanel.add(profileLabel);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		textField.setBounds(141, 407, 175, 36);
+		mainPanel.add(textField);
+		textField.setColumns(10);
+		
+		JLabel usernameLabel = new JLabel("Username:");
+		usernameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		usernameLabel.setBounds(141, 387, 77, 13);
+		mainPanel.add(usernameLabel);
+		
+		firstnameHolderTField = new JTextField();
+		firstnameHolderTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		firstnameHolderTField.setBounds(357, 234, 175, 36);
+		mainPanel.add(firstnameHolderTField);
+		firstnameHolderTField.setColumns(10);
+		
+		JLabel firstnameLabel = new JLabel("First Name");
+		firstnameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		firstnameLabel.setBounds(357, 211, 104, 13);
+		mainPanel.add(firstnameLabel);
+		
+		JLabel middlenameLabel = new JLabel("Middle Name");
+		middlenameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		middlenameLabel.setBounds(542, 211, 104, 13);
+		mainPanel.add(middlenameLabel);
+		
+		middlenameHolderTField = new JTextField();
+		middlenameHolderTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		middlenameHolderTField.setColumns(10);
+		middlenameHolderTField.setBounds(542, 234, 175, 36);
+		mainPanel.add(middlenameHolderTField);
+		
+		JLabel lastnameLabel = new JLabel("Last Name");
+		lastnameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		lastnameLabel.setBounds(727, 211, 104, 13);
+		mainPanel.add(lastnameLabel);
+		
+		textField_1 = new JTextField();
+		textField_1.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		textField_1.setColumns(10);
+		textField_1.setBounds(727, 234, 175, 36);
+		mainPanel.add(textField_1);
+		
+		table_1 = new JTable();
+		table_1.setBounds(493, 389, 246, 174);
+		mainPanel.add(table_1);
+	}
+}
