@@ -1,0 +1,165 @@
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JTabbedPane;
+import javax.swing.JScrollPane;
+import javax.swing.JButton;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JTable;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
+import javax.swing.JProgressBar;
+
+public class Admin_Access_Form extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTable programVisualTable;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Admin_Access_Form frame = new Admin_Access_Form();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Admin_Access_Form() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(950, 680);
+		setLocationRelativeTo(null);
+		setResizable(false);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setBounds(-96, -39, 1143, 810);
+		mainPanel.setBackground(new Color(0xF5F5F5));
+		contentPane.add(mainPanel);
+		mainPanel.setLayout(null);
+		
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBounds(71, 38, 996, 95);
+		headerPanel.setBackground(new Color(0x14532d));
+		mainPanel.add(headerPanel);
+		
+		JTabbedPane tabbedPanel = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPanel.setBounds(96, 132, 953, 568);
+		tabbedPanel.setBackground(new Color(0xF5F5F5));
+		mainPanel.add(tabbedPanel);
+		
+		JPanel viewProgramPanel = new JPanel();
+		tabbedPanel.addTab("Programs", null, viewProgramPanel, null);
+		viewProgramPanel.setLayout(null);
+		
+		JButton displayProgramBTN = new JButton("View Program");
+		displayProgramBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testingin", "root", "");
+					Statement st = con.createStatement();
+					String query = "SELECT * FROM program";
+					ResultSet rs = st.executeQuery(query);
+					ResultSetMetaData rsmd = rs.getMetaData();
+					DefaultTableModel model = (DefaultTableModel) programVisualTable.getModel();
+					
+					// slowing getting the data within the table 
+					int cols = rsmd.getColumnCount();
+					String[] colName = new String [cols];
+					for (int i = 0; i < cols; i++) 
+						colName[i] = rsmd.getColumnName(i+1);
+					model.setColumnIdentifiers(colName);
+					String ProgramID, Program_Name, Program_Capacity, Program_Duration;
+					
+					while (rs.next()) {
+						ProgramID = rs.getString(1);
+						Program_Name = rs.getString(2);
+						Program_Capacity = rs.getString(3);
+						Program_Duration = rs.getString(4);
+						String[] row = {ProgramID, Program_Name, Program_Capacity, Program_Duration};
+						model.addRow(row);
+					}
+					
+					
+					
+					st.close();
+					con.close();
+					
+					
+				} catch (ClassNotFoundException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		displayProgramBTN.setFocusable(false);
+		displayProgramBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		displayProgramBTN.setBounds(79, 143, 119, 47);
+		viewProgramPanel.add(displayProgramBTN);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(235, 135, 612, 188);
+		viewProgramPanel.add(scrollPane_1);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane_1.setViewportView(scrollPane);
+		scrollPane.setBorder(new LineBorder(new Color(0x14532d)));
+		
+		programVisualTable = new JTable();
+		programVisualTable.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		programVisualTable.setRowHeight(33);
+		scrollPane.setViewportView(programVisualTable);
+		
+		JButton clearBTN = new JButton("Clear");
+		clearBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				programVisualTable.setModel(new DefaultTableModel());
+			}
+		});
+		clearBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		clearBTN.setFocusable(false);
+		clearBTN.setBounds(79, 263, 119, 47);
+		viewProgramPanel.add(clearBTN);
+		
+		
+		JPanel viewApplicantPanel = new JPanel();
+		tabbedPanel.addTab("Application Info", null, viewApplicantPanel, null);
+		
+		viewApplicantPanel.setLayout(null);
+		
+		JPanel sidePanel = new JPanel();
+		sidePanel.setBounds(0, 0, 236, 636);
+		sidePanel.setBackground(new Color(0x14532d));
+		viewApplicantPanel.add(sidePanel);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPanel.addTab("Admission Status", null, tabbedPane, null);
+	}
+}
