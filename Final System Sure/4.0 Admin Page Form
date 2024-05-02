@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -25,9 +26,13 @@ import javax.swing.JProgressBar;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
+
 import java.awt.BorderLayout;
 import javax.swing.JScrollBar;
 import javax.swing.JLabel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Admin_Access_Form extends JFrame {
 
@@ -51,6 +56,20 @@ public class Admin_Access_Form extends JFrame {
 	private JTextField contactNumberTField;
 	private JTextField dateOfBirthTField;
 	private JTextField guardianNameTField;
+	
+	private String applicantIDVar;
+	private String userIDVar;
+	private String firstNameVar;
+	private String middleNameVar;
+	private String lastNameVar;
+	private String ageVar;
+	private String addressVar;
+	private String religionVar;
+	private String genderVar;
+	private String conctactNumberVar;
+	private String dateOfBirthVar;
+	private JTextField searchDataTField;
+	//String guardianNameVar = guardianNameTField.getText();
 	
 	
 
@@ -454,18 +473,18 @@ public class Admin_Access_Form extends JFrame {
 					model.setValueAt(contactNumberTField.getText(), i, 10);
 					//model.setValueAt(guardianNameTField.getText(), i, 11);
 					
-					String applicantIDVar = applicantIDTField.getText();
-					String userIDVar = userIDTField.getText();
-					String firstNameVar = firstNameTField.getText();
-				    String middleNameVar = middleNameTField.getText();
-					String lastNameVar = lastNameTField.getText();
-					String ageVar = ageTField.getText();
-					String addressVar = addressTField.getText();
-					String religionVar = religionTField.getText();
-					String genderVar = genderTField.getText();
-					String conctactNumberVar = contactNumberTField.getText();
-					String dateOfBirthVar = dateOfBirthTField.getText();
-					//String guardianNameVar = guardianNameTField.getText();
+					applicantIDVar = applicantIDTField.getText();
+					userIDVar = userIDTField.getText();
+					firstNameVar = firstNameTField.getText();
+					middleNameVar = middleNameTField.getText();
+					lastNameVar = lastNameTField.getText();
+					ageVar = ageTField.getText();
+					addressVar = addressTField.getText();
+					religionVar = religionTField.getText();
+					genderVar = genderTField.getText();
+					conctactNumberVar = contactNumberTField.getText();
+					dateOfBirthVar = dateOfBirthTField.getText();
+					//guardianNameVar = guardianNameTField.getText();
 					
 					String updateQuery = "UPDATE aplikante " +
 		                     "SET UserID = ?, FirstName = ?, " +
@@ -504,8 +523,73 @@ public class Admin_Access_Form extends JFrame {
 		});
 		updateRowBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
 		updateRowBTN.setFocusable(false);
-		updateRowBTN.setBounds(86, 571, 134, 47);
+		updateRowBTN.setBounds(177, 571, 119, 47);
 		sidePanel.add(updateRowBTN);
+		
+		JButton deleteRowBTN = new JButton("Delete Row");
+		deleteRowBTN.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        DefaultTableModel tblModel = (DefaultTableModel) applicantVisualTable.getModel();
+
+		        // Check if a row is selected
+		        if (applicantVisualTable.getSelectedRowCount() == 1) {
+		            // Remove the selected row from the table
+		            int selectedRow = applicantVisualTable.getSelectedRow();
+		            tblModel.removeRow(selectedRow);
+
+		            // Get the ApplicantID of the row to be deleted
+		            String applicantIDToDelete = (String) applicantVisualTable.getValueAt(selectedRow, 0);
+
+		            // Construct the DELETE query
+		            String deleteQuery = "DELETE FROM aplikante WHERE ApplicantID = ?";
+
+		            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_systema", "root", "");
+		                 PreparedStatement pstmt = con.prepareStatement(deleteQuery)) {
+
+		                // Set the parameter in the PreparedStatement
+		                pstmt.setString(1, applicantIDToDelete);
+
+		                // Execute the DELETE query
+		                int rowsDeleted = pstmt.executeUpdate();
+
+		                if (rowsDeleted > 0) {
+		                    System.out.println("Record deleted successfully.");
+		                } else {
+		                    System.out.println("No record deleted.");
+		                }
+
+		            } catch (Exception ex) {
+		                System.out.println("ERROR: " + ex.getMessage());
+		            }
+		        }
+		    }
+		});
+
+		deleteRowBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		deleteRowBTN.setFocusable(false);
+		deleteRowBTN.setBounds(36, 571, 119, 47);
+		sidePanel.add(deleteRowBTN);
+		
+		searchDataTField = new JTextField();
+		searchDataTField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				DefaultTableModel tableobj = (DefaultTableModel) applicantVisualTable.getModel();
+				TableRowSorter<DefaultTableModel> tableobj1 = new TableRowSorter<>(tableobj);
+				applicantVisualTable.setRowSorter(tableobj1);
+				tableobj1.setRowFilter(RowFilter.regexFilter(searchDataTField.getText()));
+			}
+		});
+		searchDataTField.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		searchDataTField.setBounds(659, 84, 199, 32);
+		viewApplicantPanel.add(searchDataTField);
+		searchDataTField.setColumns(10);
+		
+		JLabel searchLabel = new JLabel("Search");
+		searchLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		searchLabel.setForeground(new Color(0x14532d));
+		searchLabel.setBounds(601, 87, 56, 25);
+		viewApplicantPanel.add(searchLabel);
 		
 		
 		
