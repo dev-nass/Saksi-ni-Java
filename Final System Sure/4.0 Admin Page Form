@@ -15,18 +15,44 @@ import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JProgressBar;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JTextField;
+import java.awt.BorderLayout;
+import javax.swing.JScrollBar;
+import javax.swing.JLabel;
 
 public class Admin_Access_Form extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable programVisualTable;
+	private JTable applicantVisualTable;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField applicantIDTField;
+	private JTextField userIDTField;
+	private JTextField firstNameTField;
+	private JTextField middleNameTField;
+	private JTextField lastNameTField;
+	private JTextField ageTField;
+	private JTextField addressTField;
+	private JTextField religionTField;
+	private JTextField genderTField;
+	private JTextField contactNumberTField;
+	private JTextField dateOfBirthTField;
+	private JTextField guardianNameTField;
+	
+	
 
 	/**
 	 * Launch the application.
@@ -49,7 +75,7 @@ public class Admin_Access_Form extends JFrame {
 	 */
 	public Admin_Access_Form() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(950, 680);
+		setSize(1056, 860);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();
@@ -59,26 +85,26 @@ public class Admin_Access_Form extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel mainPanel = new JPanel();
-		mainPanel.setBounds(-96, -39, 1143, 810);
+		mainPanel.setBounds(-96, -39, 1143, 939);
 		mainPanel.setBackground(new Color(0xF5F5F5));
 		contentPane.add(mainPanel);
 		mainPanel.setLayout(null);
 		
 		JPanel headerPanel = new JPanel();
-		headerPanel.setBounds(71, 38, 996, 95);
+		headerPanel.setBounds(71, 38, 1117, 95);
 		headerPanel.setBackground(new Color(0x14532d));
 		mainPanel.add(headerPanel);
 		
 		JTabbedPane tabbedPanel = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPanel.setBounds(96, 132, 953, 568);
+		tabbedPanel.setBounds(96, 132, 1064, 750);
 		tabbedPanel.setBackground(new Color(0xF5F5F5));
 		mainPanel.add(tabbedPanel);
 		
 		JPanel viewProgramPanel = new JPanel();
 		tabbedPanel.addTab("Programs", null, viewProgramPanel, null);
-		viewProgramPanel.setLayout(null);
 		
 		JButton displayProgramBTN = new JButton("View Program");
+		displayProgramBTN.setBounds(389, 434, 119, 47);
 		displayProgramBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -119,25 +145,13 @@ public class Admin_Access_Form extends JFrame {
 				}
 			}
 		});
+		viewProgramPanel.setLayout(null);
 		displayProgramBTN.setFocusable(false);
 		displayProgramBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		displayProgramBTN.setBounds(79, 143, 119, 47);
 		viewProgramPanel.add(displayProgramBTN);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(235, 135, 612, 188);
-		viewProgramPanel.add(scrollPane_1);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane_1.setViewportView(scrollPane);
-		scrollPane.setBorder(new LineBorder(new Color(0x14532d)));
-		
-		programVisualTable = new JTable();
-		programVisualTable.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		programVisualTable.setRowHeight(33);
-		scrollPane.setViewportView(programVisualTable);
-		
 		JButton clearBTN = new JButton("Clear");
+		clearBTN.setBounds(563, 434, 119, 47);
 		clearBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				programVisualTable.setModel(new DefaultTableModel());
@@ -145,19 +159,359 @@ public class Admin_Access_Form extends JFrame {
 		});
 		clearBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
 		clearBTN.setFocusable(false);
-		clearBTN.setBounds(79, 263, 119, 47);
 		viewProgramPanel.add(clearBTN);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(260, 174, 593, 225);
+		viewProgramPanel.add(scrollPane);
+		scrollPane.setBorder(new LineBorder(new Color(0x14532d)));
+		
+		programVisualTable = new JTable();
+		programVisualTable.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		programVisualTable.setRowHeight(33);
+		scrollPane.setViewportView(programVisualTable);
 		
 		
 		JPanel viewApplicantPanel = new JPanel();
 		tabbedPanel.addTab("Application Info", null, viewApplicantPanel, null);
 		
 		viewApplicantPanel.setLayout(null);
+			
+		
+		applicantVisualTable = new JTable();
+		applicantVisualTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				DefaultTableModel model = (DefaultTableModel) applicantVisualTable.getModel();
+				int selectedRowIndex = applicantVisualTable.getSelectedRow();
+				
+				applicantIDTField.setText(model.getValueAt(selectedRowIndex, 0).toString());
+				userIDTField.setText(model.getValueAt(selectedRowIndex, 1).toString());
+				firstNameTField.setText(model.getValueAt(selectedRowIndex, 2).toString());
+				middleNameTField.setText(model.getValueAt(selectedRowIndex, 3).toString());
+				lastNameTField.setText(model.getValueAt(selectedRowIndex, 4).toString());
+				ageTField.setText(model.getValueAt(selectedRowIndex, 5).toString());
+				addressTField.setText(model.getValueAt(selectedRowIndex, 6).toString());
+				religionTField.setText(model.getValueAt(selectedRowIndex, 7).toString());
+				genderTField.setText(model.getValueAt(selectedRowIndex, 8).toString());
+				dateOfBirthTField.setText(model.getValueAt(selectedRowIndex, 9).toString());
+				contactNumberTField.setText(model.getValueAt(selectedRowIndex, 10).toString());
+				//guardianNameTField.setText(model.getValueAt(selectedRowIndex, 11).toString());
+			}
+		});
+		applicantVisualTable.setRowHeight(33);
+		applicantVisualTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		applicantVisualTable.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		
+		JScrollPane scrollPane_1 = new JScrollPane (applicantVisualTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane_1.setBorder(new LineBorder(new Color(0x14532d)));
+		scrollPane_1.setBounds(403, 126, 622, 312);
+		viewApplicantPanel.add(scrollPane_1);
+		
+		scrollPane_1.setViewportView(applicantVisualTable);
+		
+		JButton displayApplicantBTN = new JButton("View Applicants");
+		displayApplicantBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_systema", "root", "");
+					Statement st = con.createStatement();
+					String query = "SELECT * FROM aplikante";
+					ResultSet rs = st.executeQuery(query);
+					ResultSetMetaData rsmd = rs.getMetaData();
+					DefaultTableModel model = (DefaultTableModel) applicantVisualTable.getModel();
+					
+					// slowing getting the data within the table 
+					int cols = rsmd.getColumnCount();
+					String[] colName = new String [cols];
+					for (int i = 0; i < cols; i++) 
+						colName[i] = rsmd.getColumnName(i+1);
+					model.setColumnIdentifiers(colName);
+					String ApplicantID, UserID, FirstName, MiddleName, LastName, Age, Address, Religion, Gender, DateOfBirth, ContactNumber;
+					
+					while (rs.next()) {
+						ApplicantID = rs.getString(1);
+						UserID = rs.getString(2);
+						FirstName = rs.getString(3);
+						MiddleName = rs.getString(4);
+						LastName = rs.getString(5);
+						Age = rs.getString(6);
+						Address = rs.getString(7);
+						Religion = rs.getString(8);
+						Gender = rs.getString(9);
+						DateOfBirth = rs.getString(10);
+						ContactNumber = rs.getString(11);
+						
+							
+						
+						String[] row = {ApplicantID, UserID, FirstName, MiddleName, LastName, Age, Address, Religion, Gender, DateOfBirth, ContactNumber};
+						model.addRow(row);
+					}
+					
+					
+					
+					st.close();
+					con.close();
+					
+					
+				} catch (ClassNotFoundException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+			
+		displayApplicantBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		displayApplicantBTN.setFocusable(false);
+		displayApplicantBTN.setBounds(574, 477, 134, 47);
+		viewApplicantPanel.add(displayApplicantBTN);
+		
+		JButton clearBTN_1 = new JButton("Clear");
+		clearBTN_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		clearBTN_1.setFocusable(false);
+		clearBTN_1.setBounds(775, 477, 119, 47);
+		viewApplicantPanel.add(clearBTN_1);
 		
 		JPanel sidePanel = new JPanel();
-		sidePanel.setBounds(0, 0, 236, 636);
+		sidePanel.setBounds(0, 0, 345, 713);
 		sidePanel.setBackground(new Color(0x14532d));
+		sidePanel.setOpaque(true);
 		viewApplicantPanel.add(sidePanel);
+		sidePanel.setLayout(null);
+		
+		applicantIDTField = new JTextField();
+		applicantIDTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		applicantIDTField.setBounds(111, 41, 71, 31);
+		sidePanel.add(applicantIDTField);
+		applicantIDTField.setColumns(10);
+		
+		userIDTField = new JTextField();
+		userIDTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		userIDTField.setColumns(10);
+		userIDTField.setBounds(111, 83, 71, 31);
+		sidePanel.add(userIDTField);
+		
+		firstNameTField = new JTextField();
+		firstNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		firstNameTField.setColumns(10);
+		firstNameTField.setBounds(111, 124, 113, 31);
+		sidePanel.add(firstNameTField);
+		
+		middleNameTField = new JTextField();
+		middleNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		middleNameTField.setColumns(10);
+		middleNameTField.setBounds(111, 165, 113, 31);
+		sidePanel.add(middleNameTField);
+		
+		lastNameTField = new JTextField();
+		lastNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		lastNameTField.setColumns(10);
+		lastNameTField.setBounds(111, 206, 113, 31);
+		sidePanel.add(lastNameTField);
+		
+		ageTField = new JTextField();
+		ageTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		ageTField.setColumns(10);
+		ageTField.setBounds(111, 247, 71, 31);
+		sidePanel.add(ageTField);
+		
+		addressTField = new JTextField();
+		addressTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		addressTField.setColumns(10);
+		addressTField.setBounds(111, 288, 113, 31);
+		sidePanel.add(addressTField);
+		
+		religionTField = new JTextField();
+		religionTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		religionTField.setColumns(10);
+		religionTField.setBounds(111, 329, 113, 31);
+		sidePanel.add(religionTField);
+		
+		genderTField = new JTextField();
+		genderTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		genderTField.setColumns(10);
+		genderTField.setBounds(111, 370, 113, 31);
+		sidePanel.add(genderTField);
+		
+		contactNumberTField = new JTextField();
+		contactNumberTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		contactNumberTField.setColumns(10);
+		contactNumberTField.setBounds(111, 452, 113, 31);
+		sidePanel.add(contactNumberTField);
+		
+		dateOfBirthTField = new JTextField();
+		dateOfBirthTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		dateOfBirthTField.setColumns(10);
+		dateOfBirthTField.setBounds(111, 411, 113, 31);
+		sidePanel.add(dateOfBirthTField);
+		
+		guardianNameTField = new JTextField();
+		guardianNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		guardianNameTField.setColumns(10);
+		guardianNameTField.setBounds(111, 493, 113, 31);
+		sidePanel.add(guardianNameTField);
+		
+		JLabel applicantIDLabel = new JLabel("Applicant ID");
+		applicantIDLabel.setForeground(new Color(255, 255, 255));
+		applicantIDLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		applicantIDLabel.setBounds(10, 47, 100, 19);
+		sidePanel.add(applicantIDLabel);
+		
+		JLabel userIDLabel = new JLabel("User ID");
+		userIDLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		userIDLabel.setForeground(Color.WHITE);
+		userIDLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		userIDLabel.setBounds(10, 89, 100, 19);
+		sidePanel.add(userIDLabel);
+		
+		JLabel fisrtNameLabel = new JLabel("First Name");
+		fisrtNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		fisrtNameLabel.setForeground(Color.WHITE);
+		fisrtNameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		fisrtNameLabel.setBounds(10, 130, 100, 19);
+		sidePanel.add(fisrtNameLabel);
+		
+		JLabel middleNameLabel = new JLabel("Middle Name");
+		middleNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		middleNameLabel.setForeground(Color.WHITE);
+		middleNameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		middleNameLabel.setBounds(10, 171, 100, 19);
+		sidePanel.add(middleNameLabel);
+		
+		JLabel lastNameLabel = new JLabel("Last Name");
+		lastNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		lastNameLabel.setForeground(Color.WHITE);
+		lastNameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		lastNameLabel.setBounds(10, 212, 100, 19);
+		sidePanel.add(lastNameLabel);
+		
+		JLabel ageLabel = new JLabel("Age");
+		ageLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		ageLabel.setForeground(Color.WHITE);
+		ageLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		ageLabel.setBounds(10, 253, 100, 19);
+		sidePanel.add(ageLabel);
+		
+		JLabel addressLabel = new JLabel("Address");
+		addressLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		addressLabel.setForeground(Color.WHITE);
+		addressLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		addressLabel.setBounds(10, 294, 100, 19);
+		sidePanel.add(addressLabel);
+		
+		JLabel religionLabel = new JLabel("Religion");
+		religionLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		religionLabel.setForeground(Color.WHITE);
+		religionLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		religionLabel.setBounds(10, 335, 100, 19);
+		sidePanel.add(religionLabel);
+		
+		JLabel genderLabel = new JLabel("Gender");
+		genderLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		genderLabel.setForeground(Color.WHITE);
+		genderLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		genderLabel.setBounds(10, 376, 100, 19);
+		sidePanel.add(genderLabel);
+		
+		JLabel dateOfBirthLabel = new JLabel("Date of Birth");
+		dateOfBirthLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		dateOfBirthLabel.setForeground(Color.WHITE);
+		dateOfBirthLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		dateOfBirthLabel.setBounds(10, 417, 100, 19);
+		sidePanel.add(dateOfBirthLabel);
+		
+		JLabel lblContactNumber = new JLabel("Contact No.");
+		lblContactNumber.setHorizontalAlignment(SwingConstants.LEFT);
+		lblContactNumber.setForeground(Color.WHITE);
+		lblContactNumber.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		lblContactNumber.setBounds(10, 458, 100, 19);
+		sidePanel.add(lblContactNumber);
+		
+		JLabel guardianLabelTField = new JLabel("Guardian");
+		guardianLabelTField.setHorizontalAlignment(SwingConstants.LEFT);
+		guardianLabelTField.setForeground(Color.WHITE);
+		guardianLabelTField.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		guardianLabelTField.setBounds(10, 499, 100, 19);
+		sidePanel.add(guardianLabelTField);
+		
+		JButton updateRowBTN = new JButton("Update Row");
+		updateRowBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int i = applicantVisualTable.getSelectedRow();
+				DefaultTableModel model = (DefaultTableModel) applicantVisualTable.getModel();
+				if (i >= 0) {
+					model.setValueAt(applicantIDTField.getText(), i, 0);
+					model.setValueAt(userIDTField.getText(), i, 1);
+					model.setValueAt(firstNameTField.getText(), i, 2);
+					model.setValueAt(middleNameTField.getText(), i, 3);
+					model.setValueAt(lastNameTField.getText(), i, 4);
+					model.setValueAt(ageTField.getText(), i, 5);
+					model.setValueAt(addressTField.getText(), i, 6);
+					model.setValueAt(religionTField.getText(), i, 7);
+					model.setValueAt(genderTField.getText(), i, 8);
+					model.setValueAt(dateOfBirthTField.getText(), i, 9);
+					model.setValueAt(contactNumberTField.getText(), i, 10);
+					//model.setValueAt(guardianNameTField.getText(), i, 11);
+					
+					String applicantIDVar = applicantIDTField.getText();
+					String userIDVar = userIDTField.getText();
+					String firstNameVar = firstNameTField.getText();
+				    String middleNameVar = middleNameTField.getText();
+					String lastNameVar = lastNameTField.getText();
+					String ageVar = ageTField.getText();
+					String addressVar = addressTField.getText();
+					String religionVar = religionTField.getText();
+					String genderVar = genderTField.getText();
+					String conctactNumberVar = contactNumberTField.getText();
+					String dateOfBirthVar = dateOfBirthTField.getText();
+					//String guardianNameVar = guardianNameTField.getText();
+					
+					String updateQuery = "UPDATE aplikante " +
+		                     "SET UserID = ?, FirstName = ?, " +
+		                     "MiddleName = ?, LastName = ?, Age = ?, " +
+		                     "Address = ?, Religion = ?, Gender = ?, " +
+		                     "DateOfBirth = ?, ContactNumber = ? " +
+		                     "WHERE ApplicantID = ?";
+
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_systema", "root", "");
+		     PreparedStatement pstmt = con.prepareStatement(updateQuery)) {
+			
+			 pstmt.setString(1, userIDVar);
+			 pstmt.setString(2, firstNameVar);
+			 pstmt.setString(3, middleNameVar);
+			 pstmt.setString(4, lastNameVar);
+			 pstmt.setString(5, ageVar);
+			 pstmt.setString(6, addressVar);
+			 pstmt.setString(7, religionVar);
+			 pstmt.setString(8, genderVar);
+			 pstmt.setString(9, dateOfBirthVar);
+			 pstmt.setString(10, conctactNumberVar);
+			 pstmt.setString(11, applicantIDVar);
+
+		    int rowsUpdated = pstmt.executeUpdate();
+		    if (rowsUpdated > 0) {
+		        System.out.println("Data updated successfully.");
+		    } else {
+		        System.out.println("No rows updated.");
+		    }
+
+		} catch (Exception ex) {
+		    System.out.println("Error: " + ex.getMessage());
+		}
+				}
+ 			}
+		});
+		updateRowBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		updateRowBTN.setFocusable(false);
+		updateRowBTN.setBounds(86, 571, 134, 47);
+		sidePanel.add(updateRowBTN);
+		
+		
+		
+	
+		
+
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPanel.addTab("Admission Status", null, tabbedPane, null);
