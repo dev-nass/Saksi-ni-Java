@@ -1,3 +1,5 @@
+// MAY, 3 2024
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -5,6 +7,7 @@ import java.awt.Font;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,16 +15,21 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.*;
 
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import javax.swing.ImageIcon;
+import com.toedter.calendar.JYearChooser;
+import com.toedter.calendar.JDateChooser;
 
 public class Student_Registration_Form extends JFrame {
 
@@ -33,11 +41,12 @@ public class Student_Registration_Form extends JFrame {
 	private JTextField ageTField;
 	private JTextField addressTField;
 	private JTextField religionTField;
-	private JTextField datebirthTField;
 	private JTextField contactnumTField;
 	private static JComboBox sexComboBox;
 	
 	private JButton submitBTN;
+	private JLabel imageLabel;
+	private JComboBox programComboBox;
 	
 	// VARIABLES FOR THE DATABASE
 		private String firstNameJava;
@@ -197,20 +206,6 @@ public class Student_Registration_Form extends JFrame {
 		sexLabel.setBounds(122, 482, 132, 44);
 		mainPanel.add(sexLabel);
 		
-		datebirthTField = new JTextField("Month / Day / Year");
-		datebirthTField.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				datebirthTField.setText("");
-			}
-		});
-		datebirthTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		datebirthTField.setColumns(10);
-		datebirthTField.setBackground(new Color(226, 232, 240));
-		datebirthTField.setBorder(new LineBorder(new Color(0x14532d)));
-		datebirthTField.setBounds(305, 448, 279, 44);
-		mainPanel.add(datebirthTField);
-		
 		JLabel datebirthLabel = new JLabel("Date of Birth");
 		datebirthLabel.setForeground(new Color(0, 0, 0));
 		datebirthLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
@@ -245,6 +240,7 @@ public class Student_Registration_Form extends JFrame {
 		backBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
 		backBTN.setFocusable(false);
 		backBTN.setBounds(217, 728, 150, 44);
+		backBTN.setBorder(new LineBorder(new Color(0x14532d)));
 		mainPanel.add(backBTN);
 		
 		submitBTN = new JButton("SUBMIT");
@@ -270,19 +266,47 @@ public class Student_Registration_Form extends JFrame {
 		                PreparedStatement pstmt = con.prepareStatement(query);
 		                
 		                // Set parameters for the prepared statement
-		                pstmt.setString(1, firstNameJava);
-		                pstmt.setString(2, middleNameJava);
+		                //pstmt.setString(1, firstNameJava);
+		                //pstmt.setString(2, middleNameJava);
 		                
 
 		                // Execute the update (INSERT) operation
-		                pstmt.executeUpdate();
+		                //pstmt.executeUpdate();
 		                
 		                System.out.println("Record inserted successfully");
-
+		                
 		                // Close resources
+		                
+		                
+		                String selectedCourse = (String) programComboBox.getSelectedItem();
+		                int courseNumber = -1; // Default value if course is not found
+		                switch (selectedCourse) {
+		                    case "BS Civil Engineering":
+		                        courseNumber = 1;
+		                        break;
+		                    case "BS Information Systems":
+		                        courseNumber = 2;
+		                        break;
+		                    case "BS Midwifery":
+		                        courseNumber = 3;
+		                        break;
+		                    case "BS Nursing":
+		                        courseNumber = 4;
+		                        break;
+		                    case "BS Psychology":
+		                        courseNumber = 5;
+		                        break;
+		                    // Add more cases for other courses
+		                }
+		                
+		                PreparedStatement statement = con.prepareStatement("INSERT INTO Admission (ProgramID) VALUES (?)");
+		                statement.setInt(1, courseNumber);
+		                statement.executeUpdate();
+		                
 		                pstmt.close();
 		                con.close();
-
+		                
+		                
 		            } catch (Exception ex) {
 		                System.out.println("Error: " + ex.getMessage());
 		            }
@@ -336,7 +360,7 @@ public class Student_Registration_Form extends JFrame {
 		guardianLabel.setBounds(122, 585, 142, 44);
 		mainPanel.add(guardianLabel);
 		
-		JLabel imageLabel = new JLabel("Picture");
+		imageLabel = new JLabel("Picture");
 		imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		imageLabel.setBounds(609, 550, 196, 145);
 		imageLabel.setBackground(new Color(0xe3e8f1));
@@ -345,10 +369,54 @@ public class Student_Registration_Form extends JFrame {
 		mainPanel.add(imageLabel);
 		
 		JButton browseimageBTN = new JButton("...");
+		browseimageBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser imageSelect = new JFileChooser();
+				imageSelect.setCurrentDirectory(new File(System.getProperty("user.home")));
+				
+				int fileState = imageSelect.showSaveDialog(null);
+				
+				if (fileState == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = imageSelect.getSelectedFile();
+					String path = selectedFile.getAbsolutePath();
+					
+					ImageIcon myImg = new ImageIcon(path);
+					Image img = myImg.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(),  Image.SCALE_SMOOTH);
+					ImageIcon myPicture = new ImageIcon(img);
+					imageLabel.setIcon(myPicture);
+					
+					
+					
+				} else if (fileState == JFileChooser.CANCEL_OPTION) {
+					System.out.println("No Image is Selected");
+				}
+				
+			}
+		});
 		browseimageBTN.setBounds(815, 679, 23, 16);
 		browseimageBTN.setFocusable(false);
 		browseimageBTN.setBackground(new Color(0xfbbf24));
 		browseimageBTN.setBorder(new LineBorder(new Color(0xfbbf24)));
 		mainPanel.add(browseimageBTN);
+		
+		JDateChooser dateOfBirthCalendar = new JDateChooser();
+		dateOfBirthCalendar.setBounds(305, 449, 280, 44);
+		dateOfBirthCalendar.setBorder(new LineBorder(new Color(0x14532d)));
+		dateOfBirthCalendar.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		mainPanel.add(dateOfBirthCalendar);
+		
+		programComboBox = new JComboBox();
+		programComboBox.setToolTipText("");
+		programComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		programComboBox.setModel(new DefaultComboBoxModel(new String[] {"BS Civil Engineering", "BS Information Systems",  "BS Midwifery", "BS Nursing", "BS Psychology"}));
+		programComboBox.setBorder(new LineBorder(new Color(0x14532d)));
+		programComboBox.setBounds(122, 639, 229, 44);
+		mainPanel.add(programComboBox);
+		
+		JLabel programLabel = new JLabel("Program");
+		programLabel.setForeground(Color.BLACK);
+		programLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		programLabel.setBounds(122, 674, 132, 44);
+		mainPanel.add(programLabel);
 	}
 }
