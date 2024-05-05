@@ -1,4 +1,4 @@
-// MAY, 3 2024
+// May 5, 2024
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -16,6 +16,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
 
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -27,9 +29,15 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.ImageIcon;
 import com.toedter.calendar.JYearChooser;
 import com.toedter.calendar.JDateChooser;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Student_Registration_Form extends JFrame {
 
@@ -52,13 +60,14 @@ public class Student_Registration_Form extends JFrame {
 		private String firstNameJava;
 		private String middleNameJava;
 		private String lastNameJava;
-		private int ageJava;
+		private /*int*/ String ageJava;
 		private String addressJava;
 		private String religionJava;
 		private String genderJava;
-		private String dataOfBirthJava;
-		private String contanctNumberJava;
+		private String dateOfBirthJava;
+		private String contactNumberJava;
 		private JTextField guardianTField;
+		private JDateChooser dateOfBirthCalendar;
 
 	/**
 	 * Launch the application.
@@ -109,6 +118,12 @@ public class Student_Registration_Form extends JFrame {
 		mainPanel.add(headingLabel);
 		
 		firstnameTField = new JTextField();
+		firstnameTField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedSTRING(e);
+			}
+		});
 		firstnameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		firstnameTField.setBackground(new Color(0xe2e8f0));
 		firstnameTField.setBounds(122, 240, 229, 44);
@@ -117,6 +132,12 @@ public class Student_Registration_Form extends JFrame {
 		firstnameTField.setColumns(10);
 		
 		middlenameTField = new JTextField();
+		middlenameTField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedSTRING(e);
+			}
+		});
 		middlenameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		middlenameTField.setBounds(379, 240, 196, 44);
 		middlenameTField.setBackground(new Color(0xe2e8f0));
@@ -125,6 +146,12 @@ public class Student_Registration_Form extends JFrame {
 		middlenameTField.setColumns(10);
 		
 		lastnameTField = new JTextField();
+		lastnameTField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedSTRING(e);
+			}
+		});
 		lastnameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		lastnameTField.setBounds(609, 240, 229, 44);
 		lastnameTField.setBackground(new Color(0xe2e8f0));
@@ -150,7 +177,14 @@ public class Student_Registration_Form extends JFrame {
 		lastnameLabel.setBounds(609, 274, 132, 44);
 		mainPanel.add(lastnameLabel);
 		
-		ageTField = new JTextField();
+		ageTField = new JTextField(2);
+		ageTField.setDocument(new JTextFieldCharLimit(2));
+		ageTField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedDIGIT(e);
+			}
+		});
 		ageTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		ageTField.setColumns(10);
 		ageTField.setBackground(new Color(226, 232, 240));
@@ -179,6 +213,12 @@ public class Student_Registration_Form extends JFrame {
 		mainPanel.add(addressLabel);
 		
 		religionTField = new JTextField();
+		religionTField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedSTRING(e);
+			}
+		});
 		religionTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		religionTField.setColumns(10);
 		religionTField.setBackground(new Color(226, 232, 240));
@@ -212,7 +252,15 @@ public class Student_Registration_Form extends JFrame {
 		datebirthLabel.setBounds(305, 482, 132, 44);
 		mainPanel.add(datebirthLabel);
 		
-		contactnumTField = new JTextField("09XXXXXXXXX");
+		contactnumTField = new JTextField();
+		contactnumTField.setDocument(new JTextFieldCharLimit(11));
+		contactnumTField.setText("09XXXXXXXXX");
+		contactnumTField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedDIGIT(e);
+			}
+		});
 		contactnumTField.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -248,34 +296,54 @@ public class Student_Registration_Form extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 		        firstNameJava = firstnameTField.getText();
 		        middleNameJava = middlenameTField.getText();
-		        //lastNameJava = lastnameTField.getText();
-		        //ageJava = Integer.parseInt(ageTField.getText());
-		        //addressJava = addressTField.getText();
-		        //religionJava = religionTField.getText();
-		        //genderJava = (String) sexComboBox.getSelectedItem();
-		        //dataOfBirthJava = datebirthTField.getText();
-		        //contanctNumberJava = contactnumTField.getText();
+		        lastNameJava = lastnameTField.getText();
+		       // ageJava = Integer.parseInt(ageTField.getText());
+		        ageJava = ageTField.getText();
+		        addressJava = addressTField.getText();
+		        religionJava = religionTField.getText();
+		        genderJava = (String) sexComboBox.getSelectedItem();
+
+		        // THERE ARE PREVIOUS CODE BEFORE FOR THIS DATE OF BIRTH, THIS ONE I DONT UNDERSTAND
+
+		        // Format the selected date into a string
+		        java.util.Date selectedDate = dateOfBirthCalendar.getDate();
+		        java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
+		        
+		        
+		        contactNumberJava = contactnumTField.getText();
 
 		        if (e.getSource() == submitBTN) {
 		            try {
 		                Class.forName("com.mysql.cj.jdbc.Driver");
-		                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system", "root", "");
+		                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "");
 		                
 		                // Use PreparedStatement to safely insert data
-		                String query = "INSERT INTO applicant (FirstName, MiddleName) VALUES (?, ?)";
+		                String query = "INSERT INTO applicant (FirstName, MiddleName, LastName, Age, Address, Religion, Gender, DateOfBirth, ContactNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		                PreparedStatement pstmt = con.prepareStatement(query);
 		                
-		                // Set parameters for the prepared statement
-		                //pstmt.setString(1, firstNameJava);
-		                //pstmt.setString(2, middleNameJava);
+		                // DATE IF TEMPORARY REMOVED
 		                
+		                // Set parameters for the prepared statement
+		                pstmt.setString(1, firstNameJava);
+		                pstmt.setString(2, middleNameJava);
+		                pstmt.setString(3, lastNameJava);
+		                pstmt.setString(4, ageJava);
+		                pstmt.setString(5, addressJava);
+		                pstmt.setString(6, religionJava);
+		                pstmt.setString(7, genderJava);	
+		                pstmt.setDate(8, sqlDate);
+		                pstmt.setString(9, contactNumberJava);
 
 		                // Execute the update (INSERT) operation
-		                //pstmt.executeUpdate();
+		                pstmt.executeUpdate();
 		                
 		                System.out.println("Record inserted successfully");
 		                
 		                // Close resources
+		                
+		                
+		                
+		                
 		                
 		                
 		                String selectedCourse = (String) programComboBox.getSelectedItem();
@@ -302,6 +370,19 @@ public class Student_Registration_Form extends JFrame {
 		                PreparedStatement statement = con.prepareStatement("INSERT INTO Admission (ProgramID) VALUES (?)");
 		                statement.setInt(1, courseNumber);
 		                statement.executeUpdate();
+		                
+		             // Assuming selectedCourseID is the ID of the selected course
+		             // and connection is your database connection
+		             String programTableQuery = "UPDATE program SET ApplicantEnrolled = ApplicantEnrolled + 1 WHERE ProgramID = ?";
+		             try {
+		                 PreparedStatement pstmt1 = con.prepareStatement(programTableQuery);
+		                 pstmt1.setInt(1, courseNumber); // Set the ProgramID parameter
+		                 pstmt1.executeUpdate(); // Execute the update statement
+		             } catch (SQLException w) {
+		                 w.printStackTrace();
+		                 // Handle the exception appropriately
+		             }
+
 		                
 		                pstmt.close();
 		                con.close();
@@ -399,7 +480,8 @@ public class Student_Registration_Form extends JFrame {
 		browseimageBTN.setBorder(new LineBorder(new Color(0xfbbf24)));
 		mainPanel.add(browseimageBTN);
 		
-		JDateChooser dateOfBirthCalendar = new JDateChooser();
+		dateOfBirthCalendar = new JDateChooser();
+		
 		dateOfBirthCalendar.setBounds(305, 449, 280, 44);
 		dateOfBirthCalendar.setBorder(new LineBorder(new Color(0x14532d)));
 		dateOfBirthCalendar.setFont(new Font("Segoe UI", Font.PLAIN, 18));
@@ -419,4 +501,28 @@ public class Student_Registration_Form extends JFrame {
 		programLabel.setBounds(122, 674, 132, 44);
 		mainPanel.add(programLabel);
 	}
+	
+	
+	
+
+	public void keyTypedDIGIT(KeyEvent e) {
+		char c = e.getKeyChar();
+		
+		if(!Character.isDigit(c)) {
+			e.consume();
+		}
+	}
+	
+	public void keyTypedSTRING(KeyEvent e) {
+		char c = e.getKeyChar();
+		
+		if(Character.isDigit(c)) {
+			e.consume();
+		}
+	}
+	
+	
+	
+	
+	
 }
