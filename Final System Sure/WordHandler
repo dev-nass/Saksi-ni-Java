@@ -8,16 +8,37 @@ public class WordHandler {
 
 	static Scanner scanner = new Scanner (System.in);
 	
+	public static String initialHandler(String wordVarMethod) {
+	    String word = wordVarMethod;
+	    
+	    StringBuilder initialsBuilder = new StringBuilder();
+	    for (String a : word.split(" ")) {
+	        // Convert the first character of each word to uppercase for initials
+	        char initial = Character.toUpperCase(a.charAt(0));
+	        initialsBuilder.append(initial);
+	        
+	        // Append a substring starting from the second character of each word, maintaining lowercase
+	        if (a.length() > 1) {
+	            initialsBuilder.append(a.substring(1).toLowerCase());
+	        }
+	        
+	        // Add a space after each set of initials
+	        initialsBuilder.append(" ");
+	    }
+	    
+	    String initials = initialsBuilder.toString().trim(); // Trim any leading or trailing whitespace
+	    //System.out.println(initials);
+	    
+	    return initials;
+	}
+
+	
 	public static void main (String[] args) {
+		WordHandler handler = new WordHandler();
 		System.out.print("Enter a word here: ");
 		String word = scanner.nextLine();
 		
-		String initials = "";
-		for (String a : word.split(" ")) {
-			initials = initials + a.charAt(0);
-		}
-		
-		System.out.println(initials.toUpperCase());
+		handler.initialHandler(word);
 		
 	}
 }
