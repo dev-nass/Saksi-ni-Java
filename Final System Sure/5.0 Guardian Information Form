@@ -1,0 +1,168 @@
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class Guardian_Detail_Form extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField firstNameTField;
+	private JTextField middleNameTField;
+	private JTextField lastNameTField;
+	private JTextField contactNumberTField;
+	private JTextField occupationTField;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Guardian_Detail_Form frame = new Guardian_Detail_Form();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Guardian_Detail_Form() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(500, 820);
+		setLocationRelativeTo(null);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setBounds(-23, 0, 874, 855);
+		mainPanel.setBackground(new Color(0xF5F5F5));
+		contentPane.add(mainPanel);
+		mainPanel.setLayout(null);
+		
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBounds(-43, 0, 1026, 115);
+		headerPanel.setBackground(new Color(0x14532d));
+		mainPanel.add(headerPanel);
+		
+		JLabel headingLabel = new JLabel("Guardian Information");
+		headingLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		headingLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
+		headingLabel.setForeground(new Color(0x14532d));
+		headingLabel.setBounds(103, 104, 309, 71);
+		mainPanel.add(headingLabel);
+		
+		JLabel subHeadingLabel = new JLabel("Fill out the form carefully");
+		subHeadingLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		subHeadingLabel.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		subHeadingLabel.setBounds(151, 148, 223, 27);
+		mainPanel.add(subHeadingLabel);
+		
+		firstNameTField = new JTextField();
+		firstNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		firstNameTField.setBackground(new Color(0xe2e8f0));
+		firstNameTField.setBorder(new LineBorder(new Color(0x14532d)));
+		firstNameTField.setBounds(74, 212, 378, 49);
+		mainPanel.add(firstNameTField);
+		firstNameTField.setColumns(10);
+		
+		JLabel firstNameLabel = new JLabel("First Name");
+		firstNameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		firstNameLabel.setBounds(74, 265, 75, 21);
+		mainPanel.add(firstNameLabel);
+		
+		middleNameTField = new JTextField();
+		middleNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		middleNameTField.setColumns(10);
+		middleNameTField.setBorder(new LineBorder(new Color(0x14532d)));
+		middleNameTField.setBackground(new Color(226, 232, 240));
+		middleNameTField.setBounds(74, 299, 378, 49);
+		mainPanel.add(middleNameTField);
+		
+		JLabel middleNameLabel = new JLabel("Middle Name");
+		middleNameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		middleNameLabel.setBounds(74, 350, 94, 21);
+		mainPanel.add(middleNameLabel);
+		
+		lastNameTField = new JTextField();
+		lastNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lastNameTField.setColumns(10);
+		lastNameTField.setBorder(new LineBorder(new Color(0x14532d)));
+		lastNameTField.setBackground(new Color(226, 232, 240));
+		lastNameTField.setBounds(74, 392, 378, 49);
+		mainPanel.add(lastNameTField);
+		
+		JLabel lastNameLabel = new JLabel("Last Name");
+		lastNameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		lastNameLabel.setBounds(74, 440, 94, 21);
+		mainPanel.add(lastNameLabel);
+		
+		contactNumberTField = new JTextField();
+		contactNumberTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		contactNumberTField.setColumns(10);
+		contactNumberTField.setBorder(new LineBorder(new Color(0x14532d)));
+		contactNumberTField.setBackground(new Color(226, 232, 240));
+		contactNumberTField.setBounds(74, 476, 378, 49);
+		mainPanel.add(contactNumberTField);
+		
+		JLabel contactNumberLabel = new JLabel("Contact Number");
+		contactNumberLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		contactNumberLabel.setBounds(74, 524, 114, 21);
+		mainPanel.add(contactNumberLabel);
+		
+		occupationTField = new JTextField();
+		occupationTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		occupationTField.setColumns(10);
+		occupationTField.setBorder(new LineBorder(new Color(0x14532d)));
+		occupationTField.setBackground(new Color(226, 232, 240));
+		occupationTField.setBounds(74, 558, 378, 49);
+		mainPanel.add(occupationTField);
+		
+		JLabel occupationLabel = new JLabel("Occupation");
+		occupationLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		occupationLabel.setBounds(74, 606, 114, 21);
+		mainPanel.add(occupationLabel);
+		
+		JButton submitBTN = new JButton("SUBMIT");
+		submitBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		submitBTN.setFocusable(false);
+		submitBTN.setForeground(new Color(255, 255, 255));
+		submitBTN.setBackground(new Color(0x14532d));
+		submitBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		submitBTN.setBounds(129, 688, 104, 39);
+		mainPanel.add(submitBTN);
+		
+		JButton resetBTN = new JButton("RESET");
+		resetBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		resetBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+		resetBTN.setFocusable(false);
+		resetBTN.setForeground(new Color(255, 255, 255));
+		resetBTN.setBackground(new Color(0xb91c1c));
+		resetBTN.setBounds(257, 688, 104, 39);
+		mainPanel.add(resetBTN);
+	}
+}
