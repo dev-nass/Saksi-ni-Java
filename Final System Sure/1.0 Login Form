@@ -23,6 +23,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Login_Form extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -33,11 +40,13 @@ public class Login_Form extends JFrame implements ActionListener {
 	
 	
 	
-	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+		
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -48,6 +57,8 @@ public class Login_Form extends JFrame implements ActionListener {
 				}
 			}
 		});
+		
+		Student_Registration_Form studentForm = new Student_Registration_Form();
 	}
 
 	/**
@@ -123,10 +134,86 @@ public class Login_Form extends JFrame implements ActionListener {
 		
 		   
 		loginBTN.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
+		    public void actionPerformed(ActionEvent e) {
+		        try {
+		            // Load the MySQL JDBC driver
+		            Class.forName("com.mysql.cj.jdbc.Driver");
+		            
+		            // Establish connection to the database
+		            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "")) {
+		                System.out.println("Connection created");
+
+		                // Create statement
+		                try (Statement stmt = con.createStatement()) {
+		                    // Query for Admin login
+		                    String sqlAdminQuery = "SELECT * FROM user WHERE username = '" + usernameTField.getText() + "' AND password = '" + passwordTField.getText() + "' AND userType = 'Admin'";
+		                    try (ResultSet rsAdmin = stmt.executeQuery(sqlAdminQuery)) {
+		                        if (rsAdmin.next()) {
+		                            //dispose();
+		                            System.out.println("Login successful as Admin");
+		                            // Provide feedback to the user interface
+		                        } else {
+		                            // Check for Student login
+		                            String sqlStudentQuery = "SELECT * FROM user WHERE username = '" + usernameTField.getText() + "' AND password = '" + passwordTField.getText() + "' AND userType = 'Student'";
+		                            
+		                            
+		                            try (ResultSet rsStudent = stmt.executeQuery(sqlStudentQuery)) {
+		                                if (rsStudent.next()) {
+		                                   // dispose();
+		                                	int userID = rsStudent.getInt("UserID");
+		                                	String userFirstName = rsStudent.getString("FirstName");
+		                                	String userMiddleName = rsStudent.getString("MiddleName");
+		                                    String userLastName = rsStudent.getString("LastName");
+		                                	
+		                                    System.out.println(userID + " " + userFirstName + " " + userMiddleName + " " + userLastName);
+		                                    PreparedStatement ps = con.prepareStatement("SELECT ApplicantID, FirstName, MiddleName, LastName FROM applicant WHERE UserID = '" + userID + "' AND FirstName = '" + userFirstName + "' AND MiddleName = '" + userMiddleName + "' AND LastName = '" + userLastName + "' AND EXISTS (SELECT 1 FROM user WHERE UserID = '" + userID + "' AND FirstName = '" + userFirstName + "' AND MiddleName = '" + userMiddleName + "' AND LastName = '" + userLastName + "' AND Username = '" + usernameTField.getText() + "' AND password = '" + passwordTField.getText() + "' AND userType = 'Student')");
+
+		                                    try (ResultSet rsStudentSlow = ps.executeQuery()) {
+		                                        if (rsStudentSlow.next()) {
+		                                            int ApplicantID = rsStudentSlow.getInt("ApplicantID");
+		                                            String FirstName = rsStudentSlow.getString("FirstName");
+		                                            String MiddleName = rsStudentSlow.getString("MiddleName");
+		                                            String LastName = rsStudentSlow.getString("LastName");
+		                                            
+		                                            Student_Profile sProfile = new Student_Profile(FirstName, FirstName, MiddleName, LastName);
+		                                            sProfile.setVisible(true);
+		                                           
+		                                            System.out.println(ApplicantID + " " + FirstName + " " + MiddleName + " " + LastName);
+		                                        } else {
+		                                        	System.out.println("No rows found");
+		                                        }
+		                                    }
+
+		                                	
+		                                	
+		                                	
+				                            	
+		                                	
+		                                	
+		                                    System.out.println("Login successful as Student");
+		                                    // Provide feedback to the user interface
+		                                } else {
+		                                    System.out.println("Login failed: Invalid username or password");
+		                                    // Provide feedback to the user interface
+		                                }
+		                            }
+		                        }
+		                    }
+		                }
+		            }
+		        
+		        
+		        
+		        
+		        } catch (ClassNotFoundException | SQLException ex) {
+		            ex.printStackTrace();
+		            // Provide feedback to the user interface about the error
+		        }
+		    }
 		});
+
+
+
 		
 		loginBTN.setForeground(new Color(255, 255, 255));
 		loginBTN.setBackground(new Color(0x14532d));
@@ -142,6 +229,19 @@ public class Login_Form extends JFrame implements ActionListener {
 		rightPanel.add(newAccountLabel);
 		
 		JLabel registerLabel = new JLabel("Register");
+		registerLabel.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        if(e.getSource() == registerLabel) {
+		            // Create an instance of Student_Registration_Form and call its constructor
+		            Student_Registration_Form studentForm = new Student_Registration_Form();
+		            studentForm.setVisible(true);
+		            // Dispose the current frame (assuming 'this' refers to your current JFrame)
+		            dispose();
+		        }
+		    }
+		});
+
 		registerLabel.setForeground(new Color(255, 0, 0));
 		registerLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
 		registerLabel.setBounds(269, 517, 171, 29);
