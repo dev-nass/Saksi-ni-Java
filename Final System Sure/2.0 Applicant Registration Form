@@ -1,4 +1,4 @@
-// May 5, 2024
+// May 09
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -15,7 +15,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.filechooser.*;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 
@@ -25,19 +24,35 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.ImageIcon;
 import com.toedter.calendar.JYearChooser;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import java.io.InputStream;
+import javax.swing.JScrollBar;
+import javax.swing.JSeparator;
+import javax.swing.JScrollPane;
+import javax.swing.JCheckBox;
+import javax.swing.JSplitPane;
+import javax.swing.ScrollPaneConstants;
+
 
 public class Student_Registration_Form extends JFrame {
 
@@ -57,17 +72,21 @@ public class Student_Registration_Form extends JFrame {
 	private JComboBox programComboBox;
 	
 	// VARIABLES FOR THE DATABASE
-		private String firstNameJava;
-		private String middleNameJava;
-		private String lastNameJava;
+		public String StudfirstNameJava;
+		public String middleNameJava;
+		public String lastNameJava;
 		private /*int*/ String ageJava;
 		private String addressJava;
 		private String religionJava;
 		private String genderJava;
 		private String dateOfBirthJava;
 		private String contactNumberJava;
-		private JTextField guardianTField;
 		private JDateChooser dateOfBirthCalendar;
+		
+		private String Imagepth = null;
+		
+		static GuardianInserting inserting = new GuardianInserting();
+	
 
 	/**
 	 * Launch the application.
@@ -83,14 +102,26 @@ public class Student_Registration_Form extends JFrame {
 				}
 			}
 		});
+		
+		
+		
 	}
-
+	
+	static WordHandler wordHandler = new WordHandler();
+	private JTextField suffixTField;
+	private JTextField guardianFirstNameTField;
+	private JTextField guardianMiddleNameTField;
+	private JTextField guardianLastNameTField;
+	private JTextField guardianSuffixTField;
+	private JTextField guardianContactNumTField;
+	private JTextField occupationTField;
+	
 	/**
 	 * Create the frame.
 	 */
 	public Student_Registration_Form() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(850, 820);
+		setSize(1570, 828);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -99,13 +130,13 @@ public class Student_Registration_Form extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel mainPanel = new JPanel();
-		mainPanel.setBounds(-59, -30, 1046, 827);
+		mainPanel.setBounds(-27, -30, 1661, 900);
 		mainPanel.setBackground(new Color(0xF5F5F5));
 		contentPane.add(mainPanel);
 		mainPanel.setLayout(null);
 		
 		JPanel headerPanel = new JPanel();
-		headerPanel.setBounds(36, 25, 937, 115);
+		headerPanel.setBounds(10, 24, 1614, 115);
 		headerPanel.setBackground(new Color(0x14532d));
 		mainPanel.add(headerPanel);
 		
@@ -114,7 +145,7 @@ public class Student_Registration_Form extends JFrame {
 		headingLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
 		headingLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		headingLabel.setForeground(new Color(0x14532d));
-		headingLabel.setBounds(264, 127, 400, 89);
+		headingLabel.setBounds(636, 129, 400, 89);
 		mainPanel.add(headingLabel);
 		
 		firstnameTField = new JTextField();
@@ -126,7 +157,7 @@ public class Student_Registration_Form extends JFrame {
 		});
 		firstnameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		firstnameTField.setBackground(new Color(0xe2e8f0));
-		firstnameTField.setBounds(122, 240, 229, 44);
+		firstnameTField.setBounds(333, 240, 229, 44);
 		firstnameTField.setBorder(new LineBorder(new Color(0x14532d)));
 		mainPanel.add(firstnameTField);
 		firstnameTField.setColumns(10);
@@ -139,7 +170,7 @@ public class Student_Registration_Form extends JFrame {
 			}
 		});
 		middlenameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		middlenameTField.setBounds(379, 240, 196, 44);
+		middlenameTField.setBounds(589, 240, 196, 44);
 		middlenameTField.setBackground(new Color(0xe2e8f0));
 		middlenameTField.setBorder(new LineBorder(new Color(0x14532d)));
 		mainPanel.add(middlenameTField);
@@ -153,7 +184,7 @@ public class Student_Registration_Form extends JFrame {
 			}
 		});
 		lastnameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		lastnameTField.setBounds(609, 240, 229, 44);
+		lastnameTField.setBounds(815, 240, 229, 44);
 		lastnameTField.setBackground(new Color(0xe2e8f0));
 		lastnameTField.setBorder(new LineBorder(new Color(0x14532d)));
 		mainPanel.add(lastnameTField);
@@ -162,19 +193,19 @@ public class Student_Registration_Form extends JFrame {
 		JLabel firstnameLabel = new JLabel("First Name");
 		firstnameLabel.setForeground(new Color(0, 0, 0));
 		firstnameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		firstnameLabel.setBounds(122, 274, 132, 44);
+		firstnameLabel.setBounds(333, 274, 132, 44);
 		mainPanel.add(firstnameLabel);
 		
 		JLabel middlenameLabel = new JLabel("Middle Name");
 		middlenameLabel.setForeground(new Color(0, 0, 0));
 		middlenameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		middlenameLabel.setBounds(379, 274, 132, 44);
+		middlenameLabel.setBounds(589, 274, 132, 44);
 		mainPanel.add(middlenameLabel);
 		
 		JLabel lastnameLabel = new JLabel("Last Name");
 		lastnameLabel.setForeground(new Color(0, 0, 0));
 		lastnameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		lastnameLabel.setBounds(609, 274, 132, 44);
+		lastnameLabel.setBounds(815, 274, 132, 44);
 		mainPanel.add(lastnameLabel);
 		
 		ageTField = new JTextField(2);
@@ -189,27 +220,27 @@ public class Student_Registration_Form extends JFrame {
 		ageTField.setColumns(10);
 		ageTField.setBackground(new Color(226, 232, 240));
 		ageTField.setBorder(new LineBorder(new Color(0x14532d)));
-		ageTField.setBounds(122, 344, 96, 44);
+		ageTField.setBounds(333, 328, 96, 44);
 		mainPanel.add(ageTField);
 		
 		JLabel ageLabel = new JLabel("Age");
 		ageLabel.setForeground(new Color(0, 0, 0));
 		ageLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		ageLabel.setBounds(122, 381, 132, 44);
+		ageLabel.setBounds(333, 364, 132, 44);
 		mainPanel.add(ageLabel);
 		
 		addressTField = new JTextField();
 		addressTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		addressTField.setColumns(10);
 		addressTField.setBackground(new Color(226, 232, 240));
-		addressTField.setBounds(251, 344, 334, 44);
+		addressTField.setBounds(451, 328, 334, 44);
 		addressTField.setBorder(new LineBorder(new Color(0x14532d)));
 		mainPanel.add(addressTField);
 		
 		JLabel addressLabel = new JLabel("Address");
 		addressLabel.setForeground(new Color(0, 0, 0));
 		addressLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		addressLabel.setBounds(251, 381, 142, 44);
+		addressLabel.setBounds(451, 364, 142, 44);
 		mainPanel.add(addressLabel);
 		
 		religionTField = new JTextField();
@@ -223,13 +254,13 @@ public class Student_Registration_Form extends JFrame {
 		religionTField.setColumns(10);
 		religionTField.setBackground(new Color(226, 232, 240));
 		religionTField.setBorder(new LineBorder(new Color(0x14532d)));
-		religionTField.setBounds(609, 343, 229, 44);
+		religionTField.setBounds(815, 328, 229, 44);
 		mainPanel.add(religionTField);
 		
 		JLabel religionLabel = new JLabel("Religion");
 		religionLabel.setForeground(new Color(0, 0, 0));
 		religionLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		religionLabel.setBounds(609, 381, 142, 44);
+		religionLabel.setBounds(815, 364, 142, 44);
 		mainPanel.add(religionLabel);
 		
 		sexComboBox = new JComboBox();
@@ -237,19 +268,19 @@ public class Student_Registration_Form extends JFrame {
 		sexComboBox.setModel(new DefaultComboBoxModel(new String[] {"Male ", "Female"}));
 		sexComboBox.setBorder(new LineBorder(new Color(0x14532d)));
 		sexComboBox.setToolTipText("");
-		sexComboBox.setBounds(122, 449, 142, 44);
+		sexComboBox.setBounds(1066, 328, 142, 44);
 		mainPanel.add(sexComboBox);
 		
 		JLabel sexLabel = new JLabel("Sex");
 		sexLabel.setForeground(new Color(0, 0, 0));
 		sexLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		sexLabel.setBounds(122, 482, 132, 44);
+		sexLabel.setBounds(1066, 364, 132, 44);
 		mainPanel.add(sexLabel);
 		
 		JLabel datebirthLabel = new JLabel("Date of Birth");
 		datebirthLabel.setForeground(new Color(0, 0, 0));
 		datebirthLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		datebirthLabel.setBounds(305, 482, 132, 44);
+		datebirthLabel.setBounds(333, 458, 132, 44);
 		mainPanel.add(datebirthLabel);
 		
 		contactnumTField = new JTextField();
@@ -271,38 +302,48 @@ public class Student_Registration_Form extends JFrame {
 		contactnumTField.setColumns(10);
 		contactnumTField.setBackground(new Color(226, 232, 240));
 		contactnumTField.setBorder(new LineBorder(new Color(0x14532d)));
-		contactnumTField.setBounds(609, 448, 229, 44);
+		contactnumTField.setBounds(642, 418, 229, 44);
 		mainPanel.add(contactnumTField);
 		
 		JLabel lblContactNumber = new JLabel("Contact Number");
 		lblContactNumber.setForeground(new Color(0, 0, 0));
 		lblContactNumber.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		lblContactNumber.setBounds(609, 482, 142, 44);
+		lblContactNumber.setBounds(643, 458, 142, 44);
 		mainPanel.add(lblContactNumber);
 		
 		JButton backBTN = new JButton("BACK");
 		backBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (e.getSource()==backBTN) {
+					Login_Form loginForm = new Login_Form();
+					loginForm.setVisible(true);
+					dispose();
+				}
 			}
 		});
 		backBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
 		backBTN.setFocusable(false);
-		backBTN.setBounds(217, 728, 150, 44);
+		backBTN.setBounds(550, 772, 150, 44);
 		backBTN.setBorder(new LineBorder(new Color(0x14532d)));
 		mainPanel.add(backBTN);
 		
 		submitBTN = new JButton("SUBMIT");
 		submitBTN.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        firstNameJava = firstnameTField.getText();
-		        middleNameJava = middlenameTField.getText();
-		        lastNameJava = lastnameTField.getText();
+		    	
+		        StudfirstNameJava = firstnameTField.getText();	
+		        valuePasser(StudfirstNameJava);
+		        middleNameJava = middlenameTField.getText();	        
+		        lastNameJava = lastnameTField.getText();        
 		       // ageJava = Integer.parseInt(ageTField.getText());
-		        ageJava = ageTField.getText();
+		        ageJava = ageTField.getText();    
 		        addressJava = addressTField.getText();
 		        religionJava = religionTField.getText();
 		        genderJava = (String) sexComboBox.getSelectedItem();
 
+		        
+		        inserting.setValue(StudfirstNameJava, lastNameJava);
+		        System.out.println(inserting.getValueL());
 		        // THERE ARE PREVIOUS CODE BEFORE FOR THIS DATE OF BIRTH, THIS ONE I DONT UNDERSTAND
 
 		        // Format the selected date into a string
@@ -318,34 +359,58 @@ public class Student_Registration_Form extends JFrame {
 		                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "");
 		                
 		                // Use PreparedStatement to safely insert data
-		                String query = "INSERT INTO applicant (FirstName, MiddleName, LastName, Age, Address, Religion, Gender, DateOfBirth, ContactNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		                String query = "INSERT INTO applicant (FirstName, MiddleName, LastName, Age, Address, Religion, Gender, DateOfBirth, ContactNumber, Applicant_Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		                PreparedStatement pstmt = con.prepareStatement(query);
+		                
+		                
 		                
 		                // DATE IF TEMPORARY REMOVED
 		                
 		                // Set parameters for the prepared statement
-		                pstmt.setString(1, firstNameJava);
-		                pstmt.setString(2, middleNameJava);
-		                pstmt.setString(3, lastNameJava);
+		                pstmt.setString(1, WordHandler.initialHandler(StudfirstNameJava));
+		                pstmt.setString(2, WordHandler.initialHandler(middleNameJava));
+		                pstmt.setString(3, WordHandler.initialHandler(lastNameJava));
 		                pstmt.setString(4, ageJava);
 		                pstmt.setString(5, addressJava);
-		                pstmt.setString(6, religionJava);
+		                pstmt.setString(6, WordHandler.initialHandler(religionJava));
 		                pstmt.setString(7, genderJava);	
 		                pstmt.setDate(8, sqlDate);
 		                pstmt.setString(9, contactNumberJava);
+		                
+		                InputStream img = new FileInputStream(new File(Imagepth));
+		                
+		                pstmt.setBlob(10, img);
 
 		                // Execute the update (INSERT) operation
 		                pstmt.executeUpdate();
 		                
 		                System.out.println("Record inserted successfully");
 		                
-		                // Close resources
+		                
+		                // !! CODE FOR INSERTING  FirstName, middleName, LastName within user Table
+		                try {
+		                	String userTableQuery = "INSERT INTO user (firstName, middleName, lastName) VALUES (?, ?, ?)";
+			                PreparedStatement pstmt2 = con.prepareStatement(userTableQuery);
+			                pstmt2.setString(1, WordHandler.initialHandler(StudfirstNameJava));
+			                pstmt2.setString(2, WordHandler.initialHandler(middleNameJava));
+			                pstmt2.setString(3, WordHandler.initialHandler(lastNameJava));
+			                pstmt2.executeUpdate();
+		                } catch (SQLException w) {
+			                 w.printStackTrace();
+			                 System.out.println("ERROR HERE");
+			                 // Handle the exception appropriately
+		                }
+		               
+		                
+		                String queryID = "UPDATE applicant "
+		                				+ "SET UserID = (LAST_INSERT_ID()) "
+		                				+ "WHERE firstName = '"+StudfirstNameJava+"' AND middleName = '"+middleNameJava+"' AND lastName = '"+lastNameJava+"'";
+		                PreparedStatement pstmt3 = con.prepareStatement(queryID);
+		                pstmt3.executeUpdate();
+		               
 		                
 		                
-		                
-		                
-		                
-		                
+		                // !! CODE FOR SELECTED COURSE
 		                String selectedCourse = (String) programComboBox.getSelectedItem();
 		                int courseNumber = -1; // Default value if course is not found
 		                switch (selectedCourse) {
@@ -392,7 +457,76 @@ public class Student_Registration_Form extends JFrame {
 		                System.out.println("Error: " + ex.getMessage());
 		            }
 		        }
+
+
+                try {	
+				
+			    Class.forName("com.mysql.cj.jdbc.Driver");
+			    try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "")) {
+			        String checkQuery = "SELECT GuardianID FROM guardian_detail WHERE FirstName = ? AND MiddleName = ? AND LastName = ? AND Suffix = ? AND ContactNumber = ? AND Occupation = ?";
+			        try (PreparedStatement checkStatement = con.prepareStatement(checkQuery)) {
+			        	
+			            checkStatement.setString(1, guardianFirstNameTField.getText());
+			            checkStatement.setString(2, guardianMiddleNameTField.getText());
+			            checkStatement.setString(3, guardianLastNameTField.getText());
+			            checkStatement.setString(4, guardianSuffixTField.getText());
+			            checkStatement.setString(5, contactNumberJava);
+			            checkStatement.setString(6, occupationTField.getText());
+			            
+			            try (ResultSet resultSet = checkStatement.executeQuery()) {
+			                int guardianIDJava = 0;
+			                if (resultSet.next()) {
+			                    guardianIDJava = resultSet.getInt("GuardianID");
+			                } else {
+			                    String insertQuery = "INSERT INTO guardian_detail (FirstName, MiddleName, LastName, Suffix, ContactNumber, Occupation) VALUES (?, ?, ?, ?, ?, ?)";
+			                    try (PreparedStatement insertStatement = con.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
+			                    	insertStatement.setString(1, guardianFirstNameTField.getText());
+						            insertStatement.setString(2, guardianMiddleNameTField.getText());
+						            insertStatement.setString(3, guardianLastNameTField.getText());
+						            insertStatement.setString(4, guardianSuffixTField.getText());
+						            insertStatement.setString(5, contactNumberJava);
+						            insertStatement.setString(6, occupationTField.getText());
+			                        insertStatement.executeUpdate();
+			                        try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
+			                            if (generatedKeys.next()) {
+			                                guardianIDJava = generatedKeys.getInt(1);
+			                            } else {
+			                                throw new SQLException("Failed to retrieve GuardianID");
+			                            }
+			                        }
+			                    }
+			                }
+			                GuardianInserting inserting = new GuardianInserting();
+			                System.out.println(inserting.getValueL());
+			                String StudFirstNameHere = inserting.getValueF();
+			                String StudLastNameHere = inserting.getValueL();
+			                String studentUpdateQuery = "UPDATE applicant SET GuardianID = ? WHERE FirstName = '"+firstnameTField.getText()+"' AND LastName = '"+lastnameTField.getText()+"'";
+			                try (PreparedStatement studentUpdateStatement = con.prepareStatement(studentUpdateQuery)) {
+			                    studentUpdateStatement.setInt(1, guardianIDJava);
+			                    
+			                    int rowsAffected = studentUpdateStatement.executeUpdate();
+			                    if (rowsAffected > 0) {
+			                        System.out.println("Update successful. Rows affected: " + rowsAffected);
+			                    } else {
+			                        System.out.println("No rows updated. No matching FirstName found: ");
+			                    }
+			                } catch (SQLException w) {
+			                    System.err.println("Error executing update statement: " + w.getMessage());
+			                    w.printStackTrace();
+			                }
+
+			            }
+			        }
+			    }
+			} catch (Exception q) {
+			    q.printStackTrace();
+			}
+
 		    }
+		    
+		    
+		    
+		
 		});
 
 		submitBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
@@ -400,7 +534,7 @@ public class Student_Registration_Form extends JFrame {
 		submitBTN.setForeground(new Color(255, 255, 255));
 		submitBTN.setBackground(new Color(0x14532d));
 		submitBTN.setBorder(new LineBorder(new Color(0x14532d)));
-		submitBTN.setBounds(400, 728, 150, 44);
+		submitBTN.setBounds(722, 772, 150, 44);
 		mainPanel.add(submitBTN);
 		
 		JButton resetBTN = new JButton("RESET");
@@ -410,6 +544,11 @@ public class Student_Registration_Form extends JFrame {
 					firstnameTField.setText("");
 					middlenameTField.setText("");
 					lastnameTField.setText("");
+					ageTField.setText("");
+					addressTField.setText("");
+					religionTField.setText("");
+					dateOfBirthCalendar.setDate(null);
+					contactnumTField.setText("09XXXXXXXXX");
 				}
 			}
 		});
@@ -418,32 +557,18 @@ public class Student_Registration_Form extends JFrame {
 		resetBTN.setForeground(new Color(255, 255, 255));
 		resetBTN.setBackground(new Color(0xb91c1c));
 		resetBTN.setBorder(new LineBorder(new Color(0xb91c1c)));
-		resetBTN.setBounds(575, 728, 150, 44);
+		resetBTN.setBounds(894, 772, 150, 44);
 		mainPanel.add(resetBTN);
 		
 		JLabel subheadingLabel = new JLabel("Fill out the form carefully for registration");
 		subheadingLabel.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		subheadingLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		subheadingLabel.setBounds(305, 183, 324, 26);
+		subheadingLabel.setBounds(679, 186, 324, 26);
 		mainPanel.add(subheadingLabel);
 		
-		guardianTField = new JTextField();
-		guardianTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		guardianTField.setColumns(10);
-		guardianTField.setBackground(new Color(226, 232, 240));
-		guardianTField.setBorder(new LineBorder(new Color(0x14532d)));
-		guardianTField.setBounds(122, 550, 463, 44);
-		mainPanel.add(guardianTField);
-		
-		JLabel guardianLabel = new JLabel("Guardian Name");
-		guardianLabel.setForeground(Color.BLACK);
-		guardianLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		guardianLabel.setBounds(122, 585, 142, 44);
-		mainPanel.add(guardianLabel);
-		
-		imageLabel = new JLabel("Picture");
+		imageLabel = new JLabel("Upload Applicant Picture");
 		imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		imageLabel.setBounds(609, 550, 196, 145);
+		imageLabel.setBounds(1012, 596, 196, 145);
 		imageLabel.setBackground(new Color(0xe3e8f1));
 		imageLabel.setBorder(new LineBorder(new Color(0x14532d)));
 		imageLabel.setOpaque(true);
@@ -454,12 +579,15 @@ public class Student_Registration_Form extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser imageSelect = new JFileChooser();
 				imageSelect.setCurrentDirectory(new File(System.getProperty("user.home")));
-				
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png", "gif");
+				imageSelect.addChoosableFileFilter(filter);
 				int fileState = imageSelect.showSaveDialog(null);
+
 				
 				if (fileState == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = imageSelect.getSelectedFile();
 					String path = selectedFile.getAbsolutePath();
+					Imagepth = path;
 					
 					ImageIcon myImg = new ImageIcon(path);
 					Image img = myImg.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(),  Image.SCALE_SMOOTH);
@@ -474,7 +602,7 @@ public class Student_Registration_Form extends JFrame {
 				
 			}
 		});
-		browseimageBTN.setBounds(815, 679, 23, 16);
+		browseimageBTN.setBounds(1218, 725, 23, 16);
 		browseimageBTN.setFocusable(false);
 		browseimageBTN.setBackground(new Color(0xfbbf24));
 		browseimageBTN.setBorder(new LineBorder(new Color(0xfbbf24)));
@@ -482,7 +610,7 @@ public class Student_Registration_Form extends JFrame {
 		
 		dateOfBirthCalendar = new JDateChooser();
 		
-		dateOfBirthCalendar.setBounds(305, 449, 280, 44);
+		dateOfBirthCalendar.setBounds(333, 418, 280, 44);
 		dateOfBirthCalendar.setBorder(new LineBorder(new Color(0x14532d)));
 		dateOfBirthCalendar.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		mainPanel.add(dateOfBirthCalendar);
@@ -492,14 +620,111 @@ public class Student_Registration_Form extends JFrame {
 		programComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		programComboBox.setModel(new DefaultComboBoxModel(new String[] {"BS Civil Engineering", "BS Information Systems",  "BS Midwifery", "BS Nursing", "BS Psychology"}));
 		programComboBox.setBorder(new LineBorder(new Color(0x14532d)));
-		programComboBox.setBounds(122, 639, 229, 44);
+		programComboBox.setBounds(906, 418, 302, 44);
 		mainPanel.add(programComboBox);
 		
 		JLabel programLabel = new JLabel("Program");
 		programLabel.setForeground(Color.BLACK);
 		programLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		programLabel.setBounds(122, 674, 132, 44);
+		programLabel.setBounds(906, 458, 132, 44);
 		mainPanel.add(programLabel);
+		
+		suffixTField = new JTextField(10);
+		suffixTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		suffixTField.setBorder(new LineBorder(new Color(0x14532d)));
+		suffixTField.setBackground(new Color(226, 232, 240));
+		suffixTField.setBounds(1066, 240, 142, 44);
+		mainPanel.add(suffixTField);
+		
+		JLabel suffixLabel = new JLabel("Suffix");
+		suffixLabel.setForeground(Color.BLACK);
+		suffixLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		suffixLabel.setBounds(1066, 274, 132, 44);
+		mainPanel.add(suffixLabel);
+		
+		guardianFirstNameTField = new JTextField();
+		guardianFirstNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		guardianFirstNameTField.setColumns(10);
+		guardianFirstNameTField.setBorder(new LineBorder(new Color(0x14532d)));
+		guardianFirstNameTField.setBackground(new Color(226, 232, 240));
+		guardianFirstNameTField.setBounds(333, 512, 229, 44);
+		mainPanel.add(guardianFirstNameTField);
+		
+		JLabel guardianFirstnameLabel = new JLabel("Guardian First Name");
+		guardianFirstnameLabel.setForeground(Color.BLACK);
+		guardianFirstnameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		guardianFirstnameLabel.setBounds(333, 551, 156, 44);
+		mainPanel.add(guardianFirstnameLabel);
+		
+		guardianMiddleNameTField = new JTextField();
+		guardianMiddleNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		guardianMiddleNameTField.setColumns(10);
+		guardianMiddleNameTField.setBorder(new LineBorder(new Color(0x14532d)));
+		guardianMiddleNameTField.setBackground(new Color(226, 232, 240));
+		guardianMiddleNameTField.setBounds(589, 512, 196, 44);
+		mainPanel.add(guardianMiddleNameTField);
+		
+		JLabel guardianMiddeNameLabel = new JLabel("Guardian Middle Name");
+		guardianMiddeNameLabel.setForeground(Color.BLACK);
+		guardianMiddeNameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		guardianMiddeNameLabel.setBounds(589, 551, 166, 44);
+		mainPanel.add(guardianMiddeNameLabel);
+		
+		guardianLastNameTField = new JTextField();
+		guardianLastNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		guardianLastNameTField.setColumns(10);
+		guardianLastNameTField.setBorder(new LineBorder(new Color(0x14532d)));
+		guardianLastNameTField.setBackground(new Color(226, 232, 240));
+		guardianLastNameTField.setBounds(815, 512, 229, 44);
+		mainPanel.add(guardianLastNameTField);
+		
+		JLabel guardianLastNameLabel = new JLabel("Guardian Last Name");
+		guardianLastNameLabel.setForeground(Color.BLACK);
+		guardianLastNameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		guardianLastNameLabel.setBounds(815, 551, 166, 44);
+		mainPanel.add(guardianLastNameLabel);
+		
+		guardianSuffixTField = new JTextField(10);
+		guardianSuffixTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		guardianSuffixTField.setBorder(new LineBorder(new Color(0x14532d)));
+		guardianSuffixTField.setBackground(new Color(226, 232, 240));
+		guardianSuffixTField.setBounds(1066, 512, 142, 44);
+		mainPanel.add(guardianSuffixTField);
+		
+		JLabel guardianSuffixLabel = new JLabel("Suffix");
+		guardianSuffixLabel.setForeground(Color.BLACK);
+		guardianSuffixLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		guardianSuffixLabel.setBounds(1066, 551, 132, 44);
+		mainPanel.add(guardianSuffixLabel);
+		
+		guardianContactNumTField = new JTextField();
+		guardianContactNumTField.setText("09XXXXXXXXX");
+		guardianContactNumTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		guardianContactNumTField.setColumns(10);
+		guardianContactNumTField.setBorder(new LineBorder(new Color(0x14532d)));
+		guardianContactNumTField.setBackground(new Color(226, 232, 240));
+		guardianContactNumTField.setBounds(333, 605, 229, 44);
+		mainPanel.add(guardianContactNumTField);
+		
+		JLabel contactNumberLabel = new JLabel("Guardian Contact Number");
+		contactNumberLabel.setForeground(Color.BLACK);
+		contactNumberLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		contactNumberLabel.setBounds(333, 643, 196, 44);
+		mainPanel.add(contactNumberLabel);
+		
+		occupationTField = new JTextField();
+		occupationTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		occupationTField.setColumns(10);
+		occupationTField.setBorder(new LineBorder(new Color(0x14532d)));
+		occupationTField.setBackground(new Color(226, 232, 240));
+		occupationTField.setBounds(589, 605, 196, 44);
+		mainPanel.add(occupationTField);
+		
+		JLabel occupationLabel = new JLabel("Guardian Occupation");
+		occupationLabel.setForeground(Color.BLACK);
+		occupationLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		occupationLabel.setBounds(589, 643, 196, 44);
+		mainPanel.add(occupationLabel);
 	}
 	
 	
@@ -521,8 +746,8 @@ public class Student_Registration_Form extends JFrame {
 		}
 	}
 	
-	
-	
-	
-	
+	public String valuePasser(String namePasser) {
+		Guardian_Detail_Form secondClass = new Guardian_Detail_Form();
+		return secondClass.namereceiver = StudfirstNameJava;
+	}
 }
