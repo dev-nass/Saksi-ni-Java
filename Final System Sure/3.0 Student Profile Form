@@ -18,29 +18,45 @@ public class Student_Profile extends JFrame {
 	private JTextField textField;
 	private JTextField firstnameHolderTField;
 	private JTextField middlenameHolderTField;
-	private JTextField textField_1;
-	private JTable table_1;
+	private JTextField lastnameHolderTField;
+	private JTable admissionStatusTable;
 
+	private String globalUserName;
+	private String globalPassword;
+	private String globalFirstName;
+	private String globalMiddleName;
+	private String globalLastName;
+	
+	
+	/*
+	public String getName() {
+		return globalUserName;
+	}
+	
+	public void setName(String newlyUserName) {
+		this.globalUserName = newlyUserName;
+	}
+	
+	public String getPassword() {
+		return globalPassword;
+	}
+	
+	public void setPassword(String newlyPassword) {
+		this.globalPassword = newlyPassword;
+	}
+	*/
+	
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Student_Profile frame = new Student_Profile();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
 	 */
-	public Student_Profile() {
+	
+	public Student_Profile(String username, String firstname, String middlename, String lastname) {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(950, 680);
 		setLocationRelativeTo(null);
@@ -64,22 +80,27 @@ public class Student_Profile extends JFrame {
 		
 		JLabel profileLabel = new JLabel("New label");
 		profileLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		profileLabel.setBounds(141, 211, 175, 166);
+		profileLabel.setBounds(141, 160, 175, 166);
 		profileLabel.setBorder(new LineBorder(new Color(0x14532d)));
 		mainPanel.add(profileLabel);
 		
+		
+	
+		
 		textField = new JTextField();
+		textField.setText(this.globalPassword = username);
 		textField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		textField.setBounds(141, 407, 175, 36);
+		textField.setBounds(141, 352, 175, 36);
 		mainPanel.add(textField);
 		textField.setColumns(10);
 		
 		JLabel usernameLabel = new JLabel("Username:");
 		usernameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		usernameLabel.setBounds(141, 387, 77, 13);
+		usernameLabel.setBounds(141, 336, 77, 13);
 		mainPanel.add(usernameLabel);
 		
 		firstnameHolderTField = new JTextField();
+		firstnameHolderTField.setText(this.globalFirstName = firstname);
 		firstnameHolderTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		firstnameHolderTField.setBounds(357, 234, 175, 36);
 		mainPanel.add(firstnameHolderTField);
@@ -96,6 +117,7 @@ public class Student_Profile extends JFrame {
 		mainPanel.add(middlenameLabel);
 		
 		middlenameHolderTField = new JTextField();
+		middlenameHolderTField.setText(this.globalMiddleName = middlename);
 		middlenameHolderTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		middlenameHolderTField.setColumns(10);
 		middlenameHolderTField.setBounds(542, 234, 175, 36);
@@ -106,14 +128,20 @@ public class Student_Profile extends JFrame {
 		lastnameLabel.setBounds(727, 211, 104, 13);
 		mainPanel.add(lastnameLabel);
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		textField_1.setColumns(10);
-		textField_1.setBounds(727, 234, 175, 36);
-		mainPanel.add(textField_1);
+		lastnameHolderTField = new JTextField();
+		lastnameHolderTField.setText(this.globalLastName = lastname);
+		lastnameHolderTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		lastnameHolderTField.setColumns(10);
+		lastnameHolderTField.setBounds(727, 234, 175, 36);
+		mainPanel.add(lastnameHolderTField);
 		
-		table_1 = new JTable();
-		table_1.setBounds(493, 389, 246, 174);
-		mainPanel.add(table_1);
+		admissionStatusTable = new JTable();
+		admissionStatusTable.setBounds(141, 432, 175, 36);
+		mainPanel.add(admissionStatusTable);
+		
+		JLabel lblAdmissionStatus = new JLabel("Admission Status:");
+		lblAdmissionStatus.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		lblAdmissionStatus.setBounds(141, 409, 142, 13);
+		mainPanel.add(lblAdmissionStatus);
 	}
 }
