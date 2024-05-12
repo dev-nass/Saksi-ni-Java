@@ -1,4 +1,4 @@
-// May 09
+// MAY 12
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -10,6 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -37,6 +38,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.ImageIcon;
@@ -75,6 +78,7 @@ public class Student_Registration_Form extends JFrame {
 		public String StudfirstNameJava;
 		public String middleNameJava;
 		public String lastNameJava;
+		private String suffixJava;
 		private /*int*/ String ageJava;
 		private String addressJava;
 		private String religionJava;
@@ -210,6 +214,7 @@ public class Student_Registration_Form extends JFrame {
 		
 		ageTField = new JTextField(2);
 		ageTField.setDocument(new JTextFieldCharLimit(2));
+		
 		ageTField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -334,200 +339,232 @@ public class Student_Registration_Form extends JFrame {
 		        StudfirstNameJava = firstnameTField.getText();	
 		        valuePasser(StudfirstNameJava);
 		        middleNameJava = middlenameTField.getText();	        
-		        lastNameJava = lastnameTField.getText();        
-		       // ageJava = Integer.parseInt(ageTField.getText());
+		        lastNameJava = lastnameTField.getText();      
+		        suffixJava = suffixTField.getText();
 		        ageJava = ageTField.getText();    
 		        addressJava = addressTField.getText();
 		        religionJava = religionTField.getText();
 		        genderJava = (String) sexComboBox.getSelectedItem();
-
-		        
+		        contactNumberJava = contactnumTField.getText();
+        
 		        inserting.setValue(StudfirstNameJava, lastNameJava);
-		        System.out.println(inserting.getValueL());
-		        // THERE ARE PREVIOUS CODE BEFORE FOR THIS DATE OF BIRTH, THIS ONE I DONT UNDERSTAND
+		        System.out.println(inserting.getValueL());	      
 
 		        // Format the selected date into a string
 		        java.util.Date selectedDate = dateOfBirthCalendar.getDate();
 		        java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
 		        
+		       
 		        
-		        contactNumberJava = contactnumTField.getText();
+		        
 
 		        if (e.getSource() == submitBTN) {
-		            try {
-		                Class.forName("com.mysql.cj.jdbc.Driver");
-		                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "");
-		                
-		                // Use PreparedStatement to safely insert data
-		                String query = "INSERT INTO applicant (FirstName, MiddleName, LastName, Age, Address, Religion, Gender, DateOfBirth, ContactNumber, Applicant_Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		                PreparedStatement pstmt = con.prepareStatement(query);
-		                
-		                
-		                
-		                // DATE IF TEMPORARY REMOVED
-		                
-		                // Set parameters for the prepared statement
-		                pstmt.setString(1, WordHandler.initialHandler(StudfirstNameJava));
-		                pstmt.setString(2, WordHandler.initialHandler(middleNameJava));
-		                pstmt.setString(3, WordHandler.initialHandler(lastNameJava));
-		                pstmt.setString(4, ageJava);
-		                pstmt.setString(5, addressJava);
-		                pstmt.setString(6, WordHandler.initialHandler(religionJava));
-		                pstmt.setString(7, genderJava);	
-		                pstmt.setDate(8, sqlDate);
-		                pstmt.setString(9, contactNumberJava);
-		                
-		                InputStream img = new FileInputStream(new File(Imagepth));
-		                
-		                pstmt.setBlob(10, img);
+		        	if (StudfirstNameJava.isEmpty() || middleNameJava.isEmpty() || lastNameJava.isEmpty() || ageJava.isEmpty() || addressJava.isEmpty() || religionJava.isEmpty() || contactNumberJava.isEmpty()) {
+		        	    JOptionPane.showMessageDialog(null, "Fill out all the forms for Applicant");
+		        	} else {
+		        	    try {
+		        	        Class.forName("com.mysql.cj.jdbc.Driver");
+		        	        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "");
+		        	        Student_Registration_Form ex = new Student_Registration_Form();
 
-		                // Execute the update (INSERT) operation
-		                pstmt.executeUpdate();
-		                
-		                System.out.println("Record inserted successfully");
-		                
-		                
-		                // !! CODE FOR INSERTING  FirstName, middleName, LastName within user Table
-		                try {
-		                	String userTableQuery = "INSERT INTO user (firstName, middleName, lastName) VALUES (?, ?, ?)";
-			                PreparedStatement pstmt2 = con.prepareStatement(userTableQuery);
-			                pstmt2.setString(1, WordHandler.initialHandler(StudfirstNameJava));
-			                pstmt2.setString(2, WordHandler.initialHandler(middleNameJava));
-			                pstmt2.setString(3, WordHandler.initialHandler(lastNameJava));
-			                pstmt2.executeUpdate();
-		                } catch (SQLException w) {
-			                 w.printStackTrace();
-			                 System.out.println("ERROR HERE");
-			                 // Handle the exception appropriately
-		                }
-		               
-		                
-		                String queryID = "UPDATE applicant "
-		                				+ "SET UserID = (LAST_INSERT_ID()) "
-		                				+ "WHERE firstName = '"+StudfirstNameJava+"' AND middleName = '"+middleNameJava+"' AND lastName = '"+lastNameJava+"'";
-		                PreparedStatement pstmt3 = con.prepareStatement(queryID);
-		                pstmt3.executeUpdate();
-		               
-		                
-		                
-		                // !! CODE FOR SELECTED COURSE
-		                String selectedCourse = (String) programComboBox.getSelectedItem();
-		                int courseNumber = -1; // Default value if course is not found
-		                switch (selectedCourse) {
-		                    case "BS Civil Engineering":
-		                        courseNumber = 1;
-		                        break;
-		                    case "BS Information Systems":
-		                        courseNumber = 2;
-		                        break;
-		                    case "BS Midwifery":
-		                        courseNumber = 3;
-		                        break;
-		                    case "BS Nursing":
-		                        courseNumber = 4;
-		                        break;
-		                    case "BS Psychology":
-		                        courseNumber = 5;
-		                        break;
-		                    // Add more cases for other courses
-		                }
-		                
-		                PreparedStatement statement = con.prepareStatement("INSERT INTO Admission (ProgramID) VALUES (?)");
-		                statement.setInt(1, courseNumber);
-		                statement.executeUpdate();
-		                
-		             // Assuming selectedCourseID is the ID of the selected course
-		             // and connection is your database connection
-		             String programTableQuery = "UPDATE program SET ApplicantEnrolled = ApplicantEnrolled + 1 WHERE ProgramID = ?";
-		             try {
-		                 PreparedStatement pstmt1 = con.prepareStatement(programTableQuery);
-		                 pstmt1.setInt(1, courseNumber); // Set the ProgramID parameter
-		                 pstmt1.executeUpdate(); // Execute the update statement
-		             } catch (SQLException w) {
-		                 w.printStackTrace();
-		                 // Handle the exception appropriately
-		             }
-
-		                
-		                pstmt.close();
-		                con.close();
-		                
-		                
-		            } catch (Exception ex) {
-		                System.out.println("Error: " + ex.getMessage());
-		            }
-		        }
-
-
-                try {	
-				
-			    Class.forName("com.mysql.cj.jdbc.Driver");
-			    try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "")) {
-			        String checkQuery = "SELECT GuardianID FROM guardian_detail WHERE FirstName = ? AND MiddleName = ? AND LastName = ? AND Suffix = ? AND ContactNumber = ? AND Occupation = ?";
-			        try (PreparedStatement checkStatement = con.prepareStatement(checkQuery)) {
-			        	
-			            checkStatement.setString(1, guardianFirstNameTField.getText());
-			            checkStatement.setString(2, guardianMiddleNameTField.getText());
-			            checkStatement.setString(3, guardianLastNameTField.getText());
-			            checkStatement.setString(4, guardianSuffixTField.getText());
-			            checkStatement.setString(5, contactNumberJava);
-			            checkStatement.setString(6, occupationTField.getText());
-			            
-			            try (ResultSet resultSet = checkStatement.executeQuery()) {
-			                int guardianIDJava = 0;
-			                if (resultSet.next()) {
-			                    guardianIDJava = resultSet.getInt("GuardianID");
-			                } else {
-			                    String insertQuery = "INSERT INTO guardian_detail (FirstName, MiddleName, LastName, Suffix, ContactNumber, Occupation) VALUES (?, ?, ?, ?, ?, ?)";
-			                    try (PreparedStatement insertStatement = con.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
-			                    	insertStatement.setString(1, guardianFirstNameTField.getText());
-						            insertStatement.setString(2, guardianMiddleNameTField.getText());
-						            insertStatement.setString(3, guardianLastNameTField.getText());
-						            insertStatement.setString(4, guardianSuffixTField.getText());
-						            insertStatement.setString(5, contactNumberJava);
-						            insertStatement.setString(6, occupationTField.getText());
-			                        insertStatement.executeUpdate();
-			                        try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
-			                            if (generatedKeys.next()) {
-			                                guardianIDJava = generatedKeys.getInt(1);
-			                            } else {
-			                                throw new SQLException("Failed to retrieve GuardianID");
-			                            }
-			                        }
-			                    }
-			                }
-			                GuardianInserting inserting = new GuardianInserting();
-			                System.out.println(inserting.getValueL());
-			                String StudFirstNameHere = inserting.getValueF();
-			                String StudLastNameHere = inserting.getValueL();
-			                String studentUpdateQuery = "UPDATE applicant SET GuardianID = ? WHERE FirstName = '"+firstnameTField.getText()+"' AND LastName = '"+lastnameTField.getText()+"'";
-			                try (PreparedStatement studentUpdateStatement = con.prepareStatement(studentUpdateQuery)) {
-			                    studentUpdateStatement.setInt(1, guardianIDJava);
+		        	        if (ex.isUserExist(StudfirstNameJava, middleNameJava, lastNameJava, suffixJava)) {
+		        	            JOptionPane.showMessageDialog(null, "Student Already Exists");
+		        	        } else {
+		        	            // step #1:
+		        	            // GINAGAMIT PARA MAG LAGAY NG DATA SA APPLICANT NA TABLE - Use PreparedStatement to safely insert data
+		        	            String query = "INSERT INTO applicant (FirstName, MiddleName, LastName, Suffix,  Age, Address, Religion, Sex, DateOfBirth, ContactNumber, Applicant_Image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		        	            PreparedStatement pstmt = con.prepareStatement(query);
+		        	            pstmt.setString(1, WordHandler.initialHandler(StudfirstNameJava));
+		        	            pstmt.setString(2, WordHandler.initialHandler(middleNameJava));
+		        	            pstmt.setString(3, WordHandler.initialHandler(lastNameJava));
+		        	            pstmt.setString(4, suffixJava);
+		        	            pstmt.setString(5, ageJava);
+			                    pstmt.setString(6, addressJava);
+			                    pstmt.setString(7, WordHandler.initialHandler(religionJava));
+			                    pstmt.setString(8, genderJava);	
+			                    pstmt.setDate(9, sqlDate);
+			                    pstmt.setString(10, contactNumberJava);
 			                    
-			                    int rowsAffected = studentUpdateStatement.executeUpdate();
-			                    if (rowsAffected > 0) {
-			                        System.out.println("Update successful. Rows affected: " + rowsAffected);
-			                    } else {
-			                        System.out.println("No rows updated. No matching FirstName found: ");
+			                    InputStream img = new FileInputStream(new File(Imagepth));
+			                    
+			                    pstmt.setBlob(11, img);
+			                    
+			                 // Execute the insert query
+		        	            if (pstmt.executeUpdate() != 0) {
+		        	                JOptionPane.showMessageDialog(null, "Account Created");
+		        	                accountCreationForm ca = new accountCreationForm(StudfirstNameJava, middleNameJava, lastNameJava);
+		     			           	ca.setVisible(true);
+		     			           	dispose();
+		        	            } else {
+		        	                JOptionPane.showMessageDialog(null, "Something Wrong");
+		        	            }
+			                 // step #2:
+			                    // GINGAMIT PARA MAGPASOK NG DATA SA User Table
+			                    // !! CODE FOR INSERTING  FirstName, middleName, LastName within user Table
+			                    try {
+			                        String userTableQuery = "INSERT INTO user (firstName, middleName, lastName, Suffix) VALUES (?, ?, ?, ?)";
+			                        PreparedStatement pstmt2 = con.prepareStatement(userTableQuery);
+			                        pstmt2.setString(1, WordHandler.initialHandler(StudfirstNameJava));
+			                        pstmt2.setString(2, WordHandler.initialHandler(middleNameJava));
+			                        pstmt2.setString(3, WordHandler.initialHandler(lastNameJava));
+			                        pstmt2.setString(4,suffixJava);
+			                        pstmt2.executeUpdate();
+			                    } catch (SQLException w) {
+			                        w.printStackTrace();
+			                        System.out.print("ERROR HERE 1");
+			                        // Handle the exception appropriately
 			                    }
-			                } catch (SQLException w) {
-			                    System.err.println("Error executing update statement: " + w.getMessage());
-			                    w.printStackTrace();
+			                   
+			                    
+			                    // step #3:
+			                    // GINAGAMIT PARA I-RETRIVE YUNG GENERATED NA USERID SA USER TABLE PAPUNTA SA APPLICANT TABLE DAHIL SA step #2
+			                    String queryID = "UPDATE applicant "
+			                                     + "SET UserID = (LAST_INSERT_ID()) "
+			                                     + "WHERE firstName = '"+StudfirstNameJava+"' AND middleName = '"+middleNameJava+"' AND lastName = '"+lastNameJava+"' AND Suffix = '"+suffixJava+"'";
+			                    PreparedStatement pstmt3 = con.prepareStatement(queryID);
+			                    pstmt3.executeUpdate();
+			                   
+			                    // step #4:
+			                    // GINGAMIT PARA IPASOK YUNG PROGRAM ID NG PANILI NG APPLICANT SA ADMISSION TABLE
+			                    // !! CODE FOR SELECTED COURSE
+			                    String selectedCourse = (String) programComboBox.getSelectedItem();
+			                    int courseNumber = -1; // Default value if course is not found
+			                    switch (selectedCourse) {
+			                        case "BS Civil Engineering":
+			                            courseNumber = 1;
+			                            break;
+			                        case "BS Information Systems":
+			                            courseNumber = 2;
+			                            break;
+			                        case "BS Midwifery":
+			                            courseNumber = 3;
+			                            break;
+			                        case "BS Nursing":
+			                            courseNumber = 4;
+			                            break;
+			                        case "BS Psychology":
+			                            courseNumber = 5;
+			                            break;
+			                    }
+			                    
+			                    // step #5:
+			                    // GINAGAMIT PARA MAKUHA YUNG APPLICANT ID NUNG ROW NA NABUO DAHIL SA STEP #1
+			                    PreparedStatement applicantIDGetter = con.prepareStatement("Select ApplicantID FROM Applicant WHERE FirstName = '"+firstnameTField.getText()+"' AND MiddleName = '"+middlenameTField.getText()+"' AND LastName = '"+lastnameTField.getText()+"' AND Suffix = '"+suffixJava+"'");
+			                    ResultSet resultSet = applicantIDGetter.executeQuery();
+			                    
+			                    int applicantID = -1; // Initialize to a default value if no result is found
+
+			                    if (resultSet.next()) {
+			                        // Retrieve the ApplicantID from the result set
+			                        applicantID = resultSet.getInt("ApplicantID");
+			                    }
+			                    
+			                    // step #6:
+			                    // GINGAMIT PARA MA-INSERT YUNG FOREIGN KEYS, ProgramID at ApplicantID, SA ADMISSION TABLE
+			                    PreparedStatement statement = con.prepareStatement("INSERT INTO Admission (ProgramID, ApplicantID) VALUES (?, ?)");
+			                    statement.setInt(1, courseNumber);
+			                    statement.setInt(2, applicantID);
+			                    statement.executeUpdate();
+			                    
+		        	            
+		        	        }
+		        	        
+		        	        
+		        	        
+		        	        
+		        	        
+		        	    } catch (Exception ex) {
+		        	        System.out.println("Error: " + ex.getMessage());
+		        	        
+		        	        JOptionPane.showMessageDialog(null, "Upload your Image");
+		        	        System.out.print("ERROR HERE 3");
+		        	    }
+		        	    
+		        	    String guardianFirstName = guardianFirstNameTField.getText();
+			        	String guardianMiddleName = guardianMiddleNameTField.getText();
+			        	String guardianLastName = guardianLastNameTField.getText();
+			        	
+			                if (guardianFirstName.isEmpty() || guardianMiddleName.isEmpty() || guardianLastName.isEmpty()) {
+			                	JOptionPane.showMessageDialog(null, "Fill out all the forms for Guardian"); 	
+			                } else {
+			                	
+			                	// step #7:
+			                	// GINGAMIT PANG HANDLE NG DATA PARA SA GUARDIAN, KINUKUHA YUNG GUARDIAN ID SA GUARDIAN_DETAIL TABLE BASE DON SA MGA IMPORMASYON NA INILAGAY SA JTFields SA FORMS, KASO GAGANA LANG TO KUNG EXISTING NA SIYA SA GUARDIAN_DETAIL TABLE
+			                	try {
+			                		Class.forName("com.mysql.cj.jdbc.Driver");
+				                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "");
+				                    
+				                    String selectguardianIDquery = "SELECT GuardianID FROM guardian_detail WHERE FirstName = ? AND MiddleName = ? AND LastName = ? AND Suffix = ? AND ContactNumber = ? AND Occupation = ?";
+				                    PreparedStatement selectguardianIDstatement = con.prepareStatement(selectguardianIDquery);
+				                    
+				                    selectguardianIDstatement.setString(1, guardianFirstNameTField.getText());
+				                    selectguardianIDstatement.setString(2, guardianMiddleNameTField.getText());
+				                    selectguardianIDstatement.setString(3, guardianLastNameTField.getText());
+				                    selectguardianIDstatement.setString(4, guardianSuffixTField.getText());
+				                    selectguardianIDstatement.setString(5, contactNumberJava);
+				                    selectguardianIDstatement.setString(6, occupationTField.getText());
+				                    
+				                    ResultSet resultSet = selectguardianIDstatement.executeQuery();
+				                    int guardianIDJava = 0;
+				                    if (resultSet.next()) {
+				                    	 guardianIDJava = resultSet.getInt("GuardianID");
+				                    	 
+				                    	 PreparedStatement applicantUpdateGuardianID = con.prepareStatement("UPDATE Applicant SET GuardianID = ? WHERE FirstName = ? AND MiddleName = ? AND LastName = ? AND Suffix = ?");
+				                    	 applicantUpdateGuardianID.setInt(1, guardianIDJava);
+				                    	 applicantUpdateGuardianID.setString(2, firstnameTField.getText());
+				                    	 applicantUpdateGuardianID.setString(3, middlenameTField.getText());
+				                    	 applicantUpdateGuardianID.setString(4, lastnameTField.getText());
+				                    	 applicantUpdateGuardianID.setString(5, suffixTField.getText());
+				                    	 applicantUpdateGuardianID.executeUpdate();
+				                    } 
+				                    
+				                    // step #8:
+				                    // GINGAMIT PARA MAG INSERT SA GUARDIAN, KUNG WALA PA SIYA SA GUARDIAN TABLE (step 7)
+				                       else {
+				                    	String insertGuardianquery = "INSERT INTO guardian_detail (FirstName, MiddleName, LastName, Suffix, ContactNumber, Occupation) VALUES (?, ?, ?, ?, ?, ?)";
+				                    	PreparedStatement insertGuardianstatement = con.prepareStatement(insertGuardianquery, Statement.RETURN_GENERATED_KEYS);
+				                    	insertGuardianstatement.setString(1, guardianFirstNameTField.getText());
+	                                    insertGuardianstatement.setString(2, guardianMiddleNameTField.getText());
+	                                    insertGuardianstatement.setString(3, guardianLastNameTField.getText());
+	                                    insertGuardianstatement.setString(4, guardianSuffixTField.getText());
+	                                    insertGuardianstatement.setString(5, contactNumberJava);
+	                                    insertGuardianstatement.setString(6, occupationTField.getText());
+	                                    insertGuardianstatement.executeUpdate();
+	                                    
+	                                    // MALAY KO DITO, KASO FEELING KO NEED PARA IWAS ERROR
+	                                    try (ResultSet generatedKeys = insertGuardianstatement.getGeneratedKeys()) {
+	                                        if (generatedKeys.next()) {
+	                                            guardianIDJava = generatedKeys.getInt(1);
+	                                        } else {
+	                                            throw new SQLException("Failed to retrieve GuardianID");
+	                                        }
+	                                    }
+				                    } // DULO NG ELSE DITO, ELSE KUNG MERON NG INFO SA LAHAT NG FIELDS
+				                    
+				                    
+				                    
+			                	} catch (Exception ex) {
+			                		System.out.println("Error: " + ex.getMessage());
+			                	}
 			                }
+			            
+			                
+			           
+		        	}
+		        }
+		        	
+			       
+			       
+			                   
+			              
 
-			            }
-			        }
-			    }
-			} catch (Exception q) {
-			    q.printStackTrace();
-			}
-
+       
 		    }
-		    
-		    
-		    
-		
 		});
+
+		
+		
+		
 
 		submitBTN.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
 		submitBTN.setFocusable(false);
@@ -549,6 +586,10 @@ public class Student_Registration_Form extends JFrame {
 					religionTField.setText("");
 					dateOfBirthCalendar.setDate(null);
 					contactnumTField.setText("09XXXXXXXXX");
+					imageLabel.setIcon(null);
+					
+					
+					JOptionPane.showMessageDialog(null, "Form is Reset");
 				}
 			}
 		});
@@ -597,7 +638,7 @@ public class Student_Registration_Form extends JFrame {
 					
 					
 				} else if (fileState == JFileChooser.CANCEL_OPTION) {
-					System.out.println("No Image is Selected");
+					JOptionPane.showMessageDialog(null, "No Image is Selected");
 				}
 				
 			}
@@ -643,6 +684,12 @@ public class Student_Registration_Form extends JFrame {
 		mainPanel.add(suffixLabel);
 		
 		guardianFirstNameTField = new JTextField();
+		guardianFirstNameTField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+					keyTypedSTRING(e);	
+			}
+		});
 		guardianFirstNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		guardianFirstNameTField.setColumns(10);
 		guardianFirstNameTField.setBorder(new LineBorder(new Color(0x14532d)));
@@ -745,6 +792,30 @@ public class Student_Registration_Form extends JFrame {
 			e.consume();
 		}
 	}
+	
+	// GAGAMITIN PARA ICHECK KUNG EXISITNG NA BA ANG first name, middle name and last name
+		public boolean isUserExist(String fname, String mname, String lname, String suffix) {
+		    boolean uExist = false;
+		    try {
+		        Class.forName("com.mysql.cj.jdbc.Driver");
+		        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "");
+
+		        PreparedStatement ps = con.prepareStatement("SELECT * FROM Applicant WHERE FirstName = '"+fname+"' AND MiddleName = '"+mname+"' AND LastName = '"+lname+"' AND Suffix = '"+suffix+"'");
+		        
+		       
+		        
+		        ResultSet rs = ps.executeQuery();
+
+		        if (rs.next()) {
+		            uExist = true; 
+		        }
+
+		        con.close(); 
+		    } catch (Exception ex) {
+		        Logger.getLogger(Student_Registration_Form.class.getName()).log(Level.SEVERE, null, ex);
+		    }
+		    return uExist;
+		}
 	
 	public String valuePasser(String namePasser) {
 		Guardian_Detail_Form secondClass = new Guardian_Detail_Form();
