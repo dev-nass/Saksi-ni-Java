@@ -8,6 +8,7 @@ import javax.swing.border.LineBorder;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -146,27 +147,32 @@ public class Login_Form extends JFrame implements ActionListener {
 		                // Create statement
 		                try (Statement stmt = con.createStatement()) {
 		                    // Query for Admin login
-		                    String sqlAdminQuery = "SELECT * FROM user WHERE username = '" + usernameTField.getText() + "' AND password = '" + passwordTField.getText() + "' AND userType = 'Admin'";
+		                    String sqlAdminQuery = "SELECT * FROM user WHERE Username = '" + usernameTField.getText() + "' AND Password = '" + passwordTField.getText() + "' AND UserType = 'Admin'";
 		                    try (ResultSet rsAdmin = stmt.executeQuery(sqlAdminQuery)) {
 		                        if (rsAdmin.next()) {
-		                            //dispose();
-		                            System.out.println("Login successful as Admin");
+		                           
+		                        	JOptionPane.showMessageDialog(null, "LOGIN SUCCESSFULLY AS ADMIN");
+		                        	 dispose();
+		                        	 Admin_Access_Form adminForm = new Admin_Access_Form();
+		                        	 adminForm.setVisible(true);
 		                            // Provide feedback to the user interface
-		                        } else {
+		                        } else  {
 		                            // Check for Student login
-		                            String sqlStudentQuery = "SELECT * FROM user WHERE username = '" + usernameTField.getText() + "' AND password = '" + passwordTField.getText() + "' AND userType = 'Student'";
+		                        	
+		                            String sqlStudentQuery = "SELECT * FROM user WHERE Username = '" + usernameTField.getText() + "' AND Password = '" + passwordTField.getText() + "' AND UserType = 'Student'";
 		                            
 		                            
 		                            try (ResultSet rsStudent = stmt.executeQuery(sqlStudentQuery)) {
 		                                if (rsStudent.next()) {
-		                                   // dispose();
+		                                	JOptionPane.showMessageDialog(null, "LOGIN SUCCESSFULLY AS STUDENT");
+		                                	dispose();
 		                                	int userID = rsStudent.getInt("UserID");
 		                                	String userFirstName = rsStudent.getString("FirstName");
 		                                	String userMiddleName = rsStudent.getString("MiddleName");
 		                                    String userLastName = rsStudent.getString("LastName");
 		                                	
 		                                    System.out.println(userID + " " + userFirstName + " " + userMiddleName + " " + userLastName);
-		                                    PreparedStatement ps = con.prepareStatement("SELECT ApplicantID, FirstName, MiddleName, LastName FROM applicant WHERE UserID = '" + userID + "' AND FirstName = '" + userFirstName + "' AND MiddleName = '" + userMiddleName + "' AND LastName = '" + userLastName + "' AND EXISTS (SELECT 1 FROM user WHERE UserID = '" + userID + "' AND FirstName = '" + userFirstName + "' AND MiddleName = '" + userMiddleName + "' AND LastName = '" + userLastName + "' AND Username = '" + usernameTField.getText() + "' AND password = '" + passwordTField.getText() + "' AND userType = 'Student')");
+		                                    PreparedStatement ps = con.prepareStatement("SELECT ApplicantID, FirstName, MiddleName, LastName, Applicant_Image FROM applicant WHERE UserID = '" + userID + "' AND FirstName = '" + userFirstName + "' AND MiddleName = '" + userMiddleName + "' AND LastName = '" + userLastName + "' AND EXISTS (SELECT 1 FROM user WHERE UserID = '" + userID + "' AND FirstName = '" + userFirstName + "' AND MiddleName = '" + userMiddleName + "' AND LastName = '" + userLastName + "' AND Username = '" + usernameTField.getText() + "' AND password = '" + passwordTField.getText() + "' AND userType = 'Student')");
 
 		                                    try (ResultSet rsStudentSlow = ps.executeQuery()) {
 		                                        if (rsStudentSlow.next()) {
@@ -174,8 +180,8 @@ public class Login_Form extends JFrame implements ActionListener {
 		                                            String FirstName = rsStudentSlow.getString("FirstName");
 		                                            String MiddleName = rsStudentSlow.getString("MiddleName");
 		                                            String LastName = rsStudentSlow.getString("LastName");
-		                                            
-		                                            Student_Profile sProfile = new Student_Profile(FirstName, FirstName, MiddleName, LastName);
+		                                            byte [] ApplicantImage = rsStudentSlow.getBytes("Applicant_Image");
+		                                            Student_Profile sProfile = new Student_Profile(ApplicantID, FirstName, FirstName, MiddleName, LastName, ApplicantImage);
 		                                            sProfile.setVisible(true);
 		                                           
 		                                            System.out.println(ApplicantID + " " + FirstName + " " + MiddleName + " " + LastName);
@@ -190,13 +196,16 @@ public class Login_Form extends JFrame implements ActionListener {
 				                            	
 		                                	
 		                                	
-		                                    System.out.println("Login successful as Student");
+		                                   
 		                                    // Provide feedback to the user interface
 		                                } else {
-		                                    System.out.println("Login failed: Invalid username or password");
+		                                	JOptionPane.showMessageDialog(null, "INVALID Username or Password");
 		                                    // Provide feedback to the user interface
 		                                }
 		                            }
+		                            
+		                            
+		                            
 		                        }
 		                    }
 		                }
