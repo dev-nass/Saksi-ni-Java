@@ -1,6 +1,9 @@
+// MAY 12
+
 import java.awt.Color;
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -9,23 +12,53 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import java.awt.Font;
+import java.awt.Image;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.JTable;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Student_Profile extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField usernameTFieldHolder;
 	private JTextField firstnameHolderTField;
 	private JTextField middlenameHolderTField;
 	private JTextField lastnameHolderTField;
-	private JTable admissionStatusTable;
 
+	int globalApplicantID;
 	private String globalUserName;
 	private String globalPassword;
 	private String globalFirstName;
 	private String globalMiddleName;
 	private String globalLastName;
+	private byte[] globalApplicantImage;
+	private String programname;
+	
+	private JTextField applicantIDTField;
+	private JTextField programTField;
+	private JTextField admissionStatusTField;
+	private JTextField suffixTField;
+	private JTextField ageTField;
+	private JTextField addressTField;
+	private JTextField religionTField;
+	private JTextField sexTField;
+	private JTextField dateOfBirthTField;
+	private JTextField contactNumberTField;
+	
+	private JTextField guardianFirstNameTField;
+	private JTextField guardianmiddleNameTField;
+	private JTextField guardianlastnameTField;
+	private JTextField guardianSuffixTField;
+	private JTextField guardianContaactNumberrTField;
+	private JTextField occupationTField;
 	
 	
 	/*
@@ -55,10 +88,10 @@ public class Student_Profile extends JFrame {
 	 * Create the frame.
 	 */
 	
-	public Student_Profile(String username, String firstname, String middlename, String lastname) {
+	public Student_Profile (int ApplicantID, String username, String firstname, String middlename, String lastname, byte [] ApplicantIamge) {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(950, 680);
+		setSize(1030, 730);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();
@@ -74,25 +107,33 @@ public class Student_Profile extends JFrame {
 		mainPanel.setLayout(null);
 		
 		JPanel headerPanel = new JPanel();
-		headerPanel.setBounds(71, 38, 996, 95);
+		headerPanel.setBounds(71, 38, 1092, 95);
 		headerPanel.setBackground(new Color(0x14532d));
 		mainPanel.add(headerPanel);
 		
-		JLabel profileLabel = new JLabel("New label");
+		JLabel profileLabel = new JLabel();
 		profileLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		profileLabel.setBounds(141, 160, 175, 166);
 		profileLabel.setBorder(new LineBorder(new Color(0x14532d)));
+		
+		ImageIcon imageOfStud = new ImageIcon(this.globalApplicantImage = ApplicantIamge);
+		Image img = imageOfStud.getImage().getScaledInstance(profileLabel.getWidth(), profileLabel.getHeight(),  Image.SCALE_SMOOTH);
+		ImageIcon imageOfStudScaled = new ImageIcon(img);
+		
+		profileLabel.setIcon(imageOfStudScaled);
 		mainPanel.add(profileLabel);
 		
 		
 	
 		
-		textField = new JTextField();
-		textField.setText(this.globalPassword = username);
-		textField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		textField.setBounds(141, 352, 175, 36);
-		mainPanel.add(textField);
-		textField.setColumns(10);
+		usernameTFieldHolder = new JTextField();
+		usernameTFieldHolder.setEditable(false);
+		usernameTFieldHolder.setText(this.globalUserName = username);
+		usernameTFieldHolder.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		usernameTFieldHolder.setBorder(new LineBorder(new Color(0x14532d)));
+		usernameTFieldHolder.setBounds(141, 352, 175, 36);
+		mainPanel.add(usernameTFieldHolder);
+		usernameTFieldHolder.setColumns(10);
 		
 		JLabel usernameLabel = new JLabel("Username:");
 		usernameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
@@ -100,48 +141,383 @@ public class Student_Profile extends JFrame {
 		mainPanel.add(usernameLabel);
 		
 		firstnameHolderTField = new JTextField();
+		firstnameHolderTField.setEditable(false);
 		firstnameHolderTField.setText(this.globalFirstName = firstname);
 		firstnameHolderTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-		firstnameHolderTField.setBounds(357, 234, 175, 36);
+		firstnameHolderTField.setBorder(new LineBorder(new Color(0x14532d)));
+		firstnameHolderTField.setBounds(357, 212, 217, 36);
 		mainPanel.add(firstnameHolderTField);
 		firstnameHolderTField.setColumns(10);
 		
 		JLabel firstnameLabel = new JLabel("First Name");
 		firstnameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		firstnameLabel.setBounds(357, 211, 104, 13);
+		firstnameLabel.setBounds(357, 189, 104, 13);
 		mainPanel.add(firstnameLabel);
 		
 		JLabel middlenameLabel = new JLabel("Middle Name");
 		middlenameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		middlenameLabel.setBounds(542, 211, 104, 13);
+		middlenameLabel.setBounds(597, 189, 104, 13);
 		mainPanel.add(middlenameLabel);
 		
 		middlenameHolderTField = new JTextField();
+		middlenameHolderTField.setEditable(false);
 		middlenameHolderTField.setText(this.globalMiddleName = middlename);
 		middlenameHolderTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		middlenameHolderTField.setBorder(new LineBorder(new Color(0x14532d)));
 		middlenameHolderTField.setColumns(10);
-		middlenameHolderTField.setBounds(542, 234, 175, 36);
+		middlenameHolderTField.setBounds(594, 212, 194, 36);
 		mainPanel.add(middlenameHolderTField);
 		
 		JLabel lastnameLabel = new JLabel("Last Name");
 		lastnameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		lastnameLabel.setBounds(727, 211, 104, 13);
+		lastnameLabel.setBounds(812, 189, 104, 13);
 		mainPanel.add(lastnameLabel);
 		
 		lastnameHolderTField = new JTextField();
+		lastnameHolderTField.setEditable(false);
 		lastnameHolderTField.setText(this.globalLastName = lastname);
 		lastnameHolderTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		lastnameHolderTField.setBorder(new LineBorder(new Color(0x14532d)));
 		lastnameHolderTField.setColumns(10);
-		lastnameHolderTField.setBounds(727, 234, 175, 36);
+		lastnameHolderTField.setBounds(812, 212, 175, 36);
 		mainPanel.add(lastnameHolderTField);
+		lastnameHolderTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		lastnameHolderTField.setColumns(10);
+		this.globalApplicantID = ApplicantID;
 		
-		admissionStatusTable = new JTable();
-		admissionStatusTable.setBounds(141, 432, 175, 36);
-		mainPanel.add(admissionStatusTable);
+		JLabel ApplicantIDLabel = new JLabel("Applicant ID:");
+		ApplicantIDLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		ApplicantIDLabel.setBounds(141, 398, 142, 21);
+		mainPanel.add(ApplicantIDLabel);
 		
-		JLabel lblAdmissionStatus = new JLabel("Admission Status:");
-		lblAdmissionStatus.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		lblAdmissionStatus.setBounds(141, 409, 142, 13);
-		mainPanel.add(lblAdmissionStatus);
+		applicantIDTField = new JTextField();
+		applicantIDTField.setEditable(false);
+		this.globalApplicantID = ApplicantID;
+		applicantIDTField.setText(String.valueOf(ApplicantID));
+
+		applicantIDTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		applicantIDTField.setColumns(10);
+		applicantIDTField.setBounds(141, 422, 175, 36);
+		applicantIDTField.setBorder(new LineBorder(new Color(0x14532d)));
+		mainPanel.add(applicantIDTField);
+		
+		JLabel programLabel = new JLabel("Program:");
+		programLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		programLabel.setBounds(141, 468, 142, 21);
+		mainPanel.add(programLabel);
+		
+		programTField = new JTextField();
+		programTField.setEditable(false);
+		programTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		programTField.setBorder(new LineBorder(new Color(0x14532d)));
+		programTField.setColumns(10);
+		programTField.setBounds(141, 487, 175, 36);
+		mainPanel.add(programTField);
+		
+		JLabel admissionStatusLabel = new JLabel("Admission Status:");
+		admissionStatusLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		admissionStatusLabel.setBounds(141, 537, 142, 21);
+		mainPanel.add(admissionStatusLabel);
+		
+		admissionStatusTField = new JTextField();
+		admissionStatusTField.setEditable(false);
+		admissionStatusTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		admissionStatusTField.setBorder(new LineBorder(new Color(0x14532d)));
+		admissionStatusTField.setColumns(10);
+		admissionStatusTField.setBounds(141, 564, 175, 36);
+		mainPanel.add(admissionStatusTField);
+		
+		JLabel guardddiansuffixLabel = new JLabel("Suffix");
+		guardddiansuffixLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		guardddiansuffixLabel.setBounds(357, 541, 104, 13);
+		mainPanel.add(guardddiansuffixLabel);
+		
+		suffixTField = new JTextField();
+		suffixTField.setEditable(false);
+		suffixTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		suffixTField.setBorder(new LineBorder(new Color(0x14532d)));
+		suffixTField.setColumns(10);
+		suffixTField.setBounds(357, 297, 104, 36);
+		mainPanel.add(suffixTField);
+		
+		JLabel ageLabel = new JLabel("Age");
+		ageLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		ageLabel.setBounds(471, 270, 104, 21);
+		mainPanel.add(ageLabel);
+		
+		ageTField = new JTextField();
+		ageTField.setEditable(false);
+		ageTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		ageTField.setBorder(new LineBorder(new Color(0x14532d)));
+		ageTField.setColumns(10);
+		ageTField.setBounds(471, 297, 104, 36);
+		mainPanel.add(ageTField);
+		
+		JLabel addressLabel = new JLabel("Address");
+		addressLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		addressLabel.setBounds(597, 270, 104, 21);
+		mainPanel.add(addressLabel);
+		
+		addressTField = new JTextField();
+		addressTField.setEditable(false);
+		addressTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		addressTField.setBorder(new LineBorder(new Color(0x14532d)));
+		addressTField.setColumns(10);
+		addressTField.setBounds(597, 297, 390, 36);
+		mainPanel.add(addressTField);
+		
+		JLabel religionLabel = new JLabel("Religon");
+		religionLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		religionLabel.setBounds(357, 359, 104, 21);
+		mainPanel.add(religionLabel);
+		
+		religionTField = new JTextField();
+		religionTField.setEditable(false);
+		religionTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		religionTField.setBorder(new LineBorder(new Color(0x14532d)));
+		religionTField.setColumns(10);
+		religionTField.setBounds(357, 383, 125, 36);
+		mainPanel.add(religionTField);
+		
+		JLabel sexLabel = new JLabel("Sex");
+		sexLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		sexLabel.setBounds(497, 359, 104, 21);
+		mainPanel.add(sexLabel);
+		
+		sexTField = new JTextField();
+		sexTField.setEditable(false);
+		sexTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		sexTField.setBorder(new LineBorder(new Color(0x14532d)));
+		sexTField.setColumns(10);
+		sexTField.setBounds(497, 383, 77, 36);
+		mainPanel.add(sexTField);
+		
+		JLabel dataOfBirthLabel = new JLabel("Date of birth");
+		dataOfBirthLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		dataOfBirthLabel.setBounds(597, 359, 104, 21);
+		mainPanel.add(dataOfBirthLabel);
+		
+		dateOfBirthTField = new JTextField();
+		dateOfBirthTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		dateOfBirthTField.setBorder(new LineBorder(new Color(0x14532d)));
+		dateOfBirthTField.setEditable(false);
+		dateOfBirthTField.setColumns(10);
+		dateOfBirthTField.setBounds(597, 383, 104, 36);
+		mainPanel.add(dateOfBirthTField);
+		
+		JLabel contactNumberLabel = new JLabel("Contact Number");
+		contactNumberLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		contactNumberLabel.setBounds(712, 359, 125, 21);
+		mainPanel.add(contactNumberLabel);
+		
+		contactNumberTField = new JTextField();
+		contactNumberTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		contactNumberTField.setBorder(new LineBorder(new Color(0x14532d)));
+		contactNumberTField.setEditable(false);
+		contactNumberTField.setColumns(10);
+		contactNumberTField.setBounds(711, 383, 276, 36);
+		mainPanel.add(contactNumberTField);
+		
+		JLabel guardianfirstnameLabel = new JLabel("Guardian First Name");
+		guardianfirstnameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		guardianfirstnameLabel.setBounds(357, 464, 142, 13);
+		mainPanel.add(guardianfirstnameLabel);
+		
+		guardianFirstNameTField = new JTextField();
+		guardianFirstNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		guardianFirstNameTField.setEditable(false);
+		guardianFirstNameTField.setColumns(10);
+		guardianFirstNameTField.setBorder(new LineBorder(new Color(0x14532d)));
+		guardianFirstNameTField.setBounds(357, 487, 217, 36);
+		mainPanel.add(guardianFirstNameTField);
+		
+		guardianmiddleNameTField = new JTextField();
+		guardianmiddleNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		guardianmiddleNameTField.setEditable(false);
+		guardianmiddleNameTField.setColumns(10);
+		guardianmiddleNameTField.setBorder(new LineBorder(new Color(0x14532d)));
+		guardianmiddleNameTField.setBounds(597, 487, 194, 36);
+		mainPanel.add(guardianmiddleNameTField);
+		
+		JLabel guardianmiddlenameLabel = new JLabel("Guardian Middle Name");
+		guardianmiddlenameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		guardianmiddlenameLabel.setBounds(597, 467, 160, 13);
+		mainPanel.add(guardianmiddlenameLabel);
+		
+		guardianlastnameTField = new JTextField();
+		guardianlastnameTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		guardianlastnameTField.setEditable(false);
+		guardianlastnameTField.setColumns(10);
+		guardianlastnameTField.setBorder(new LineBorder(new Color(0x14532d)));
+		guardianlastnameTField.setBounds(812, 487, 175, 36);
+		mainPanel.add(guardianlastnameTField);
+		
+		JLabel guardianlastnameLabel = new JLabel("Guardian Lasrt Name");
+		guardianlastnameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		guardianlastnameLabel.setBounds(812, 468, 160, 13);
+		mainPanel.add(guardianlastnameLabel);
+		
+		guardianSuffixTField = new JTextField();
+		guardianSuffixTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		guardianSuffixTField.setEditable(false);
+		guardianSuffixTField.setColumns(10);
+		guardianSuffixTField.setBorder(new LineBorder(new Color(0x14532d)));
+		guardianSuffixTField.setBounds(357, 564, 104, 36);
+		mainPanel.add(guardianSuffixTField);
+		
+		guardianContaactNumberrTField = new JTextField();
+		guardianContaactNumberrTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		guardianContaactNumberrTField.setEditable(false);
+		guardianContaactNumberrTField.setColumns(10);
+		guardianContaactNumberrTField.setBorder(new LineBorder(new Color(0x14532d)));
+		guardianContaactNumberrTField.setBounds(481, 564, 276, 36);
+		mainPanel.add(guardianContaactNumberrTField);
+		
+		JLabel contactNumberLabel_1 = new JLabel("Contact Number");
+		contactNumberLabel_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		contactNumberLabel_1.setBounds(481, 540, 125, 21);
+		mainPanel.add(contactNumberLabel_1);
+		
+		occupationTField = new JTextField();
+		occupationTField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		occupationTField.setEditable(false);
+		occupationTField.setColumns(10);
+		occupationTField.setBorder(new LineBorder(new Color(0x14532d)));
+		occupationTField.setBounds(770, 564, 217, 36);
+		mainPanel.add(occupationTField);
+		
+		JLabel contactNumberLabel_1_1 = new JLabel("Contact Number");
+		contactNumberLabel_1_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		contactNumberLabel_1_1.setBounds(770, 540, 125, 21);
+		mainPanel.add(contactNumberLabel_1_1);
+		
+		JLabel suffixLabel = new JLabel("Suffix");
+		suffixLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		suffixLabel.setBounds(357, 277, 104, 13);
+		mainPanel.add(suffixLabel);
+		
+		JButton logoutBTN = new JButton("LOG OUT");
+		logoutBTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource()== logoutBTN) {
+					Login_Form lf = new Login_Form();
+					lf.setVisible(true);
+					dispose();
+				}
+			}
+		});
+		logoutBTN.setForeground(new Color(255, 255, 255));
+		logoutBTN.setBackground(new Color(0xb91c1c));
+		logoutBTN.setBounds(153, 654, 113, 36);
+		mainPanel.add(logoutBTN);
+		
+		try {
+		    Class.forName("com.mysql.cj.jdbc.Driver");
+		    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "");
+		    
+		    // GINGAMIT PARA MA-FETCH YUNG MGA DATA SA ADMISSION
+		    PreparedStatement studentUpdateStatement = con.prepareStatement("SELECT ProgramID, Status FROM Admission WHERE ApplicantID = '"+ApplicantID+"'");
+		    ResultSet rsStudent = studentUpdateStatement.executeQuery();
+		    
+		    if (rsStudent.next()) { // Move the cursor to the first row
+		    	int ProgramIDNumJava = rsStudent.getInt("ProgramID");
+		    	
+		        switch (ProgramIDNumJava) {
+		            case 1:
+		                programTField.setText("BS Civil Engineering");
+		                break;
+		            case 2:
+		                programTField.setText("BS Information Systems");
+		                break;
+		            case 3:
+		                programTField.setText("BS Midwifery");
+		                break;
+		            case 4:
+		                programTField.setText("BS Nursing");
+		                break;
+		            case 5:
+		                programTField.setText("BS Psychology");
+		                break;
+		        }
+
+		        String Registration_Status = rsStudent.getString("Status");
+		        admissionStatusTField.setText(Registration_Status);
+
+		    } else {
+		        // Handle the case where no row is returned
+		        programTField.setText("No program found");
+		    }
+		    
+		 // GAGAMITIN PARA MAKUHA YUNG MGA PERSONAL NA INFORMATION NG STUDENT
+		    PreparedStatement studentUpdateStatement2 = con.prepareStatement("SELECT Suffix, Age, Address, Religion, Sex, DateOfBirth, ContactNumber FROM applicant WHERE ApplicantID = '"+ApplicantID+"'");
+		    ResultSet rs2 = studentUpdateStatement2.executeQuery();
+		    String suffix = "";
+		    String age = "";
+		    String address = "";
+		    String religion = "";
+		    String sex = "";
+		    String dateOfBirth = "";
+		    String contactNumber = "";
+		    if (rs2.next()) {
+		        suffix = rs2.getString("Suffix");
+		        age = rs2.getString("Age");
+		        address = rs2.getString("Address");
+		        religion = rs2.getString("Religion");
+		        sex = rs2.getString("Sex");
+		        dateOfBirth = rs2.getString("DateOfBirth");
+		        contactNumber = rs2.getString("ContactNumber");
+
+		        suffixTField.setText(suffix);
+		        ageTField.setText(age);
+		        addressTField.setText(address);
+		        religionTField.setText(religion);
+		        sexTField.setText(sex);
+		        dateOfBirthTField.setText(dateOfBirth);
+		        contactNumberTField.setText(contactNumber);
+		        
+		        // GAGAMITIN PARA MAKUHA YUNG GUARDIAN ID SA APPLICANT TABLE
+			    PreparedStatement studentUpdateStatement3 = con.prepareStatement("SELECT GuardianID FROM Applicant WHERE FirstName = '"+firstname+"' AND MiddleName = '"+middlename+"' AND Lastname = '"+lastname+"'");
+			    ResultSet rs3 = studentUpdateStatement3.executeQuery();
+			    int guardianID = 0;
+			    if (rs3.next()) {
+			    	guardianID = rs3.getInt("GuardianID");
+			    }
+			    
+			   // GAGAMITIN PARA MAKUHA YUNG GUARDDIAN DETAIL BASE DOON SA NAKUHANG GUARDIAN ID
+			    PreparedStatement studentUpdateStatement4 = con.prepareStatement("SELECT FirstName, MiddleName, LastName, Suffix, ContactNumber, Occupation FROM Guardian_detail WHERE GuardianID = '"+guardianID+"'");
+			    ResultSet rs4 = studentUpdateStatement4.executeQuery();
+			    String gfirstname = "";
+			    String gmiddlename = "";
+			    String glastname = "";
+			    String gsuffix = "";
+			    String gcontactnumber = "";
+			    String goccupation = "";
+			    
+			    if (rs4.next()) {
+			    	gfirstname = rs4.getString("FirstName");
+			    	gmiddlename = rs4.getString("MiddleName");
+			    	glastname = rs4.getString("LastName");
+			    	gsuffix = rs4.getString("Suffix");
+			    	gcontactnumber = rs4.getString("ContactNumber");
+			    	goccupation = rs4.getString("Occupation");
+			    	
+			    	guardianFirstNameTField.setText(gfirstname);
+			    	guardianmiddleNameTField.setText(gmiddlename);
+			    	guardianlastnameTField.setText(glastname);
+			    	guardianSuffixTField.setText(gsuffix);
+			    	guardianContaactNumberrTField.setText(gcontactnumber);
+			    	occupationTField.setText(goccupation);
+			    }
+		    }
+
+		  
+		    
+		} catch (ClassNotFoundException | SQLException e) {
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		} 
+
+		 
+		
 	}
 }
