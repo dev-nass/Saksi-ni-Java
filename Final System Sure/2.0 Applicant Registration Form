@@ -509,36 +509,49 @@ public class Student_Registration_Form extends JFrame {
 				                    if (resultSet.next()) {
 				                    	 guardianIDJava = resultSet.getInt("GuardianID");
 				                    	 
-				                    	 PreparedStatement applicantUpdateGuardianID = con.prepareStatement("UPDATE Applicant SET GuardianID = ? WHERE FirstName = ? AND MiddleName = ? AND LastName = ? AND Suffix = ?");
+				                    	 PreparedStatement applicantUpdateGuardianID = con.prepareStatement("UPDATE Applicant SET GuardianID = ? WHERE FirstName = '"+firstnameTField.getText()+"' AND MiddleName = '"+middlenameTField.getText()+"' AND LastName = '"+lastnameTField.getText()+"' AND Suffix = '"+suffixTField.getText()+"'");
 				                    	 applicantUpdateGuardianID.setInt(1, guardianIDJava);
-				                    	 applicantUpdateGuardianID.setString(2, firstnameTField.getText());
-				                    	 applicantUpdateGuardianID.setString(3, middlenameTField.getText());
-				                    	 applicantUpdateGuardianID.setString(4, lastnameTField.getText());
-				                    	 applicantUpdateGuardianID.setString(5, suffixTField.getText());
+				                
+				       
 				                    	 applicantUpdateGuardianID.executeUpdate();
 				                    } 
 				                    
 				                    // step #8:
 				                    // GINGAMIT PARA MAG INSERT SA GUARDIAN, KUNG WALA PA SIYA SA GUARDIAN TABLE (step 7)
 				                       else {
-				                    	String insertGuardianquery = "INSERT INTO guardian_detail (FirstName, MiddleName, LastName, Suffix, ContactNumber, Occupation) VALUES (?, ?, ?, ?, ?, ?)";
-				                    	PreparedStatement insertGuardianstatement = con.prepareStatement(insertGuardianquery, Statement.RETURN_GENERATED_KEYS);
-				                    	insertGuardianstatement.setString(1, guardianFirstNameTField.getText());
-	                                    insertGuardianstatement.setString(2, guardianMiddleNameTField.getText());
-	                                    insertGuardianstatement.setString(3, guardianLastNameTField.getText());
-	                                    insertGuardianstatement.setString(4, guardianSuffixTField.getText());
-	                                    insertGuardianstatement.setString(5, contactNumberJava);
-	                                    insertGuardianstatement.setString(6, occupationTField.getText());
-	                                    insertGuardianstatement.executeUpdate();
+				                    	 String insertGuardianquery = "INSERT INTO guardian_detail (FirstName, MiddleName, LastName, Suffix, ContactNumber, Occupation) VALUES (?, ?, ?, ?, ?, ?)";
+				                    	 PreparedStatement insertGuardianstatement = con.prepareStatement(insertGuardianquery, Statement.RETURN_GENERATED_KEYS);
+				                    	 insertGuardianstatement.setString(1, guardianFirstNameTField.getText());
+				                    	 insertGuardianstatement.setString(2, guardianMiddleNameTField.getText());
+				                    	 insertGuardianstatement.setString(3, guardianLastNameTField.getText());
+				                    	 insertGuardianstatement.setString(4, guardianSuffixTField.getText());
+				                    	 insertGuardianstatement.setString(5, guardianContactNumTField.getText());
+				                    	 insertGuardianstatement.setString(6, occupationTField.getText());
+				                    	 insertGuardianstatement.executeUpdate();
 	                                    
-	                                    // MALAY KO DITO, KASO FEELING KO NEED PARA IWAS ERROR
-	                                    try (ResultSet generatedKeys = insertGuardianstatement.getGeneratedKeys()) {
-	                                        if (generatedKeys.next()) {
-	                                            guardianIDJava = generatedKeys.getInt(1);
-	                                        } else {
-	                                            throw new SQLException("Failed to retrieve GuardianID");
-	                                        }
-	                                    }
+				                    	// MALAY KO DITO, KASO FEELING KO NEED PARA IWAS ERROR
+				                    	 int guardianIDJava2;
+				                    	    try (ResultSet generatedKeys = insertGuardianstatement.getGeneratedKeys()) {
+				                    	        if (generatedKeys.next()) {
+				                    	            guardianIDJava2 = generatedKeys.getInt(1);
+				                    	        } else {
+				                    	            throw new SQLException("Failed to retrieve GuardianID");
+				                    	        }
+				                    	    }
+				                    	 
+	                                 // step 9:
+	                                 // GAGAMITIN PARA AFTER MAG INSERRT NG BAGONG GUARDIAN SA TABLE NILA, SIYA NAMANG IRE-RETRIVE AT ILALAGAY SA APPLICANT TABLE
+				                    	    String applicantUpdateGuardianIDQuery = "UPDATE Applicant SET GuardianID = ? WHERE FirstName = ? AND MiddleName = ? AND LastName = ? AND Suffix = ?";
+				                    	    PreparedStatement applicantUpdateGuardianIDStatement = con.prepareStatement(applicantUpdateGuardianIDQuery);
+				                    	    applicantUpdateGuardianIDStatement.setInt(1, guardianIDJava2);
+				                    	    applicantUpdateGuardianIDStatement.setString(2, firstnameTField.getText());
+				                    	    applicantUpdateGuardianIDStatement.setString(3, middlenameTField.getText());
+				                    	    applicantUpdateGuardianIDStatement.setString(4, lastnameTField.getText());
+				                    	    applicantUpdateGuardianIDStatement.setString(5, suffixTField.getText());
+				                    	    applicantUpdateGuardianIDStatement.executeUpdate();
+				                    	    
+				                    	    insertGuardianstatement.close();
+				                    	    applicantUpdateGuardianIDStatement.close();          
 				                    } // DULO NG ELSE DITO, ELSE KUNG MERON NG INFO SA LAHAT NG FIELDS
 				                    
 				                    
