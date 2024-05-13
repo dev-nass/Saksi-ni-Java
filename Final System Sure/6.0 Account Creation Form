@@ -1,3 +1,5 @@
+// MAY 14, 2024
+
 import java.awt.Color;
 import java.awt.EventQueue;
 
@@ -123,29 +125,32 @@ public class accountCreationForm extends JFrame {
 		        if (e.getSource() == createBTN) {
 
 		            if (!passWordJava.equals(repassWordJava)) {
-		                JOptionPane.showMessageDialog(null, "THEY ARE NOT THE SAME");
+		                JOptionPane.showMessageDialog(null, "RE-ENTER THE PASSWORD");
+		            } else {
+		            	// GAGAMITIN PARA KUNG SAME NA YUNG NA ENTER NA PASSWORD MAKAPAG CREATE NA NG ACCOUNT
+		            	try {
+			                Class.forName("com.mysql.cj.jdbc.Driver");
+			                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "");
+			                PreparedStatement updateUserStatement = con.prepareStatement("UPDATE User SET Username = '"+userNameJava+"', Password = '"+passWordJava+"' WHERE firstName = ? AND MiddleName = ? AND LastName = ? ");
+			                	updateUserStatement.setString(1, firstName);
+			                	updateUserStatement.setString(2, middleName);
+			                	updateUserStatement.setString(3, lastName);
+			                	updateUserStatement.executeUpdate();
+			                
+			                	int rowsUpdated = updateUserStatement.executeUpdate();
+			                	if (rowsUpdated != 0) {
+			                		JOptionPane.showMessageDialog(null, "Account Created Successfully");
+			                		Login_Form lf = new Login_Form();
+			                		lf.setVisible(true);
+			                		dispose();
+			                	}
+			                	
+			                    } catch (SQLException | ClassNotFoundException e1) {
+				                    e1.printStackTrace();
+			                    }
 		            }
 
-		            try {
-		                Class.forName("com.mysql.cj.jdbc.Driver");
-		                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "");
-		                PreparedStatement updateUserStatement = con.prepareStatement("UPDATE User SET Username = '"+userNameJava+"', Password = '"+passWordJava+"' WHERE firstName = ? AND MiddleName = ? AND LastName = ? ");
-		                	updateUserStatement.setString(1, firstName);
-		                	updateUserStatement.setString(2, middleName);
-		                	updateUserStatement.setString(3, lastName);
-		                	updateUserStatement.executeUpdate();
-		                
-		                	int rowsUpdated = updateUserStatement.executeUpdate();
-		                	if (rowsUpdated != 0) {
-		                		JOptionPane.showMessageDialog(null, "Account Created Successfully");
-		                		Login_Form lf = new Login_Form();
-		                		lf.setVisible(true);
-		                		dispose();
-		                	}
-		                	
-		                    } catch (SQLException | ClassNotFoundException e1) {
-			                    e1.printStackTrace();
-		                    } 
+		             
 		        }
 		        
 		    }
