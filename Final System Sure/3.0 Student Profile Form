@@ -1,4 +1,4 @@
-// MAY 12
+// MAY 14, 2024
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -386,10 +386,10 @@ public class Student_Profile extends JFrame {
 		occupationTField.setBounds(770, 564, 217, 36);
 		mainPanel.add(occupationTField);
 		
-		JLabel contactNumberLabel_1_1 = new JLabel("Contact Number");
-		contactNumberLabel_1_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
-		contactNumberLabel_1_1.setBounds(770, 540, 125, 21);
-		mainPanel.add(contactNumberLabel_1_1);
+		JLabel occupationLabel = new JLabel("Occupation");
+		occupationLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
+		occupationLabel.setBounds(770, 540, 125, 21);
+		mainPanel.add(occupationLabel);
 		
 		JLabel suffixLabel = new JLabel("Suffix");
 		suffixLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
