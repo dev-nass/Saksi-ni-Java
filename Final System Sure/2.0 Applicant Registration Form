@@ -1,4 +1,4 @@
-// MAY 14, 2024
+// MAY 17, 2024
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -125,6 +125,7 @@ public class Student_Registration_Form extends JFrame {
 	 */
 	public Student_Registration_Form() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Applicant Registration Form");
 		setSize(1570, 828);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -143,13 +144,48 @@ public class Student_Registration_Form extends JFrame {
 		headerPanel.setBounds(10, 24, 1614, 115);
 		headerPanel.setBackground(new Color(0x14532d));
 		mainPanel.add(headerPanel);
+		headerPanel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("KOLEHIYO NG LUNGSOD NG DASMARINAS");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 30));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(321, 0, 877, 82);
+		headerPanel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setBounds(362, 64, 435, 4);
+		headerPanel.add(lblNewLabel_1);
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Jonas\\Downloads\\minus.png"));
+		
+		JLabel lblNewLabel_2 = new JLabel("Building the Foundation For the Dasmarinenos");
+		lblNewLabel_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setBounds(505, 61, 505, 54);
+		headerPanel.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("");
+		lblNewLabel_1_1.setBounds(700, 64, 364, 4);
+		headerPanel.add(lblNewLabel_1_1);
+		lblNewLabel_1_1.setIcon(new ImageIcon("C:\\Users\\Jonas\\Downloads\\minus.png"));
+		
+		JLabel lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setBounds(308, 0, 135, 125);
+		headerPanel.add(lblNewLabel_3);
+		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\Jonas\\Downloads\\Picture3.jpg"));
+		
+		JLabel lblNewLabel_3_1 = new JLabel("");
+		lblNewLabel_3_1.setIcon(new ImageIcon("C:\\Users\\Jonas\\Downloads\\Picture3.jpg"));
+		lblNewLabel_3_1.setBounds(1098, 0, 135, 125);
+		headerPanel.add(lblNewLabel_3_1);
 		
 		JLabel headingLabel = new JLabel("Applicant Registration Form");
 		headingLabel.setForeground(new Color(255, 255, 255));
 		headingLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
 		headingLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		headingLabel.setForeground(new Color(0x14532d));
-		headingLabel.setBounds(636, 129, 400, 89);
+		headingLabel.setBounds(557, 130, 400, 89);
 		mainPanel.add(headingLabel);
 		
 		firstnameTField = new JTextField();
@@ -392,7 +428,7 @@ public class Student_Registration_Form extends JFrame {
 			                 // Execute the insert query
 		        	            if (pstmt.executeUpdate() != 0) {
 		        	                JOptionPane.showMessageDialog(null, "Account Created");
-		        	                accountCreationForm ca = new accountCreationForm(StudfirstNameJava, middleNameJava, lastNameJava);
+		        	                accountCreationForm ca = new accountCreationForm(StudfirstNameJava, middleNameJava, lastNameJava, suffixTField.getText());
 		     			           	ca.setVisible(true);
 		     			           	dispose();
 		        	            } else {
@@ -497,12 +533,12 @@ public class Student_Registration_Form extends JFrame {
 				                    String selectguardianIDquery = "SELECT GuardianID FROM guardian_detail WHERE FirstName = ? AND MiddleName = ? AND LastName = ? AND Suffix = ? AND ContactNumber = ? AND Occupation = ?";
 				                    PreparedStatement selectguardianIDstatement = con.prepareStatement(selectguardianIDquery);
 				                    
-				                    selectguardianIDstatement.setString(1, guardianFirstNameTField.getText());
-				                    selectguardianIDstatement.setString(2, guardianMiddleNameTField.getText());
-				                    selectguardianIDstatement.setString(3, guardianLastNameTField.getText());
+				                    selectguardianIDstatement.setString(1, WordHandler.initialHandler(guardianFirstNameTField.getText()));
+				                    selectguardianIDstatement.setString(2, WordHandler.initialHandler(guardianMiddleNameTField.getText()));
+				                    selectguardianIDstatement.setString(3, WordHandler.initialHandler(guardianLastNameTField.getText()));
 				                    selectguardianIDstatement.setString(4, guardianSuffixTField.getText());
-				                    selectguardianIDstatement.setString(5, contactNumberJava);
-				                    selectguardianIDstatement.setString(6, occupationTField.getText());
+				                    selectguardianIDstatement.setString(5, guardianContactNumTField.getText()); // KAYA PALA DUPLICATED YUNG GUARDIAN DAHIL SAUUUUU
+				                    selectguardianIDstatement.setString(6, WordHandler.initialHandler(occupationTField.getText()));
 				                    
 				                    ResultSet resultSet = selectguardianIDstatement.executeQuery();
 				                    int guardianIDJava = 0;
@@ -521,12 +557,12 @@ public class Student_Registration_Form extends JFrame {
 				                       else {
 				                    	 String insertGuardianquery = "INSERT INTO guardian_detail (FirstName, MiddleName, LastName, Suffix, ContactNumber, Occupation) VALUES (?, ?, ?, ?, ?, ?)";
 				                    	 PreparedStatement insertGuardianstatement = con.prepareStatement(insertGuardianquery, Statement.RETURN_GENERATED_KEYS);
-				                    	 insertGuardianstatement.setString(1, guardianFirstNameTField.getText());
-				                    	 insertGuardianstatement.setString(2, guardianMiddleNameTField.getText());
-				                    	 insertGuardianstatement.setString(3, guardianLastNameTField.getText());
+				                    	 insertGuardianstatement.setString(1, WordHandler.initialHandler(guardianFirstNameTField.getText()));
+				                    	 insertGuardianstatement.setString(2, WordHandler.initialHandler(guardianMiddleNameTField.getText()));
+				                    	 insertGuardianstatement.setString(3, WordHandler.initialHandler(guardianLastNameTField.getText()));
 				                    	 insertGuardianstatement.setString(4, guardianSuffixTField.getText());
 				                    	 insertGuardianstatement.setString(5, guardianContactNumTField.getText());
-				                    	 insertGuardianstatement.setString(6, occupationTField.getText());
+				                    	 insertGuardianstatement.setString(6, WordHandler.initialHandler(occupationTField.getText()));
 				                    	 insertGuardianstatement.executeUpdate();
 	                                    
 				                    	// MALAY KO DITO, KASO FEELING KO NEED PARA IWAS ERROR
@@ -544,9 +580,9 @@ public class Student_Registration_Form extends JFrame {
 				                    	    String applicantUpdateGuardianIDQuery = "UPDATE Applicant SET GuardianID = ? WHERE FirstName = ? AND MiddleName = ? AND LastName = ? AND Suffix = ?";
 				                    	    PreparedStatement applicantUpdateGuardianIDStatement = con.prepareStatement(applicantUpdateGuardianIDQuery);
 				                    	    applicantUpdateGuardianIDStatement.setInt(1, guardianIDJava2);
-				                    	    applicantUpdateGuardianIDStatement.setString(2, firstnameTField.getText());
-				                    	    applicantUpdateGuardianIDStatement.setString(3, middlenameTField.getText());
-				                    	    applicantUpdateGuardianIDStatement.setString(4, lastnameTField.getText());
+				                    	    applicantUpdateGuardianIDStatement.setString(2, WordHandler.initialHandler(firstnameTField.getText()));
+				                    	    applicantUpdateGuardianIDStatement.setString(3, WordHandler.initialHandler(middlenameTField.getText()));
+				                    	    applicantUpdateGuardianIDStatement.setString(4, WordHandler.initialHandler(lastnameTField.getText()));
 				                    	    applicantUpdateGuardianIDStatement.setString(5, suffixTField.getText());
 				                    	    applicantUpdateGuardianIDStatement.executeUpdate();
 				                    	    
@@ -594,6 +630,7 @@ public class Student_Registration_Form extends JFrame {
 					firstnameTField.setText("");
 					middlenameTField.setText("");
 					lastnameTField.setText("");
+					suffixTField.setText("");
 					ageTField.setText("");
 					addressTField.setText("");
 					religionTField.setText("");
@@ -601,6 +638,12 @@ public class Student_Registration_Form extends JFrame {
 					contactnumTField.setText("09XXXXXXXXX");
 					imageLabel.setIcon(null);
 					
+					guardianFirstNameTField.setText("");
+					guardianMiddleNameTField.setText("");
+					guardianLastNameTField.setText("");
+					guardianSuffixTField.setText("");
+					guardianContactNumTField.setText("09XXXXXXXXX");
+					occupationTField.setText("");
 					
 					JOptionPane.showMessageDialog(null, "Form is Reset");
 				}
@@ -617,7 +660,7 @@ public class Student_Registration_Form extends JFrame {
 		JLabel subheadingLabel = new JLabel("Fill out the form carefully for registration");
 		subheadingLabel.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		subheadingLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		subheadingLabel.setBounds(679, 186, 324, 26);
+		subheadingLabel.setBounds(604, 188, 324, 26);
 		mainPanel.add(subheadingLabel);
 		
 		imageLabel = new JLabel("Upload Applicant Picture");
@@ -717,6 +760,12 @@ public class Student_Registration_Form extends JFrame {
 		mainPanel.add(guardianFirstnameLabel);
 		
 		guardianMiddleNameTField = new JTextField();
+		guardianMiddleNameTField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+					keyTypedSTRING(e);	
+			}
+		});
 		guardianMiddleNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		guardianMiddleNameTField.setColumns(10);
 		guardianMiddleNameTField.setBorder(new LineBorder(new Color(0x14532d)));
@@ -731,6 +780,12 @@ public class Student_Registration_Form extends JFrame {
 		mainPanel.add(guardianMiddeNameLabel);
 		
 		guardianLastNameTField = new JTextField();
+		guardianLastNameTField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+					keyTypedSTRING(e);	
+			}
+		});
 		guardianLastNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		guardianLastNameTField.setColumns(10);
 		guardianLastNameTField.setBorder(new LineBorder(new Color(0x14532d)));
@@ -758,7 +813,20 @@ public class Student_Registration_Form extends JFrame {
 		mainPanel.add(guardianSuffixLabel);
 		
 		guardianContactNumTField = new JTextField();
+		guardianContactNumTField.setDocument(new JTextFieldCharLimit(11));
 		guardianContactNumTField.setText("09XXXXXXXXX");
+		guardianContactNumTField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				keyTypedDIGIT(e);
+			}
+		});
+		guardianContactNumTField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				guardianContactNumTField.setText("");
+			}
+		});
 		guardianContactNumTField.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		guardianContactNumTField.setColumns(10);
 		guardianContactNumTField.setBorder(new LineBorder(new Color(0x14532d)));
