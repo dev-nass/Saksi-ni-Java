@@ -1,4 +1,4 @@
-// MAY 14, 2024
+// MAY 17, 2024
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -92,6 +92,7 @@ public class Student_Profile extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1030, 730);
+		setTitle("Applicant Profile");
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();
@@ -107,9 +108,42 @@ public class Student_Profile extends JFrame {
 		mainPanel.setLayout(null);
 		
 		JPanel headerPanel = new JPanel();
-		headerPanel.setBounds(71, 38, 1092, 95);
+		headerPanel.setBounds(71, 38, 1092, 105);
 		headerPanel.setBackground(new Color(0x14532d));
 		mainPanel.add(headerPanel);
+		headerPanel.setLayout(null);
+		
+		JLabel KLDtxt = new JLabel("KOLEHIYO NG LUNGSOD NG DASMARINAS");
+		KLDtxt.setForeground(new Color(255, 255, 255));
+		KLDtxt.setFont(new Font("Segoe UI", Font.BOLD, 27));
+		KLDtxt.setBounds(245, 10, 564, 43);
+		headerPanel.add(KLDtxt);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Jonas\\Downloads\\minus.png"));
+		lblNewLabel.setBounds(161, 51, 433, 4);
+		headerPanel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Jonas\\Downloads\\minus.png"));
+		lblNewLabel_1.setBounds(500, 51, 293, 4);
+		headerPanel.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Building the Foundation for the Dasmarinenos");
+		lblNewLabel_2.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 20));
+		lblNewLabel_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2.setBounds(323, 60, 470, 25);
+		headerPanel.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\Jonas\\Downloads\\Picture3.jpg"));
+		lblNewLabel_3.setBounds(123, 10, 103, 85);
+		headerPanel.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_3_1 = new JLabel("");
+		lblNewLabel_3_1.setIcon(new ImageIcon("C:\\Users\\Jonas\\Downloads\\Picture3.jpg"));
+		lblNewLabel_3_1.setBounds(817, 10, 103, 85);
+		headerPanel.add(lblNewLabel_3_1);
 		
 		JLabel profileLabel = new JLabel();
 		profileLabel.setHorizontalAlignment(SwingConstants.CENTER);
