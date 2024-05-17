@@ -1,4 +1,4 @@
-// MAY 14, 2024
+// MAY 17, 2024
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -32,6 +32,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.SwingConstants;
 
 public class Login_Form extends JFrame implements ActionListener {
 
@@ -88,6 +89,12 @@ public class Login_Form extends JFrame implements ActionListener {
 		mainPanel.add(leftPanel);
 		leftPanel.setLayout(null);
 		
+		JLabel kldBuildingIMG = new JLabel("");
+		kldBuildingIMG.setIcon(new ImageIcon("C:\\Users\\Jonas\\Downloads\\123.png"));
+		kldBuildingIMG.setHorizontalAlignment(SwingConstants.CENTER);
+		kldBuildingIMG.setBounds(10, 10, 543, 731);
+		leftPanel.add(kldBuildingIMG);
+		
 		JPanel rightPanel = new JPanel();
 		rightPanel.setBackground(new Color(0xF5F5F5));
 		mainPanel.add(rightPanel);
@@ -142,7 +149,7 @@ public class Login_Form extends JFrame implements ActionListener {
 		            // Load the MySQL JDBC driver
 		            Class.forName("com.mysql.cj.jdbc.Driver");
 		            
-		            // Establish connection to the database
+		            // KONEKSYON SA DATABASE
 		            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "")) {
 		                System.out.println("Connection created");
 
@@ -268,11 +275,4 @@ public class Login_Form extends JFrame implements ActionListener {
 			passwordTField.setEchoChar('•');
 		}
 	}
-
-	
-
-	
-	
-	
-	
 }
