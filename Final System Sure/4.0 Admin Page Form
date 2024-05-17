@@ -1,4 +1,4 @@
-// MAY 14, 2024
+// MAY 17, 2024
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -138,12 +138,46 @@ public class Admin_Access_Form extends JFrame {
 		mainPanel.setLayout(null);
 		
 		JPanel headerPanel = new JPanel();
-		headerPanel.setBounds(71, 38, 1589, 95);
+		headerPanel.setBounds(71, 38, 1589, 110);
 		headerPanel.setBackground(new Color(0x14532d));
 		mainPanel.add(headerPanel);
+		headerPanel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("KOLEHIYO NG LUNGSODD NG DASMARINAS");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 26));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(469, 0, 605, 59);
+		headerPanel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Jonas\\Downloads\\minus.png"));
+		lblNewLabel_1.setBounds(403, 54, 430, 5);
+		headerPanel.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("");
+		lblNewLabel_1_1.setIcon(new ImageIcon("C:\\Users\\Jonas\\Downloads\\minus.png"));
+		lblNewLabel_1_1.setBounds(720, 54, 323, 5);
+		headerPanel.add(lblNewLabel_1_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Building the Foundation for the Dasmarinenos");
+		lblNewLabel_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 23));
+		lblNewLabel_2.setBounds(536, 55, 462, 45);
+		headerPanel.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\Jonas\\Downloads\\Picture3.jpg"));
+		lblNewLabel_3.setBounds(364, 10, 104, 90);
+		headerPanel.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_3_1 = new JLabel("");
+		lblNewLabel_3_1.setIcon(new ImageIcon("C:\\Users\\Jonas\\Downloads\\Picture3.jpg"));
+		lblNewLabel_3_1.setBounds(1066, 10, 104, 90);
+		headerPanel.add(lblNewLabel_3_1);
 		
 		JTabbedPane tabbedPanel = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPanel.setBounds(96, 132, 1564, 750);
+		tabbedPanel.setBounds(96, 146, 1564, 736);
 		tabbedPanel.setBackground(new Color(0xF5F5F5));
 		mainPanel.add(tabbedPanel);
 		
