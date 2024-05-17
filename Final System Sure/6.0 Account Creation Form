@@ -1,10 +1,11 @@
-// MAY 14, 2024
+// MAY 17, 2024
 
 import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
@@ -17,17 +18,24 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class accountCreationForm extends JFrame {
+public class accountCreationForm extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField userNameTField;
-	private JTextField passWordTField;
-	private JTextField repassWordTField;
+	private static JTextField userNameTField;
+	private JPasswordField passWordTField;
+	private static JPasswordField repassWordTField;
+	
+	private JCheckBox showpasChkBox;
 	
 	// VARIABLES FOR GETTIG THE NAMES
 	private String userNameJava;
@@ -47,11 +55,12 @@ public class accountCreationForm extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public accountCreationForm(String firstName, String middleName, String lastName) {
+	public accountCreationForm(String firstName, String middleName, String lastName, String suffix) {
 	
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500, 600);
+		setSize(500, 660);
+		setTitle("Account Creation");
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -60,53 +69,74 @@ public class accountCreationForm extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel mainPanel = new JPanel();
-		mainPanel.setBounds(-37, -21, 536, 595);
+		mainPanel.setBounds(-37, -21, 536, 669);
 		mainPanel.setBackground(new Color(0xF5F5F5));
 		contentPane.add(mainPanel);
 		mainPanel.setLayout(null);
 		
 		JPanel headerPanel = new JPanel();
-		headerPanel.setBounds(0, 5, 610, 98);
+		headerPanel.setBounds(10, 5, 610, 117);
 		headerPanel.setBackground(new Color(0x14532d));
 		mainPanel.add(headerPanel);
+		headerPanel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Kolehiyo ng Lungsod ng Dasmarinas");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblNewLabel.setBounds(117, 22, 314, 55);
+		headerPanel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Jonas\\Downloads\\minus.png"));
+		lblNewLabel_1.setBounds(29, 66, 400, 5);
+		headerPanel.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Building the Foundation for the Dasmarinenos");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2.setFont(new Font("Harlow Solid Italic", Font.PLAIN, 15));
+		lblNewLabel_2.setBounds(117, 77, 307, 13);
+		headerPanel.add(lblNewLabel_2);
 		
 		userNameTField = new JTextField();
 		userNameTField.setFont(new Font("Segoe UI", Font.PLAIN, 17));
-		userNameTField.setBounds(125, 213, 290, 45);
+		userNameTField.setBounds(125, 236, 290, 45);
 		userNameTField.setBackground(new Color(0xe2e8f0));
 		userNameTField.setBorder(new LineBorder(new Color(0x14532d)));
 		mainPanel.add(userNameTField);
 		userNameTField.setColumns(10);
 		
-		passWordTField = new JTextField();
+		passWordTField = new JPasswordField();
 		passWordTField.setFont(new Font("Segoe UI", Font.PLAIN, 17));
 		passWordTField.setColumns(10);
-		passWordTField.setBounds(125, 305, 290, 45);
+		passWordTField.setBounds(125, 330, 290, 45);
 		passWordTField.setBackground(new Color(0xe2e8f0));
 		passWordTField.setBorder(new LineBorder(new Color(0x14532d)));
+		passWordTField.setEchoChar('•');
 		mainPanel.add(passWordTField);
 		
-		repassWordTField = new JTextField();
+		repassWordTField = new JPasswordField();
 		repassWordTField.setFont(new Font("Segoe UI", Font.PLAIN, 17));
 		repassWordTField.setColumns(10);
-		repassWordTField.setBounds(125, 397, 290, 45);
+		repassWordTField.setBounds(125, 422, 290, 45);
 		repassWordTField.setBackground(new Color(0xe2e8f0));
 		repassWordTField.setBorder(new LineBorder(new Color(0x14532d)));
 		mainPanel.add(repassWordTField);
 		
 		JLabel userNameLabel = new JLabel("Username");
 		userNameLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		userNameLabel.setBounds(125, 257, 68, 13);
+		userNameLabel.setBounds(125, 291, 68, 13);
 		mainPanel.add(userNameLabel);
 		
 		JLabel passWordLabel = new JLabel("Password");
 		passWordLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		passWordLabel.setBounds(125, 351, 68, 13);
+		passWordLabel.setBounds(125, 380, 68, 13);
 		mainPanel.add(passWordLabel);
 		
 		JLabel repassWordLabel = new JLabel("Re-type password");
 		repassWordLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
-		repassWordLabel.setBounds(125, 442, 120, 13);
+		repassWordLabel.setBounds(125, 472, 120, 13);
 		mainPanel.add(repassWordLabel);
 		
 		JButton createBTN = new JButton("CREATE");
@@ -120,21 +150,27 @@ public class accountCreationForm extends JFrame {
 		        passWordJava = passWordTField.getText();
 		        repassWordJava = repassWordTField.getText();
 		        
+		       
 		      
 
 		        if (e.getSource() == createBTN) {
-
-		            if (!passWordJava.equals(repassWordJava)) {
-		                JOptionPane.showMessageDialog(null, "RE-ENTER THE PASSWORD");
-		            } else {
-		            	// GAGAMITIN PARA KUNG SAME NA YUNG NA ENTER NA PASSWORD MAKAPAG CREATE NA NG ACCOUNT
-		            	try {
-			                Class.forName("com.mysql.cj.jdbc.Driver");
-			                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "");
-			                PreparedStatement updateUserStatement = con.prepareStatement("UPDATE User SET Username = '"+userNameJava+"', Password = '"+passWordJava+"' WHERE firstName = ? AND MiddleName = ? AND LastName = ? ");
+		        	
+		        	try {
+		        		 Class.forName("com.mysql.cj.jdbc.Driver");
+		        		 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "");
+		        		 
+		        		 
+		        		 if (!passWordJava.equals(repassWordJava)) {
+				                JOptionPane.showMessageDialog(null, "RE-ENTER THE PASSWORD");
+				           } else if (isUserExist(userNameTField.getText()) == true) {
+				        	   JOptionPane.showMessageDialog(null, "Username Already Exist");
+				           } else {
+				            	// GAGAMITIN PARA KUNG SAME NA YUNG NA ENTER NA PASSWORD MAKAPAG CREATE NA NG ACCOUNT
+				        	   PreparedStatement updateUserStatement = con.prepareStatement("UPDATE User SET Username = '"+userNameJava+"', Password = '"+passWordJava+"' WHERE firstName = ? AND MiddleName = ? AND LastName = ? AND Suffix = ? ");
 			                	updateUserStatement.setString(1, firstName);
 			                	updateUserStatement.setString(2, middleName);
 			                	updateUserStatement.setString(3, lastName);
+			                	updateUserStatement.setString(4, suffix);
 			                	updateUserStatement.executeUpdate();
 			                
 			                	int rowsUpdated = updateUserStatement.executeUpdate();
@@ -144,11 +180,15 @@ public class accountCreationForm extends JFrame {
 			                		lf.setVisible(true);
 			                		dispose();
 			                	}
-			                	
-			                    } catch (SQLException | ClassNotFoundException e1) {
-				                    e1.printStackTrace();
-			                    }
-		            }
+				           }
+		        	} catch (SQLException | ClassNotFoundException e1) {
+		        		 e1.printStackTrace();
+		        	}
+
+		            
+		            
+		            
+		          
 
 		             
 		        }
@@ -156,13 +196,16 @@ public class accountCreationForm extends JFrame {
 		    }
 		});
 
-		createBTN.setBounds(125, 504, 120, 39);
+		createBTN.setBounds(125, 548, 120, 39);
 		
 		mainPanel.add(createBTN);
 		
 		JButton resetBTN = new JButton("RESET");
 		resetBTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				userNameTField.setText("");
+				passWordTField.setText("");
+				repassWordTField.setText("");
 			}
 		});
 		resetBTN.setForeground(Color.WHITE);
@@ -170,22 +213,71 @@ public class accountCreationForm extends JFrame {
 		resetBTN.setFocusable(false);
 		resetBTN.setForeground(new Color(255, 255, 255));
 		resetBTN.setBackground(new Color(0xb91c1c));
-		resetBTN.setBounds(295, 504, 120, 39);
+		resetBTN.setBounds(295, 548, 120, 39);
 		mainPanel.add(resetBTN);
 		
 		JLabel headingLabel = new JLabel("Create Account");
 		headingLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		headingLabel.setFont(new Font("Segoe UI", Font.BOLD, 30));
 		headingLabel.setForeground(new Color(0x14532d));
-		headingLabel.setBounds(162, 123, 224, 30);
+		headingLabel.setBounds(167, 142, 224, 44);
 		mainPanel.add(headingLabel);
 		
 		JLabel subHeadingLabel = new JLabel("Fill the form carefully");
 		subHeadingLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		subHeadingLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		subHeadingLabel.setBounds(184, 155, 169, 13);
+		subHeadingLabel.setBounds(186, 183, 169, 13);
 		mainPanel.add(subHeadingLabel);
+		
+		showpasChkBox = new JCheckBox("Show Password");
+		showpasChkBox.setFont(new Font("Segoe UI Light", Font.PLAIN, 9));
+		showpasChkBox.setBackground(new Color(245, 245, 245));
+		showpasChkBox.setFocusable(false);
+		showpasChkBox.setBounds(316, 472, 99, 21);
+		showpasChkBox.setForeground(new Color(0, 0, 0));
+		showpasChkBox.addActionListener(this);
+		mainPanel.add(showpasChkBox);
 	
 		
 	}
+	
+	
+	static boolean isUserExist(String un) throws ClassNotFoundException, SQLException {
+		boolean uExist = false;
+		Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_system_final", "root", "");
+        
+        
+        try {
+        	PreparedStatement ps = con.prepareStatement("SELECT * FROM User WHERE Username = '"+userNameTField.getText()+"'");
+        	ResultSet rs = ps.executeQuery();
+        	
+        	if (rs.next()) {
+        		uExist = true;
+        	}
+        	
+        } catch (SQLException e1) {
+        	e1.printStackTrace();
+        }
+		return uExist;
+		
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (showpasChkBox.isSelected()) {
+			passWordTField.setEchoChar((char)0);
+			repassWordTField.setEchoChar((char)0);
+		} else {
+			passWordTField.setEchoChar('•');
+			repassWordTField.setEchoChar('•');
+		}
+	}
+	
+
+
+
+
 }
