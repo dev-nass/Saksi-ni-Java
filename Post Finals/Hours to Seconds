@@ -1,0 +1,29 @@
+// MAY 26, 2024
+
+import java.util.Scanner;
+
+public class Main {
+	
+	static Scanner scanner = new Scanner(System.in);
+	
+	public static void main (String[] args) {
+		
+		System.out.print("How many hours: ");
+		int hours = scanner.nextInt();
+		
+		howManySeconds(hours);
+		
+		
+	}
+	
+	
+	public static int howManySeconds(int hours) {
+		// multiply yung numero ng ORAS sa kung ilang SEGUNDO meron ito
+		// ang ISANG ORAS ay meron 3,600 na seguno, kung ganon minultiply ko lamang siya sa variable na oras
+		int seconds = hours * 3600;
+		
+		System.out.println("The number of seconds are there in "+hours+ " hours is "+seconds);
+		
+		return seconds;
+	}
+}
