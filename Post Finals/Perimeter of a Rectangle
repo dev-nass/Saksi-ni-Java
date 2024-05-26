@@ -1,0 +1,33 @@
+// MAY 26, 2024
+
+import java.util.Scanner;
+
+public class Main {
+	
+	static Scanner scanner = new Scanner(System.in);
+	
+	public static void main (String[] args) {
+		
+		System.out.print("Enter the length: ");
+		int v = scanner.nextInt();
+		
+		System.out.print("Enter the width: ");
+		int w = scanner.nextInt();
+		
+		// V takes the value of the length
+		// W takes the value of the width
+		findPerimeter(v, w);
+		
+	}
+	
+	public static int findPerimeter(int length, int width) {
+		// the LENGTH and the WIDTH is both multiplied by 2
+		// because a rectangle is 2Dimensional []
+		int perimeter = (length*2) + (width*2);
+		
+		System.out.println(perimeter);
+		
+		return perimeter;
+  }
+	
+}
