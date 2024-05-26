@@ -1,0 +1,39 @@
+// MAY 26, 2024
+
+import java.util.*;
+
+public class Main {
+	
+	static Scanner scanner = new Scanner (System.in);
+	
+	public static int[] arrayOfMultiples(int num, int length) {
+		int [] iArray = new int[length];
+		
+		// iterates through the Array indexes
+		for (int i = 0; i < iArray.length; i++) {
+			iArray[i] = num * (i+1);
+			// the iterations are explained as follows: num = 6
+					// 6 * 1 = iArray[0] = 6
+					// 6 * 2 = iArray[1] = 12
+					// 6 * 3 = iArray[2] = 18...
+		}
+	
+		// for each loop, responsible for printing all the values within the array
+		for (int value : iArray) {
+			System.out.print(value+ " ");
+		}
+		
+		return iArray;
+	}
+	
+	
+	public static void main (String[] args) {
+		System.out.print("Enter multiple: ");
+		int multiple = scanner.nextInt();
+		
+		System.out.print("Enter the length: ");
+		int length = scanner.nextInt();
+		
+		arrayOfMultiples(multiple, length);
+	}
+}
