@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -15,22 +16,37 @@ public class Player extends Entity {
 	GamePanel gamePanel;
 	KeyHandler keyH;	
 	
+	public final int screenX; // use as players coordinate
+	public final int screenY; // use as players coordinate
+	
+	// RESPONSIBLE FOR PLAYER'S CENTERING THE CAMERA WITHIN THE PLAYER AFTER ITS COORDINATES WITHIN THE MAP IS REVEALED BY setDefaultValue()
 	public Player(GamePanel gamePanel, KeyHandler keyH) {
 		
 		this.gamePanel = gamePanel;
 		this.keyH = keyH;
+	// camera  = ensures that the camera is centered - this is added ensuring that the player is actually on the center of the screen, not the left corner of its picture (see video#5)
+		screenX = gamePanel.screenWidth/2 - (gamePanel.tileSize/2); // 384 - 24 = 360
+		screenY = gamePanel.screenHeight/2 - (gamePanel.tileSize/2); // 288 - 24 = 264
+		
+		solidArea = new Rectangle();
+		solidArea.x = 8;
+		solidArea.y = 16;
+		solidArea.width = 32;
+		solidArea.height = 32;
 		
 		setDefaultValues();
 		getPlayerImage();
 		
 	}
 	
+	// RESPONSIBLE FOR PLAYER'S COORDINATES WITHIN THE WHOLE MAP / TEXT FILE
 	public void setDefaultValues() {
 		
 		// these variables are pre-declared on the 'Entity Class' 
-		x = 100; 
-		y = 100;
-		speed = 4;
+		// these are use to set player's position within the whole map/text file
+		worldX = gamePanel.tileSize * 23; // 48 * 23 = 1,104
+		worldY = gamePanel.tileSize * 21;
+		speed = 4;	
 		direction = "down";
 		
 	}
@@ -73,22 +89,48 @@ public class Player extends Entity {
 		if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true) {
 			if (keyH.upPressed == true) {
 				direction = "up";
-				y = y - speed;
+				
 			} 
 					
 			else if (keyH.downPressed == true) {
 				direction = "down";
-				y = y + speed;
+				
 			}
 					
 			else if (keyH.leftPressed == true) {
 				direction = "left";
-				x = x - speed;
+				
 			}
 					
 			else if (keyH.rightPressed == true) {
 				direction = "right";
-				x = x + speed;
+				
+			}
+			
+			// CHECK TILE COLLISION
+			collisionOn = false;
+			gamePanel.cChecker.checkTile(this);
+			
+			// IF COLLISION IS FALSE, PLAYER CAN MOVE
+			if (collisionOn == false) {
+				switch(direction) {
+				case "up":
+					worldY = worldY - speed;
+					break;
+					
+				case "down":
+					worldY = worldY + speed;
+					break;
+					
+				case "left":
+					worldX = worldX - speed;
+					break;
+					
+				case "right":
+					worldX = worldX + speed;
+					break;
+						
+				}
 			}
 			
 			spriteCounter++;
@@ -204,7 +246,7 @@ public class Player extends Entity {
 		}
 		
 		// this is written to ensure the initial position of the IMAGE, in this case the character, being process.
-		g2d.drawImage(image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
+		g2d.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
 		
 	}
 	

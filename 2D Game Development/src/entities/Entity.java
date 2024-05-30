@@ -1,10 +1,11 @@
 package entities;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Entity {
 
-	public int x, y;
+	public int worldX, worldY;
 	public int speed;
 	
 	// since Entity class and Player class are both in the same package, Player class then now has an access to this Buffered Image
@@ -15,5 +16,6 @@ public class Entity {
 	public int spriteCounter = 0;
 	public int spriteNum = 1; // use to indicate which 3 part image should be use (idle, walking with left foot, walking with right foot)
 	
-	
+	public Rectangle solidArea; // built in class in Java that allows you to create rectangle. will be use for collision
+	public boolean collisionOn = false;
 }
