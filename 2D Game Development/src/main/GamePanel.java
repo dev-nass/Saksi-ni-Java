@@ -28,6 +28,12 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int screenWidth = maxScreenCol * tileSize; // 768px screen horizontal size
 	public final int screenHeight = maxScreenRow * tileSize; // 576px screen vertical size
 	
+	// WORLD SETTINGS
+	public final int maxWorldCol = 50;
+	public final int maxWorldRow = 50;
+	public final int maxWidth = tileSize * maxWorldCol;
+	public final int maxHeight = tileSize * maxWorldRow;
+	
 	// FPS
 	int FPS = 60;
 	
@@ -38,7 +44,9 @@ public class GamePanel extends JPanel implements Runnable {
 	// this concept of TIME allows the game to run all the time while waiting for the users inputs or processing the inputs
 	Thread gameThread; // automatically calls the run method
 	
-	Player player = new Player(this,keyH); //instantiates the player - passing THIS GamePanel class and the keyHandler VK that's being handle
+	public CollisionChecker cChecker = new CollisionChecker(this);
+	
+	public Player player = new Player(this,keyH); //instantiates the player - passing THIS GamePanel class and the keyHandler VK that's being handle
 	
 	
 	// !! MAIN CONSTRUCTOR
