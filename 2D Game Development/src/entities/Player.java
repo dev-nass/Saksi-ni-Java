@@ -19,6 +19,8 @@ public class Player extends Entity {
 	public final int screenX; // use as players coordinate
 	public final int screenY; // use as players coordinate
 	
+	int hashKey = 0;
+	
 	// RESPONSIBLE FOR PLAYER'S CENTERING THE CAMERA WITHIN THE PLAYER AFTER ITS COORDINATES WITHIN THE MAP IS REVEALED BY setDefaultValue()
 	public Player(GamePanel gamePanel, KeyHandler keyH) {
 		
@@ -28,9 +30,14 @@ public class Player extends Entity {
 		screenX = gamePanel.screenWidth/2 - (gamePanel.tileSize/2); // 384 - 24 = 360
 		screenY = gamePanel.screenHeight/2 - (gamePanel.tileSize/2); // 288 - 24 = 264
 		
+	// variable pre-defined on the entity data
+	// the this block does is basically set the rectangle that will be use as an indicator for collision, if player is hitting any object, size in accordance to player character sprite
+	// do remember that the rectangle is intended to be smaller than the player's character
 		solidArea = new Rectangle();
 		solidArea.x = 8;
 		solidArea.y = 16;
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
 		solidArea.width = 32;
 		solidArea.height = 32;
 		
@@ -111,6 +118,10 @@ public class Player extends Entity {
 			collisionOn = false;
 			gamePanel.cChecker.checkTile(this);
 			
+			// CHECK OBJECT COLLISION
+			int objIndex = gamePanel.cChecker.checkObject(this, true);
+			pickUpObject(objIndex);
+			
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if (collisionOn == false) {
 				switch(direction) {
@@ -151,6 +162,34 @@ public class Player extends Entity {
 
 		
 	}
+	
+	public void pickUpObject(int i) {
+		
+		if(i != 999) {
+			
+			String objectName  = gamePanel.sObj[i].name;
+			
+			switch(objectName) {
+			case "Key":
+				hashKey++;
+				gamePanel.sObj[i] = null;
+				System.out.println("Key: "+hashKey);
+				break;
+				
+			// indicates that if the user has a key the door will disappear
+			case "Door":
+				if(hashKey > 0) {
+					gamePanel.sObj[i] = null;
+					hashKey--;
+				}
+				break;
+			}
+			System.out.println("Key: "+hashKey);
+		}
+		
+		
+	}
+	
 	
 	// responsible for the graphics after the update has been made
 	public void draw(Graphics2D g2d) {

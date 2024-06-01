@@ -16,6 +16,9 @@ public class Entity {
 	public int spriteCounter = 0;
 	public int spriteNum = 1; // use to indicate which 3 part image should be use (idle, walking with left foot, walking with right foot)
 	
+	// Collision Variable
 	public Rectangle solidArea; // built in class in Java that allows you to create rectangle. will be use for collision
+	public int solidAreaDefaultX, solidAreaDefaultY;
+	
 	public boolean collisionOn = false;
 }
