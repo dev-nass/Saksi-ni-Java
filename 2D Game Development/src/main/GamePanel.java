@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entities.Player;
+import object.SuperObject;
 import tile.TileManager;
 
 
@@ -43,11 +44,16 @@ public class GamePanel extends JPanel implements Runnable {
 	// Important concept of 2D game is it needs to have TIME, so as in real life
 	// this concept of TIME allows the game to run all the time while waiting for the users inputs or processing the inputs
 	Thread gameThread; // automatically calls the run method
-	
+		
 	public CollisionChecker cChecker = new CollisionChecker(this);
+	
+	public AssestSetter aSetter = new AssestSetter(this);
 	
 	public Player player = new Player(this,keyH); //instantiates the player - passing THIS GamePanel class and the keyHandler VK that's being handle
 	
+	// Create java object for object class -- the argument states that array object can be use to store 10 different kind of items
+	
+	public SuperObject sObj[] = new SuperObject[10];
 	
 	// !! MAIN CONSTRUCTOR
 	public GamePanel() {
@@ -56,6 +62,12 @@ public class GamePanel extends JPanel implements Runnable {
 		this.setDoubleBuffered(true); // enables the game rendering performance
 		this.addKeyListener(keyH); // adds the key handler on the GamePanel Class
 		this.setFocusable(true); // enables the 'GamePanel class' to be focused on receiving inputs, just read it on his captions
+	}
+	
+	// called before the game start, the gameThread below
+	public void setupGame() {
+		
+		aSetter.setObject();
 	}
 
 	public void StartGameThread() {
@@ -124,8 +136,17 @@ public class GamePanel extends JPanel implements Runnable {
 		// Passes the graphics G to grahics2D class, just made this explanation up
 		Graphics2D g2d = (Graphics2D)g;
 		
+		// TILE
 		tileM.draw(g2d);
 		
+		// OBJECTS
+		for (int i = 0; i < sObj.length; i++) {
+			if (sObj[i] != null) {
+				sObj[i].draw(g2d, this);
+			}
+		}
+		
+		// PLAYER
 		player.draw(g2d);
 		
 		g2d.dispose();
