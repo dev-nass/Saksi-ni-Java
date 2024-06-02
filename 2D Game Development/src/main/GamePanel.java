@@ -32,28 +32,28 @@ public class GamePanel extends JPanel implements Runnable {
 	// WORLD SETTINGS
 	public final int maxWorldCol = 50;
 	public final int maxWorldRow = 50;
-	public final int maxWidth = tileSize * maxWorldCol;
-	public final int maxHeight = tileSize * maxWorldRow;
+	public final int maxWidth = tileSize * maxWorldCol; // these variables are unused
+	public final int maxHeight = tileSize * maxWorldRow; // these variables are unused
 	
 	// FPS
 	int FPS = 60;
 	
+	// SYSTEM
 	TileManager tileM = new TileManager(this);
-	// Creates the object for the KeyHandler Class created 
-	KeyHandler keyH = new KeyHandler();
+	KeyHandler keyH = new KeyHandler(); // Creates the object for the KeyHandler Class created 
+	Sound soundTheme = new Sound();
+	Sound soundEffect = new Sound();
+	public CollisionChecker cChecker = new CollisionChecker(this);
+	public AssestSetter aSetter = new AssestSetter(this);
+	public UI ui = new UI(this);
 	// Important concept of 2D game is it needs to have TIME, so as in real life
 	// this concept of TIME allows the game to run all the time while waiting for the users inputs or processing the inputs
-	Thread gameThread; // automatically calls the run method
-		
-	public CollisionChecker cChecker = new CollisionChecker(this);
+	Thread gameThread; // automatically calls the run method	
 	
-	public AssestSetter aSetter = new AssestSetter(this);
 	
+	// ENTITY AND OBJECT
 	public Player player = new Player(this,keyH); //instantiates the player - passing THIS GamePanel class and the keyHandler VK that's being handle
-	
-	// Create java object for object class -- the argument states that array object can be use to store 10 different kind of items
-	
-	public SuperObject sObj[] = new SuperObject[10];
+	public SuperObject sObj[] = new SuperObject[10]; // Create java object for object class -- the argument states that array object can be use to store 10 different kind of items
 	
 	// !! MAIN CONSTRUCTOR
 	public GamePanel() {
@@ -68,6 +68,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public void setupGame() {
 		
 		aSetter.setObject();
+		
+		playMusic(0);
 	}
 
 	public void StartGameThread() {
@@ -83,7 +85,7 @@ public class GamePanel extends JPanel implements Runnable {
 		// TODO Auto-generated method stub
 		
 		// uses nanoseconds - see the video#2 for this
-		double drawInterval = 1000000000/FPS; // ensures that the screen will refresh for every 0.01666 seconds
+		double drawInterval = 1000000000/60; // ensures that the screen will refresh for every 0.01666 seconds
 		double delta = 0;
 		long lastTime = System.nanoTime(); // 1Billion nanoseconds = 1 seconds, use for very accurate indicator of time
 		long currentTime;
@@ -123,6 +125,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	// responsible for updating the information on the screen (X, Y) position
 	public void update() {
+		
 		player.update();	
 	}
 	
@@ -149,6 +152,32 @@ public class GamePanel extends JPanel implements Runnable {
 		// PLAYER
 		player.draw(g2d);
 		
+		// UI 
+		ui.draw(g2d);
 		g2d.dispose();
 	}
+	
+	// RESPONSIBLE FOR PLAYING THE MAIN THEME SONG OF THE GAME, IN A LOOP THAT IS
+	public void playMusic(int i) {
+		
+		soundTheme.setFile(i); // this argument is use to ensure that the BlueBoyAdventure.mav is used. the value is passed above in setupGame()
+		soundTheme.play();
+		soundTheme.loop(); // the whole music of the game has to be loop
+		
+	}
+	
+	public void stopMusic() {
+		
+		soundTheme.stop();
+	}
+	
+	// RESPONSIBLE FOR PLAYING THE SOUND EFFECTS
+	public void playSE(int i) {
+		
+		soundEffect.setFile(i);
+		soundEffect.play();
+		
+	}
+	
+	
 }

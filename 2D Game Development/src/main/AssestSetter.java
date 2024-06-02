@@ -1,5 +1,6 @@
 package main;
 
+import object.OBJ_Boots;
 import object.OBJ_Chest;
 import object.OBJ_Door;
 import object.OBJ_Key;
@@ -43,6 +44,10 @@ public class AssestSetter {
 		gamePanel.sObj[6] = new OBJ_Chest();
 		gamePanel.sObj[6].worldX = 10 * gamePanel.tileSize;
 		gamePanel.sObj[6].worldY = 7 * gamePanel.tileSize;
+		
+		gamePanel.sObj[7] = new OBJ_Boots();
+		gamePanel.sObj[7].worldX = 37 * gamePanel.tileSize;
+		gamePanel.sObj[7].worldY = 42 * gamePanel.tileSize;
 		
 	}
 	
