@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.math.BigInteger;
 
 import javax.imageio.ImageIO;
 
@@ -19,7 +20,10 @@ public class Player extends Entity {
 	public final int screenX; // use as players coordinate
 	public final int screenY; // use as players coordinate
 	
-	int hashKey = 0;
+	public int hashKey = 0;
+	
+	
+	
 	
 	// RESPONSIBLE FOR PLAYER'S CENTERING THE CAMERA WITHIN THE PLAYER AFTER ITS COORDINATES WITHIN THE MAP IS REVEALED BY setDefaultValue()
 	public Player(GamePanel gamePanel, KeyHandler keyH) {
@@ -121,6 +125,11 @@ public class Player extends Entity {
 			// CHECK OBJECT COLLISION
 			int objIndex = gamePanel.cChecker.checkObject(this, true);
 			pickUpObject(objIndex);
+		
+			
+			
+			
+			
 			
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if (collisionOn == false) {
@@ -165,25 +174,46 @@ public class Player extends Entity {
 	
 	public void pickUpObject(int i) {
 		
+		
 		if(i != 999) {
 			
 			String objectName  = gamePanel.sObj[i].name;
 			
 			switch(objectName) {
 			case "Key":
+				gamePanel.playSE(1);
 				hashKey++;
 				gamePanel.sObj[i] = null;
-				System.out.println("Key: "+hashKey);
+				gamePanel.ui.showMessaege("NIGGA");
 				break;
 				
 			// indicates that if the user has a key the door will disappear
 			case "Door":
 				if(hashKey > 0) {
+					gamePanel.playSE(3);
 					gamePanel.sObj[i] = null;
-					hashKey--;
+					gamePanel.ui.showMessaege("A NIGGA opened a door");
+					hashKey--; 
+				} else {
+					gamePanel.ui.showMessaege("A NIGGA can't open a door");
 				}
 				break;
+				
+			case "Boots":
+			    gamePanel.playSE(2);
+			    speed += 2;
+			    gamePanel.sObj[i] = null;
+			    gamePanel.ui.showMessaege("SPEEDY SHIT MY NIGGA");
+			    break;
+			    
+			case "Chest":
+				gamePanel.ui.gameFinished = true;
+				gamePanel.stopMusic();
+				gamePanel.playSE(4);
+				break;
 			}
+			
+			
 			System.out.println("Key: "+hashKey);
 		}
 		
@@ -288,5 +318,10 @@ public class Player extends Entity {
 		g2d.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
 		
 	}
+	
+	public void movementLimiter() {
+		
+	}
+	
 	
 }
