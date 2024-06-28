@@ -3,7 +3,7 @@ import java.util.Scanner;
 // JUNE 28, 2024
 // Check if the user input any space within the text
 
-public class containsWhiteSpace  {
+public class ContainsWhiteSpace  {
 
     static Scanner scanner = new Scanner(System.in);
 
