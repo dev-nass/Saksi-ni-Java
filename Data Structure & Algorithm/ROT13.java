@@ -2,10 +2,9 @@ import java.util.Scanner;
 
 /*
  	FOR FUTURE SELF HERE'S WHAT U DID:
- 		1. For each muna para isa-isahin yung LETTERS ng buong WORD na gustong itago
- 		2. Hinanap yung INDEX ng kada LETTER + SHIFT
- 		3. Kung ano ngayon yung mahahanap na INDEX yun yung gagamitin para i-search o
- 		hanapin yung new value nito.
+ 		1. Identify the pattern required which is 3, 1, 7, 4, 2, 5.
+ 		2. Used another variable that will increment through the array pattern.
+ 		3. Shift the current letter based on its alphabet index + the current SHIFT.
 */
 public class Main {
 	
@@ -26,11 +25,9 @@ public class Main {
 		String alphabetv1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		char[] alphabetv2  = alphabetv1.toCharArray();
 		
-		// Define the shift pattern
-//		THIS TWO ARE ADDED
-        int[] shifts = {3, 1, 7, 4, 2, 5};
-        int shiftIndex = 0;
-        
+		
+        int[] shifts = {3, 1, 7, 4, 2, 5}; // Define the shift pattern
+        int shiftIndex = 0; // used for iterating through the shift pattern
         int search = 0; // Track the current shift from the array
 
 		String wordToTransfer = word;
@@ -39,30 +36,24 @@ public class Main {
 		for(char letter : wordArray) {
 
 				search = alphabetv1.indexOf(letter) + shifts[shiftIndex];
-//				System.out.println(search) used for debugging;
 				
 				if(Character.isWhitespace(letter)) {
 					result += letter;
 					continue;
 				}
 				
-//				This condition if used if the search value exceed the alphabet length
-//				may -1 kasi array ito 0 to 25, not 1 to 26 ang alphabet
+//				NOTE: .length method return base 1 value, not starting to 0
 				if(search > alphabetv1.length() - 1) {
-	/*			
-	 			Sample if yung value ng SEARCH ay 27, sobra dahil sa + shift.
-				Modulo natin yun sa length ng alphabet which is 26.
-				
-				So: Ilang 26 meron sa 27, isa, ilan natira isa din so
-				SEARCH = 1
-	*/
 					search = search % alphabetv1.length();
 				}
-//				then pag hinanap "A" na yung makikita
+
 				result += alphabetv2[search];
-				// Move to the next shift in the pattern, reset after the last one
+
 				
-//				UNDERSTAND THIS ONE
+/*				NOTE: Responsible for incrementing shiftIndex by one everytime the loop runs.
+ 				If 6 % 6 is reached, however, it will return to 0 index hence repeating the process
+ 				To understand this fully future self, use simulation screen
+*/
 	            shiftIndex = (shiftIndex + 1) % shifts.length;
 			}
 	
