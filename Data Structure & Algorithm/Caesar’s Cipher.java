@@ -5,7 +5,7 @@ import java.util.Scanner;
  		1. For each muna para isa-isahin yung LETTERS ng buong WORD na gustong itago
  		2. Hinanap yung INDEX ng kada LETTER + SHIFT
  		3. Kung ano ngayon yung mahahanap na INDEX yun yung gagamitin para i-search o
- 		hanapin yung new value nito.
+ 		hanapin yung new value nito sa alphabet
 */
 public class Main {
 	
@@ -55,7 +55,7 @@ public class Main {
 */
 				search = search % alphabetv1.length();
 			}
-//			then pag hinanap "A" na yung makikita
+//			then pag hinanap "B" na yung makikita
 			result += alphabetv2[search];
 		}
 		
